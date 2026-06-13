@@ -13,17 +13,42 @@ import { writeFileSync, mkdirSync } from "fs";
 import { join } from "path";
 import { PrismaClient } from "@prisma/client";
 
+// 独立脚本不经 Next.js,需显式加载 .env(Node 内置,无依赖)
+try {
+  process.loadEnvFile(join(__dirname, "..", ".env"));
+} catch {
+  /* 没有 .env 时静默跳过 */
+}
+
 const prisma = new PrismaClient();
 
 const AZURE_KEY = process.env.AZURE_SPEECH_KEY;
 const AZURE_REGION = process.env.AZURE_SPEECH_REGION ?? "eastasia";
 
-// 地道美音 + 情感叙事。用 mstts:express-as 加「温暖友好」的讲故事语气,
-// 而不是平板的机器朗读。音色/风格/语气强度都可用环境变量覆盖做 A/B。
+// 按「年龄段(级别)」选朗读音色——不同年龄用不同声音。
+// 注:童声 en-US-AnaNeural 不支持 mstts:express-as 风格,故其 style 为 null(不加风格标签)。
 // (为什么用情感 TTS 而非声音克隆:见 docs/adr/0007)
-const VOICE = process.env.AZURE_TTS_VOICE ?? "en-US-JennyNeural";
-const STYLE = process.env.AZURE_TTS_STYLE ?? "friendly"; // 温暖亲切;可选 cheerful/hopeful
-const STYLEDEGREE = process.env.AZURE_TTS_STYLEDEGREE ?? "1.6"; // 情感强度(0.01-2)
+const VOICE_BY_STAGE: { maxLevel: number; voice: string; style: string | null; note: string }[] = [
+  {
+    maxLevel: 12,
+    voice: "en-US-AnaNeural",
+    style: null,
+    note: "小学(L1-12):童声,同龄亲切(用户 2026-06 定)",
+  },
+  // TODO(初中段音色):用户将另行选择,届时改这一行的 voice/style
+  {
+    maxLevel: 15,
+    voice: "en-US-AvaMultilingualNeural",
+    style: null,
+    note: "初中(L13-15):暂用自然叙事音,待定",
+  },
+];
+
+function voiceForLevel(levelId: number) {
+  return (
+    VOICE_BY_STAGE.find((s) => levelId <= s.maxLevel) ?? VOICE_BY_STAGE[VOICE_BY_STAGE.length - 1]
+  );
+}
 
 /** 按级别调语速:低龄更慢、便于逐词跟读;高级别接近自然语速 */
 function rateForLevel(levelId: number): string {
@@ -32,15 +57,19 @@ function rateForLevel(levelId: number): string {
   return "-5%";
 }
 
-async function azureTts(text: string, rate: string): Promise<Buffer> {
+async function azureTts(
+  text: string,
+  voice: string,
+  style: string | null,
+  rate: string
+): Promise<Buffer> {
   const escaped = text.replaceAll("&", "&amp;").replaceAll("<", "&lt;").replaceAll(">", "&gt;");
-  const ssml = `<speak version='1.0' xmlns:mstts='https://www.w3.org/2001/mstts' xml:lang='en-US'>
-  <voice name='${VOICE}'>
-    <mstts:express-as style='${STYLE}' styledegree='${STYLEDEGREE}'>
-      <prosody rate='${rate}'>${escaped}</prosody>
-    </mstts:express-as>
-  </voice>
-</speak>`;
+  const inner = `<prosody rate='${rate}'>${escaped}</prosody>`;
+  // 支持风格的音色才包 express-as;童声等不支持的直接朗读
+  const body = style
+    ? `<mstts:express-as style='${style}' styledegree='1.6'>${inner}</mstts:express-as>`
+    : inner;
+  const ssml = `<speak version='1.0' xmlns:mstts='https://www.w3.org/2001/mstts' xml:lang='en-US'><voice name='${voice}'>${body}</voice></speak>`;
   const res = await fetch(`https://${AZURE_REGION}.tts.speech.microsoft.com/cognitiveservices/v1`, {
     method: "POST",
     headers: {
@@ -72,14 +101,15 @@ async function main() {
   for (const story of stories) {
     // 名字槽位读成通用昵称(音频是全体共享的,不能按孩子定制)
     const text = story.text.replaceAll("{{name}}", "Sam");
+    const stage = voiceForLevel(story.levelId);
     try {
-      const mp3 = await azureTts(text, rateForLevel(story.levelId));
+      const mp3 = await azureTts(text, stage.voice, stage.style, rateForLevel(story.levelId));
       writeFileSync(join(audioDir, `${story.slug}.mp3`), mp3);
       await prisma.story.update({
         where: { id: story.id },
         data: { audioUrl: `/audio/${story.slug}.mp3` },
       });
-      console.log(`✅ ${story.slug}`);
+      console.log(`✅ ${story.slug}  (${stage.voice})`);
     } catch (e) {
       console.log(`❌ ${story.slug}: ${e}`);
     }

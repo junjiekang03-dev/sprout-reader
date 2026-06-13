@@ -8,5 +8,6 @@
 
 ## Consequences
 
-- 朗读音色/风格/语速通过 `AZURE_TTS_VOICE` / `AZURE_TTS_STYLE` / `AZURE_TTS_STYLEDEGREE` 环境变量可调,做 A/B。
+- 朗读音色**按年龄段(级别)选**,在 `scripts/tts-generate.ts` 的 `VOICE_BY_STAGE` 配置:小学段(L1-12)用童声 `en-US-AnaNeural`(同龄亲切),初中段(L13-15)待定。换音色只改一行。
+- 不支持 `mstts:express-as` 风格的音色(如童声 Ana)自动跳过风格标签,直接朗读。语速按级别调(低龄更慢)。
 - 「家长克隆自己声音读给**自己孩子**」的亲子价值不在此否定——它属于二期「亲子模式」(见 BACKLOG),且需解决英文发音(英文正文仍用地道 TTS、家长声音只用于中文陪伴)、声纹合规、GPU 成本。

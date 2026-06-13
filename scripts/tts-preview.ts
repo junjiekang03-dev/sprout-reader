@@ -9,6 +9,13 @@
 import { writeFileSync, mkdirSync } from "fs";
 import { join } from "path";
 
+// 独立脚本不经 Next.js,需显式加载 .env(Node 内置,无依赖)
+try {
+  process.loadEnvFile(join(__dirname, "..", ".env"));
+} catch {
+  /* 没有 .env 时静默跳过 */
+}
+
 const AZURE_KEY = process.env.AZURE_SPEECH_KEY;
 const AZURE_REGION = process.env.AZURE_SPEECH_REGION ?? "eastasia";
 
