@@ -23,6 +23,14 @@ export async function getLevelSuggestion(
   });
 }
 
+/** 取最近一次「未撤销的自动调级」记录(主页用于展示通知 + 撤销入口);无则 null */
+export async function getLatestAutoLevelChange(childId: string) {
+  return prisma.levelChange.findFirst({
+    where: { childId, auto: true, undone: false },
+    orderBy: { createdAt: "desc" },
+  });
+}
+
 /** 连续打卡天数(从今天或昨天往前数,缺一天即断) */
 export async function getStreak(childId: string): Promise<number> {
   const readings = await prisma.reading.findMany({

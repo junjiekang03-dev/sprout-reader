@@ -46,15 +46,17 @@
 
 ---
 
-## 3. 升降级建议落到孩子档案的自动微调 · AFK
+## 3. 升降级建议落到孩子档案的自动微调 · AFK ✅ 已完成(2026-06-13)
 
 **What**:**Level Suggestion** 目前要手动点「接受」。增加可选的「自动跟随」开关,连续命中升/降条件时自动微调一级并通知家长。
 
 **Acceptance**
 
-- [ ] 家长可开关「自动调级」
-- [ ] 自动调级有记录与撤销
-- [ ] 复用现有 `suggestLevelChange` 纯逻辑(已有测试)
+- [x] 家长可开关「自动调级」(`Child.autoFollowLevel` + 主页开关 `setAutoFollowLevel`;开启时主页隐藏手动横幅)
+- [x] 自动调级有记录与撤销(新增 `LevelChange` 表;主页显示最近一次自动调级 + 撤销 `undoLevelChange` 还原级别)
+- [x] 复用现有 `suggestLevelChange` 纯逻辑(新增纯函数 `decideAutoLevelChange` 包一层门禁,6 个单测;在阅读提交 `POST /api/readings` 时触发)
+
+**实现要点**:在阅读提交(性能数据到达的唯一时刻)而非主页渲染时自动调级,避免 RSC 副作用;`decideAutoLevelChange` 防御性只接受 ±1 且不越界。不做防抖——调级后新级别尚无样本,`suggestLevelChange` 攒够前不会再触发,天然避免横跳。preview 端到端验证:开开关→读达标→自动升 L4→撤销还原 L3。
 
 **Blocked by**:None
 

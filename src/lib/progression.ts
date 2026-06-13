@@ -53,3 +53,33 @@ export function suggestLevelChange(input: {
   }
   return null;
 }
+
+export interface AutoLevelDecision {
+  fromLevel: number;
+  toLevel: number;
+  direction: "up" | "down";
+}
+
+/**
+ * 自动跟随的调度纯函数:在「自动调级」开启且命中升/降建议时,决定是否自动调级、调到几级。
+ * 复用 suggestLevelChange 的输出(LevelSuggestion)。
+ *
+ * - 自动跟随关闭 → null(走手动横幅路径,家长自己点接受)
+ * - 没有建议 → null
+ * - 有建议 → 返回具体调级动作;防御性地只接受相对当前级别 ±1 且在 [1, MAX] 内的目标
+ *   (与 acceptLevelSuggestion 的边界一致,杜绝异常输入造成跳级)。
+ *
+ * 不做防抖:调级后新级别尚无阅读记录,suggestLevelChange 在攒够新级别样本前不会再触发,
+ * 天然避免来回横跳;真出现「升上去又吃力」是合理的纠偏,不应抑制。
+ */
+export function decideAutoLevelChange(input: {
+  autoFollow: boolean;
+  currentLevel: number;
+  suggestion: LevelSuggestion | null;
+}): AutoLevelDecision | null {
+  if (!input.autoFollow || !input.suggestion) return null;
+  const to = input.suggestion.toLevel;
+  if (to < 1 || to > MAX_LEVEL) return null;
+  if (Math.abs(to - input.currentLevel) !== 1) return null;
+  return { fromLevel: input.currentLevel, toLevel: to, direction: input.suggestion.direction };
+}

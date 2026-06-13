@@ -23,3 +23,31 @@ export async function acceptLevelSuggestion(toLevel: number) {
   await prisma.child.update({ where: { id: child.id }, data: { levelId: clamped } });
   revalidatePath("/home");
 }
+
+/** 开关「自动跟随难度」(BACKLOG#3):开启后,命中升/降建议时阅读提交会自动调一级 */
+export async function setAutoFollowLevel(enabled: boolean) {
+  const parent = await getSessionParent();
+  if (!parent) redirect("/login");
+  const child = parent.children[0];
+  if (!child) redirect("/onboarding");
+  await prisma.child.update({ where: { id: child.id }, data: { autoFollowLevel: enabled } });
+  revalidatePath("/home");
+}
+
+/** 撤销一次自动调级:把级别还原到调级前,并标记该记录已撤销 */
+export async function undoLevelChange(changeId: string) {
+  const parent = await getSessionParent();
+  if (!parent) redirect("/login");
+  const child = parent.children[0];
+  if (!child) redirect("/onboarding");
+
+  const change = await prisma.levelChange.findUnique({ where: { id: changeId } });
+  // 只允许撤销本孩子、尚未撤销的记录
+  if (!change || change.childId !== child.id || change.undone) return;
+
+  await prisma.$transaction([
+    prisma.child.update({ where: { id: child.id }, data: { levelId: change.fromLevel } }),
+    prisma.levelChange.update({ where: { id: change.id }, data: { undone: true } }),
+  ]);
+  revalidatePath("/home");
+}

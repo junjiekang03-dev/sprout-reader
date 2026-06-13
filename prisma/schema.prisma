@@ -41,9 +41,11 @@ model Child {
   levelId       Int       @default(1)
   interests     String    @default("[]") // JSON: InterestKey[]
   placementDone Boolean   @default(false)
+  autoFollowLevel Boolean @default(false) // BACKLOG#3:开启后,命中升/降建议时自动调一级
   createdAt     DateTime  @default(now())
   readings      Reading[]
   wordbook      WordbookEntry[]
+  levelChanges  LevelChange[]
 }
 
 model Story {
@@ -94,4 +96,19 @@ model WordbookEntry {
 
   @@unique([childId, word])
   @@index([childId, dueDateKey])
+}
+
+// 调级记录:自动跟随(或手动)产生的升/降级,可撤销(BACKLOG#3)
+model LevelChange {
+  id        String   @id @default(cuid())
+  childId   String
+  child     Child    @relation(fields: [childId], references: [id], onDelete: Cascade)
+  fromLevel Int
+  toLevel   Int
+  direction String // up | down
+  auto      Boolean  @default(true) // true=自动跟随触发;false=家长手动接受
+  undone    Boolean  @default(false) // 撤销后置 true,并把级别还原回 fromLevel
+  createdAt DateTime @default(now())
+
+  @@index([childId, createdAt])
 }

@@ -1,7 +1,8 @@
 import { NextResponse } from "next/server";
 import { prisma } from "@/lib/db";
 import { getSessionParent } from "@/lib/session";
-import { getStreak } from "@/lib/stats";
+import { getStreak, getLevelSuggestion } from "@/lib/stats";
+import { decideAutoLevelChange } from "@/lib/progression";
 import { parseQuestions, dateKeyOf } from "@/lib/story-types";
 
 /** 提交读后测验:服务端判分并记录阅读(同一天重复读同一篇只记一次) */
@@ -40,6 +41,32 @@ export async function POST(req: Request) {
     update: { correctCount: correct, totalCount: total },
   });
 
+  // 自动跟随难度(BACKLOG#3):开启时,命中升/降建议则自动调一级并记录(家长可在主页撤销)
+  let levelChange: { fromLevel: number; toLevel: number; direction: "up" | "down" } | null = null;
+  if (child.autoFollowLevel) {
+    const suggestion = await getLevelSuggestion(child.id, child.levelId);
+    const decision = decideAutoLevelChange({
+      autoFollow: true,
+      currentLevel: child.levelId,
+      suggestion,
+    });
+    if (decision) {
+      await prisma.$transaction([
+        prisma.child.update({ where: { id: child.id }, data: { levelId: decision.toLevel } }),
+        prisma.levelChange.create({
+          data: {
+            childId: child.id,
+            fromLevel: decision.fromLevel,
+            toLevel: decision.toLevel,
+            direction: decision.direction,
+            auto: true,
+          },
+        }),
+      ]);
+      levelChange = decision;
+    }
+  }
+
   const streak = await getStreak(child.id);
-  return NextResponse.json({ correct, total, streak });
+  return NextResponse.json({ correct, total, streak, levelChange });
 }

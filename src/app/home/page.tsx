@@ -2,12 +2,13 @@ import Link from "next/link";
 import { redirect } from "next/navigation";
 import { getSessionParent } from "@/lib/session";
 import { recommendStory } from "@/lib/recommend";
-import { getStreak, getCalendar, getLevelSuggestion } from "@/lib/stats";
+import { getStreak, getCalendar, getLevelSuggestion, getLatestAutoLevelChange } from "@/lib/stats";
 import { getDueCount } from "@/lib/wordbook";
 import { getLevel, INTERESTS } from "@/lib/levels";
 import { dateKeyOf, renderWithName } from "@/lib/story-types";
 import { logout } from "@/app/actions/auth";
 import { LevelSuggestionBanner } from "./suggestion-banner";
+import { AutoFollowToggle, AutoChangeNotice } from "./auto-follow";
 
 export default async function HomePage() {
   const parent = await getSessionParent();
@@ -16,12 +17,13 @@ export default async function HomePage() {
   if (!child) redirect("/onboarding");
   if (!child.placementDone) redirect("/placement");
 
-  const [story, streak, calendar, suggestion, dueCount] = await Promise.all([
+  const [story, streak, calendar, suggestion, dueCount, latestChange] = await Promise.all([
     recommendStory(child.id),
     getStreak(child.id),
     getCalendar(child.id, 28),
     getLevelSuggestion(child.id, child.levelId),
     getDueCount(child.id),
+    getLatestAutoLevelChange(child.id),
   ]);
   const level = getLevel(child.levelId);
   const todayDone = calendar.find((c) => c.dateKey === dateKeyOf(new Date()))?.count ?? 0;
@@ -41,14 +43,23 @@ export default async function HomePage() {
         </div>
       </header>
 
-      {/* 升降级建议 */}
-      {suggestion && (
-        <LevelSuggestionBanner
-          direction={suggestion.direction}
-          toLevel={suggestion.toLevel}
-          toLevelName={getLevel(suggestion.toLevel).name}
-        />
-      )}
+      {/* 升降级:自动跟随开 → 显示最近自动调级 + 撤销;关 → 显示手动建议横幅 */}
+      {child.autoFollowLevel
+        ? latestChange && (
+            <AutoChangeNotice
+              changeId={latestChange.id}
+              direction={latestChange.direction}
+              toLevelName={getLevel(latestChange.toLevel).name}
+              childName={child.nickname}
+            />
+          )
+        : suggestion && (
+            <LevelSuggestionBanner
+              direction={suggestion.direction}
+              toLevel={suggestion.toLevel}
+              toLevelName={getLevel(suggestion.toLevel).name}
+            />
+          )}
 
       {/* 今日故事 */}
       <section className="mt-8">
@@ -115,6 +126,11 @@ export default async function HomePage() {
             />
           ))}
         </div>
+      </section>
+
+      {/* 自动跟随难度开关 */}
+      <section className="mt-6">
+        <AutoFollowToggle enabled={child.autoFollowLevel} />
       </section>
 
       {/* 家长入口 */}
