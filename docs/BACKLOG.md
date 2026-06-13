@@ -33,11 +33,14 @@
 - [ ] 产出率、拒绝原因有统计输出
 - [ ] **情节多样性约束**:生成时提供「同轨道已有情节摘要」让模型避开雷同;人工审读发现首批批量产出里,同一兴趣轨道相邻级别套用了相同情节模板(帮迷路小动物找妈妈 / 帮小星星发光 / 苦练后大赛进球),需在 prompt 里加去重要求
 
-**待重写**(首批批量产出中,每对相邻级别雷同里被退回的一篇,保持 draft 不发布):
+**待重写 → ✅ 已重写并发布(2026-06-13)**:用 Workflow 喂「同轨道全部已有情节摘要 + 必须避开」生成,过分级校验 + 对抗式安全/多样性审核,人工通读后发布,均已生成童声(Ana)音频:
 
-- `dinosaurs-l6-and-the-little-dino`(与 L5 雷同:帮迷路小恐龙)
-- `space-l6-and-the-little-star`(与 L5 雷同:帮小星星发光)
-- `soccer-l8-and-the-big-match`(与 L7 雷同:苦练后大赛进球)
+- ~~`dinosaurs-l6-and-the-little-dino`~~ → `dinosaurs-l6-the-rainy-day`(雨天大恐龙用尾巴当伞护住 {{name}} 和小动物)
+- ~~`space-l6-and-the-little-star`~~ → `space-l6-the-new-planet`(发现并命名一颗开满花、会发光的新行星;slug+标题已换)
+- ~~`soccer-l8-and-the-big-match`~~ → `soccer-l8-the-goalkeeper`(临危当门将做出关键扑救,而非进球)
+
+> 旧 slug 的 draft 行已用新增的 `scripts/delete-stories.ts` 从库中清除。
+> 仍待办(本条 #2 核心):把「同轨道情节去重」固化进批量生成脚本——目前是在 Workflow prompt 里手工提供禁用情节摘要,尚未脚本化。
 
 **Blocked by**:None(已有 Workflow 与 import 脚本作基础)
 

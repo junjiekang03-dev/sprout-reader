@@ -1,0 +1,26 @@
+{
+  "slug": "dinosaurs-l6-the-rainy-day",
+  "title": "{{name}} and the Rainy Day",
+  "levelId": 6,
+  "interest": "dinosaurs",
+  "text": "{{name}} and a big dinosaur went to the park. The dinosaur was a good friend. They wanted to play all day.\n\nBut the sky got dark. Then the rain came down. It was cold and wet. {{name}} had no umbrella.\n\nA little duck ran fast. A little rabbit ran too. They were all wet and scared.\n\nThe big dinosaur was kind. It stood up tall and still. It opened its long tail wide. The big tail was like an umbrella!\n\n{{name}} sat under the tail. The duck sat there too. The rabbit sat close by. They were all dry now. No one was wet.\n\nThey waited under the big dinosaur. They were warm and happy together. The rain was loud, but they were safe and glad.\n\nSoon the rain stopped. The sun came out. The sky got bright again. The land was soft mud now.\n\n{{name}} jumped in the mud. The duck jumped too. The rabbit hopped and hopped. The big dinosaur made a happy roar. They all laughed and played in the mud.",
+  "glossary": [],
+  "questions": [
+    {
+      "prompt": "Why could {{name}} not stay dry at first?",
+      "options": ["{{name}} had no umbrella.", "{{name}} had no hat.", "{{name}} had no coat."],
+      "answer": 0
+    },
+    {
+      "prompt": "What did the dinosaur use to keep everyone dry?",
+      "options": ["Its big claw", "Its long tail", "Its big egg"],
+      "answer": 1
+    },
+    {
+      "prompt": "What did they do after the rain stopped?",
+      "options": ["They went home to sleep.", "They looked for a bone.", "They played in the mud."],
+      "answer": 2
+    }
+  ],
+  "status": "draft"
+}
