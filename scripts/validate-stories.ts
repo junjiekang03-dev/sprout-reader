@@ -30,6 +30,7 @@ const storySchema = z.object({
       })
     )
     .length(3),
+  status: z.enum(["draft", "published"]).optional(),
 });
 
 const files = readdirSync(STORIES_DIR).filter((f) => f.endsWith(".json"));

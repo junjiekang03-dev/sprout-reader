@@ -9,16 +9,26 @@
 ## 已实现(MVP 闭环)
 
 - **15 级自研分级体系**:底层锚定 CEFR + 课标词表(5 档累积词表),对外映射牛津树级别 + 校内年级双坐标 — [levels.ts](src/lib/levels.ts)
-- **内容流水线**:AI 生成 prompt 模板 → 程序化校验(词表/句长/生词密度)→ 人工通读 → 入库
-  - `npx tsx scripts/story-prompt.ts <级别> <主题> [数量]` 生成创作 prompt
+- **三层内容管线**:AI 生成 → 程序化校验(词表/句长/生词密度)→ 人工通读发布
+  - `npx tsx scripts/story-prompt.ts <级别> <主题> [数量]` 生成单条创作 prompt
+  - 批量:Workflow 多代理生成 + 对抗式安全审核 → `scripts/import-generated.ts` 过程序校验 → 落 **draft**(实测产出率约 80%)
   - `npm run validate:stories` 校验 content/stories/\*.json(上架门禁)
-  - `npm run db:seed` 校验并导入数据库(幂等)
+  - `/admin?key=<ADMIN_KEY>` 人工通读后「发布」或「退回」(第 3 层)
+  - 主题词按兴趣轨道豁免「超纲/生词密度」(选恐龙轨道的孩子本就熟悉 dinosaur)
   - `npx tsx scripts/tts-generate.ts` 预生成 TTS 朗读(需 Azure key,无 key 时阅读器回退浏览器 Web Speech)
 - **入级测评**:8 题自适应阶梯(L1-L12 题库),保守定级
 - **每日阅读闭环**:按级别+兴趣推荐 → 点词查词(带发音)→ 听全文朗读 → 3 道理解题(选项乱序)→ 打卡
+- **升降级建议**:连续高/低正确率时,主页提示升/降一级,家长可接受或忽略(纯逻辑有单测)
 - **激励与家长侧**:连续打卡 streak、四周日历、家长周报页(免登录可分享,自带获客 CTA)
 - **合规设计**:家长注册制(孩子仅英文昵称档案)、20 分钟护眼提醒、按会员订阅而非课时收费的产品形态
-- **种子内容**:13 篇故事(L2-L11,六大主题),全部通过分级校验
+- **种子内容**:13 篇手写种子(L2-L11)+ 批量生成的 draft,全部通过分级校验
+- **工程质量**:Vitest 单测(分级逻辑 + 校验器回归)、Husky pre-commit(prettier + typecheck + test)、危险 git 命令护栏
+
+## 文档
+
+- [CONTEXT.md](CONTEXT.md) — 领域语言(Level / Band / Story / Interest Track / Name Slot …)
+- [docs/adr/](docs/adr/) — 架构决策记录(自研分级、内容预生成、家长注册制、校验门禁 …)
+- [docs/BACKLOG.md](docs/BACKLOG.md) — 二期垂直切片(AFK / HITL)
 
 ## 本地运行
 

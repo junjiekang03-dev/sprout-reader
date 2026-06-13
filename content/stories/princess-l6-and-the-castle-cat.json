@@ -1,0 +1,39 @@
+{
+  "slug": "princess-l6-and-the-castle-cat",
+  "title": "{{name}} and the Castle Cat",
+  "levelId": 6,
+  "interest": "princess",
+  "text": "{{name}} was a kind princess. She lived in a big castle. One day, she heard a sad sound. It came from the garden. {{name}} ran to look. A little cat sat in a tall tree. The cat was scared. It could not get down.\n\n\"Do not be scared,\" said {{name}}. \"I will help you.\"\n\nShe looked up at the cat. The tree was very high. {{name}} did not stop. She was brave because the cat needed her. First, she got a long ladder. Then she put it on the tree. She went up, step by step.\n\nThe cat looked at {{name}}. It was still scared. But {{name}} smiled at it. \"Come to me,\" she said softly. The cat walked to her hand. She held it close and safe.\n\n{{name}} went down the ladder. The cat was happy now. It was not scared. The princess gave it some warm milk. The cat played in the garden all day. They were good friends. {{name}} felt very happy because she helped her new friend.",
+  "glossary": [
+    {
+      "word": "ladder",
+      "zh": "梯子"
+    },
+    {
+      "word": "castle",
+      "zh": "城堡"
+    },
+    {
+      "word": "princess",
+      "zh": "公主"
+    }
+  ],
+  "questions": [
+    {
+      "prompt": "Where was the little cat?",
+      "options": ["In a tall tree", "In the castle", "Under the bed"],
+      "answer": 0
+    },
+    {
+      "prompt": "What did {{name}} use to help the cat?",
+      "options": ["A long ladder", "A big box", "A rope"],
+      "answer": 0
+    },
+    {
+      "prompt": "How did {{name}} feel at the end?",
+      "options": ["Very happy", "Very sad", "Very scared"],
+      "answer": 0
+    }
+  ],
+  "status": "draft"
+}

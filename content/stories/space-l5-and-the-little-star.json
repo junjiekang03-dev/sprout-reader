@@ -1,0 +1,39 @@
+{
+  "slug": "space-l5-and-the-little-star",
+  "title": "{{name}} and the Little Star",
+  "levelId": 5,
+  "interest": "space",
+  "text": "Today {{name}} wants to see the stars. {{name}} has a big red telescope. The sky is dark and clear now. One star looks very sad. It is small and dim. \"Do not be sad,\" says {{name}}. \"I like you a lot.\" {{name}} wants to help the little star. {{name}} looks up at the sky. The big stars are bright. The little star is not bright. But it wants to shine too. {{name}} smiles at the little star. \"You can do it,\" says {{name}}. \"Try and try again!\" The little star tries hard. Slowly, it gets brighter. Now it shines like the big stars! The little star is so happy. The sky looks more beautiful now. {{name}} is happy too. \"Good star!\" says {{name}}. The little star winks at {{name}}. They are good friends now. {{name}} looks up every night. The little star is always there.",
+  "glossary": [
+    {
+      "word": "telescope",
+      "zh": "望远镜"
+    },
+    {
+      "word": "shine",
+      "zh": "发光,闪耀"
+    },
+    {
+      "word": "dim",
+      "zh": "暗淡的,微弱的"
+    }
+  ],
+  "questions": [
+    {
+      "prompt": "What does {{name}} use to see the stars?",
+      "options": ["A big red telescope", "A small blue book", "A green ball"],
+      "answer": 0
+    },
+    {
+      "prompt": "Why is the little star sad at first?",
+      "options": ["It is too big", "It is not bright", "It is too hot"],
+      "answer": 1
+    },
+    {
+      "prompt": "What happens to the little star in the end?",
+      "options": ["It goes away", "It shines bright like big stars", "It stays sad"],
+      "answer": 1
+    }
+  ],
+  "status": "draft"
+}

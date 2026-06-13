@@ -1,0 +1,51 @@
+{
+  "slug": "soccer-l7-and-the-big-goal",
+  "title": "{{name}} and the Big Goal",
+  "levelId": 7,
+  "interest": "soccer",
+  "text": "{{name}} loved to play soccer. Every day after school, {{name}} ran to the park. But there was a problem. {{name}} could not kick the ball far. The other kids could kick well. {{name}} felt sad.\n\nOne day, an old man sat near the field. He saw {{name}} try and try. \"Do not give up,\" he said kindly. \"Keep your eye on the ball. Then kick hard!\"\n\n{{name}} smiled. The next day, {{name}} went to the park early. {{name}} looked at the ball. {{name}} kicked it again and again. The ball went a little far. Then it went far. {{name}} was so happy!\n\nOn Saturday, the big game came. {{name}} was on the team. The score was the same for both sides. There was no time left. The ball came to {{name}}.\n\n{{name}} took a deep breath. \"Keep your eye on the ball,\" {{name}} said. {{name}} looked at the ball. {{name}} kicked it hard. The ball flew into the net. Goal!\n\nAll the kids ran to {{name}}. \"You did it!\" they cheered. The old man smiled from his seat.\n\n{{name}} learned a big lesson that day. When you keep trying, good things will come. {{name}} will play soccer for a long, long time.",
+  "glossary": [
+    {
+      "word": "goal",
+      "zh": "(足球的)球门;进球得分"
+    },
+    {
+      "word": "net",
+      "zh": "球网"
+    },
+    {
+      "word": "score",
+      "zh": "比分;得分"
+    },
+    {
+      "word": "team",
+      "zh": "队;球队"
+    },
+    {
+      "word": "cheered",
+      "zh": "欢呼;喝彩"
+    }
+  ],
+  "questions": [
+    {
+      "prompt": "What was {{name}}'s problem at the start?",
+      "options": [
+        "{{name}} could not run fast",
+        "{{name}} could not kick the ball far",
+        "{{name}} did not like soccer"
+      ],
+      "answer": 1
+    },
+    {
+      "prompt": "What did the old man tell {{name}} to do?",
+      "options": ["Keep your eye on the ball", "Run away from the ball", "Stop playing soccer"],
+      "answer": 0
+    },
+    {
+      "prompt": "What happened at the end of the big game?",
+      "options": ["{{name}} missed the ball", "{{name}} scored a goal", "The game stopped early"],
+      "answer": 1
+    }
+  ],
+  "status": "draft"
+}

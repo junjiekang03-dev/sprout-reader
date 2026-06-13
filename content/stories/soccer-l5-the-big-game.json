@@ -1,0 +1,39 @@
+{
+  "slug": "soccer-l5-the-big-game",
+  "title": "The Big Game",
+  "levelId": 5,
+  "interest": "soccer",
+  "text": "Today is a big day. {{name}} wants to play soccer. The game is now! {{name}} runs fast on the green grass. The ball comes near. {{name}} kicks it hard. But the ball goes to a friend. The friend is faster than {{name}}. {{name}} feels sad now. The other team is better today. They have one goal. {{name}} wants to try again. \"I can do it!\" says {{name}}. {{name}} likes to run and kick. Now the ball comes again. {{name}} looks at the goal. {{name}} kicks the ball high. The ball goes in! It is a goal! All the friends are happy. They jump and shout. {{name}} is happy too. The game is fun today. Brave kids never stop. {{name}} wants to play more soccer now!",
+  "glossary": [
+    {
+      "word": "goal",
+      "zh": "进球;球门(足球比赛中把球踢进对方球门得分)"
+    },
+    {
+      "word": "kick",
+      "zh": "踢(用脚击球)"
+    },
+    {
+      "word": "team",
+      "zh": "队伍;球队"
+    }
+  ],
+  "questions": [
+    {
+      "prompt": "What does {{name}} want to do today?",
+      "options": ["Play soccer", "Read a book", "Eat lunch"],
+      "answer": 0
+    },
+    {
+      "prompt": "How does {{name}} feel after the friend gets the ball?",
+      "options": ["Happy", "Sad", "Sleepy"],
+      "answer": 1
+    },
+    {
+      "prompt": "What happens at the end of the game?",
+      "options": ["{{name}} kicks a goal", "{{name}} goes home", "The ball is lost"],
+      "answer": 0
+    }
+  ],
+  "status": "draft"
+}

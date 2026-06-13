@@ -1,0 +1,35 @@
+{
+  "slug": "magic-l4-and-the-little-star",
+  "title": "{{name}} and the Little Star",
+  "levelId": 4,
+  "interest": "magic",
+  "text": "{{name}} is in the garden. It is night now. {{name}} sees a little star. The star is falling down! It lands by a tree.\n\nThe star is sad. \"I want to go home,\" it says. {{name}} smiles at the star. \"I can help you,\" says {{name}}.\n\nThere is an old wand by the tree. {{name}} picks it up. The wand is glowing! It feels warm and soft.\n\n{{name}} waves the wand up high. Pink lights are jumping in the sky. The little star is going up now. It flies back to the moon!\n\nThe star is happy. All the stars are smiling. They make a big heart in the sky. {{name}} is happy too. What a magic night!",
+  "glossary": [
+    {
+      "word": "wand",
+      "zh": "魔法棒"
+    },
+    {
+      "word": "glowing",
+      "zh": "发光的"
+    }
+  ],
+  "questions": [
+    {
+      "prompt": "What does {{name}} see in the garden?",
+      "options": ["A little star", "A big dog", "A red car"],
+      "answer": 0
+    },
+    {
+      "prompt": "What does {{name}} use to help the star?",
+      "options": ["A book", "A wand", "A cup"],
+      "answer": 1
+    },
+    {
+      "prompt": "Where does the little star go in the end?",
+      "options": ["Into the tree", "Back to the moon", "Under the water"],
+      "answer": 1
+    }
+  ],
+  "status": "draft"
+}

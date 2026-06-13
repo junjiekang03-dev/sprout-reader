@@ -4,7 +4,7 @@
  */
 
 import { getLevel } from "./levels";
-import { cumulativeWordSet } from "./wordlists";
+import { cumulativeWordSet, THEME_WORDS } from "./wordlists";
 import type { GlossaryEntry, QuizQuestion } from "./story-types";
 
 /** 常见不规则形(还原到词表原形) */
@@ -185,17 +185,24 @@ function lemmaCandidates(raw: string): string[] {
       tryAdd(base.slice(0, -4)); // running → run
     }
   }
-  // 副词/比较级
+  // 副词/比较级/名词派生
   if (base.endsWith("ly")) tryAdd(base.slice(0, -2));
+  if (base.endsWith("ness")) tryAdd(base.slice(0, -4)); // kindness → kind
   if (base.endsWith("ier")) tryAdd(base.slice(0, -3) + "y");
   if (base.endsWith("iest")) tryAdd(base.slice(0, -4) + "y");
   if (base.endsWith("er")) {
     tryAdd(base.slice(0, -2));
     tryAdd(base.slice(0, -1)); // nicer → nice
+    if (base.length > 4 && base[base.length - 3] === base[base.length - 4]) {
+      tryAdd(base.slice(0, -3)); // bigger → big
+    }
   }
   if (base.endsWith("est")) {
     tryAdd(base.slice(0, -3));
     tryAdd(base.slice(0, -2)); // nicest → nice
+    if (base.length > 5 && base[base.length - 4] === base[base.length - 5]) {
+      tryAdd(base.slice(0, -4)); // biggest → big
+    }
   }
   return [...out];
 }
@@ -208,6 +215,8 @@ export interface StoryInput {
   text: string;
   glossary: GlossaryEntry[];
   questions: QuizQuestion[];
+  /** 上架状态:人工通读前为 draft,通读发布后为 published(缺省视为 published) */
+  status?: "draft" | "published";
 }
 
 export interface ValidationResult {
@@ -227,6 +236,8 @@ export function validateStory(story: StoryInput): ValidationResult {
   const warnings: string[] = [];
   const level = getLevel(story.levelId);
   const allowed = cumulativeWordSet(level.band);
+  // 本兴趣轨道的主题词:在该轨道豁免「超纲」与「生词密度」(见 THEME_WORDS 说明)
+  const themeWords = new Set((THEME_WORDS[story.interest] ?? []).map((w) => w.toLowerCase()));
   const glossaryWords = new Set(story.glossary.map((g) => g.word.toLowerCase()));
 
   // 名字槽位在词频统计前移除(渲染时会替换为孩子名字)
@@ -280,7 +291,7 @@ export function validateStory(story: StoryInput): ValidationResult {
     )
       continue;
     const candidates = lemmaCandidates(t.raw);
-    const inList = candidates.some((c) => allowed.has(c));
+    const inList = candidates.some((c) => allowed.has(c) || themeWords.has(c));
     const inGlossary = candidates.some((c) => glossaryWords.has(c)) || glossaryWords.has(lower);
     if (!inList && !inGlossary) outOfList.add(lower);
   }
@@ -290,10 +301,11 @@ export function validateStory(story: StoryInput): ValidationResult {
     errors.push(`词表外生词未收录进 glossary: "${w}"`);
   }
 
-  // 生词密度 = glossary 词出现次数 / 总词数
+  // 生词密度 = 真生词出现次数 / 总词数。主题词不算生词(孩子已熟悉本轨道核心词)
   let glossaryHits = 0;
   for (const t of tokens) {
     const candidates = lemmaCandidates(t.raw);
+    if (candidates.some((c) => themeWords.has(c))) continue;
     if (candidates.some((c) => glossaryWords.has(c))) glossaryHits++;
   }
   const newWordRatio = wordCount === 0 ? 0 : glossaryHits / wordCount;

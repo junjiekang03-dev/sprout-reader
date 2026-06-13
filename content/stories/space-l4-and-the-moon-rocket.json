@@ -1,0 +1,39 @@
+{
+  "slug": "space-l4-and-the-moon-rocket",
+  "title": "{{name}} and the Moon Rocket",
+  "levelId": 4,
+  "interest": "space",
+  "text": "{{name}} looks up at the night sky. There are many stars. {{name}} sees a big rocket. It is going to the moon. {{name}} wants to go too. A kind robot waves to her. It is sitting in the rocket. {{name}} climbs in fast. The rocket is going up now. There are stars all around them. The moon is getting close. {{name}} sees grey rocks. She is jumping high and slow. The robot is laughing with her. They look back at Earth. It is a blue ball. It is far away. {{name}} feels very happy. She is brave and curious. The robot gives her a small star. {{name}} keeps it in her hand. Now they fly home together.",
+  "glossary": [
+    {
+      "word": "rocket",
+      "zh": "火箭(飞向太空的交通工具)"
+    },
+    {
+      "word": "robot",
+      "zh": "机器人"
+    },
+    {
+      "word": "moon",
+      "zh": "月球;月亮"
+    }
+  ],
+  "questions": [
+    {
+      "prompt": "Where does the rocket go?",
+      "options": ["To the sea", "To the moon", "To a forest"],
+      "answer": 1
+    },
+    {
+      "prompt": "Who is with {{name}} in the rocket?",
+      "options": ["A kind robot", "Her mom", "A big dog"],
+      "answer": 0
+    },
+    {
+      "prompt": "What does the robot give {{name}}?",
+      "options": ["A grey rock", "A small star", "A blue ball"],
+      "answer": 1
+    }
+  ],
+  "status": "draft"
+}

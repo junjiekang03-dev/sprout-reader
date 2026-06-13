@@ -1,0 +1,59 @@
+{
+  "slug": "soccer-l8-and-the-big-match",
+  "title": "{{name}} and the Big Match",
+  "levelId": 8,
+  "interest": "soccer",
+  "text": "{{name}} loved soccer very much. Every day after school, {{name}} ran to the field. The big match was on Saturday. {{name}}'s team was going to play the best team in town.\n\nBut there was a problem. {{name}} was not good at scoring goals. The other kids could kick the ball far. {{name}} always missed the net. Some kids said, \"You should sit and watch.\"\n\n{{name}} felt sad. But {{name}} did not give up. \"I must try harder,\" said {{name}}.\n\nEvery day, {{name}} did some practice. {{name}} kicked the ball again and again. When the sun went down, {{name}} still played. {{name}}'s legs were tired, but the heart was strong.\n\nOn Saturday, the big match began. Both teams ran fast. The score was zero to zero. Then the ball came to {{name}}!\n\n\"You should kick now!\" yelled a friend. {{name}} took a deep breath. {{name}} ran to the ball. When the moment came, {{name}} kicked it hard.\n\nThe ball flew up. It went into the net! Goal! {{name}}'s team won the big match!\n\nAll the kids ran to {{name}}. They were so happy. \"You did it!\" they said. \"You never gave up!\"\n\n{{name}} smiled. Hard work is the best way. A good friend helps too. And soccer is the most fun game in the world!",
+  "glossary": [
+    {
+      "word": "match",
+      "zh": "比赛"
+    },
+    {
+      "word": "goal",
+      "zh": "进球;球门"
+    },
+    {
+      "word": "net",
+      "zh": "球网"
+    },
+    {
+      "word": "score",
+      "zh": "比分;得分"
+    },
+    {
+      "word": "practice",
+      "zh": "练习"
+    }
+  ],
+  "questions": [
+    {
+      "prompt": "What problem did {{name}} have at the start?",
+      "options": [
+        "{{name}} could not run fast",
+        "{{name}} was not good at scoring goals",
+        "{{name}} did not like soccer"
+      ],
+      "answer": 1
+    },
+    {
+      "prompt": "What did {{name}} do every day to get better?",
+      "options": [
+        "Watched other kids play",
+        "Practiced kicking the ball",
+        "Asked friends to help kick"
+      ],
+      "answer": 1
+    },
+    {
+      "prompt": "How did the big match end?",
+      "options": [
+        "{{name}}'s team won the match",
+        "The score stayed zero to zero",
+        "The other team won"
+      ],
+      "answer": 0
+    }
+  ],
+  "status": "draft"
+}

@@ -1,0 +1,51 @@
+{
+  "slug": "animals-l8-and-the-little-bird",
+  "title": "{{name}} and the Little Bird",
+  "levelId": 8,
+  "interest": "animals",
+  "text": "{{name}} loved animals very much.\nOne sunny day, {{name}} went to the park.\nThere was a little bird on the cold ground.\nThe bird could not fly back to its nest.\n\"Oh no! I must help you,\" said {{name}}.\nThe nest was high up in a big tree.\n\"I am going to climb up,\" said {{name}}.\nThe tree was very tall and old.\n{{name}} felt a little bit scared.\n\"I should be brave,\" {{name}} said softly.\nWhen {{name}} looked up, the nest looked far away.\nBut {{name}} did not want to stop.\nStep by step, {{name}} climbed up the tree.\nThe little bird made a soft, happy sound.\n\"You are so kind,\" it seemed to say.\nAt last, {{name}} reached the top branch.\nThe baby bird was safe back in its nest.\nSoon the mother bird flew home to the tree.\nShe sang a sweet song for {{name}}.\n{{name}} climbed down with a very big smile.\n\"We must always help our animal friends,\" said {{name}}.\nFrom that day on, the birds knew {{name}}.\nEvery morning, they sang by the window.\nWhen {{name}} woke up, the birds were always there.\nThey were going to be friends for a long time.",
+  "glossary": [
+    {
+      "word": "nest",
+      "zh": "鸟巢;鸟窝"
+    },
+    {
+      "word": "branch",
+      "zh": "树枝"
+    },
+    {
+      "word": "brave",
+      "zh": "勇敢的"
+    }
+  ],
+  "questions": [
+    {
+      "prompt": "Why could the little bird not go back to its nest?",
+      "options": [
+        "It was too tired to sing",
+        "It could not fly up to the nest",
+        "It did not like its mother"
+      ],
+      "answer": 1
+    },
+    {
+      "prompt": "How did {{name}} feel before climbing the tall tree?",
+      "options": [
+        "A little scared, but then brave",
+        "Very angry at the bird",
+        "Happy and not scared at all"
+      ],
+      "answer": 0
+    },
+    {
+      "prompt": "What did the birds do every morning after that day?",
+      "options": [
+        "They flew far away from {{name}}",
+        "They sang by {{name}}'s window",
+        "They hid inside the big tree"
+      ],
+      "answer": 1
+    }
+  ],
+  "status": "draft"
+}

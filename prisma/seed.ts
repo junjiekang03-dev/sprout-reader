@@ -40,8 +40,10 @@ async function main() {
         text: story.text,
         glossaryJson: JSON.stringify(story.glossary),
         questionsJson: JSON.stringify(story.questions),
-        status: "published",
+        // 新生成的故事默认入 draft,等人工通读后在 /admin 发布
+        status: story.status ?? "published",
       },
+      // 注意:update 不触碰 status,避免把人工已发布的故事重新 seed 打回 draft
       update: {
         title: story.title,
         levelId: story.levelId,

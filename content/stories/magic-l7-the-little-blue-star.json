@@ -1,0 +1,39 @@
+{
+  "slug": "magic-l7-the-little-blue-star",
+  "title": "The Little Blue Star",
+  "levelId": 7,
+  "interest": "magic",
+  "text": "One night, {{name}} looked up at the sky. The stars were bright. But one little star was sad. It could not shine. It fell down into the garden.\n\n{{name}} ran to the star. \"Do not be sad,\" said {{name}}. \"I will help you.\"\n\nThe star was cold. It had no light. {{name}} had an idea. {{name}} found a small magic lamp. The lamp was very old. But it did not work.\n\n\"What can I do?\" thought {{name}}.\n\nThen {{name}} smiled at the star. {{name}} sang a happy song. The star liked the song very much. Slowly, the star began to glow. A soft blue light came out.\n\n{{name}} clapped and jumped. \"You can shine again!\"\n\nThe little star was so happy. It got bigger and brighter. It went up, up, up into the dark sky.\n\nThe other stars said hello. They all shone together. The sky was full of light.\n\nThe blue star looked down at {{name}}. It blinked two times. It was saying \"thank you.\"\n\n{{name}} waved at the sky. \"Good night, little star!\"\n\nNow, every night, {{name}} can find the blue star. It is the brightest one. And it always blinks at {{name}}.\n\nKindness made the star shine. A friend made the night warm.",
+  "glossary": [
+    {
+      "word": "glow",
+      "zh": "发出柔和的光;微微发亮"
+    },
+    {
+      "word": "blink",
+      "zh": "(灯光)闪烁;眨眼"
+    }
+  ],
+  "questions": [
+    {
+      "prompt": "Why was the little star sad at first?",
+      "options": ["It could not shine.", "It was too big.", "It lost its friend."],
+      "answer": 0
+    },
+    {
+      "prompt": "What did {{name}} do to help the star?",
+      "options": [
+        "{{name}} gave it food.",
+        "{{name}} sang a happy song.",
+        "{{name}} fixed the lamp."
+      ],
+      "answer": 1
+    },
+    {
+      "prompt": "What does the blue star do every night now?",
+      "options": ["It falls down again.", "It hides in the garden.", "It blinks at {{name}}."],
+      "answer": 2
+    }
+  ],
+  "status": "draft"
+}

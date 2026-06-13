@@ -1,0 +1,39 @@
+{
+  "slug": "dinosaurs-l5-and-the-baby-dinosaur",
+  "title": "{{name}} and the Baby Dinosaur",
+  "levelId": 5,
+  "interest": "dinosaurs",
+  "text": "{{name}} likes dinosaurs a lot.\nToday {{name}} goes to the park.\nLook! There is a big egg.\nThe egg is round and warm.\nNow the egg shakes a little.\nA baby dinosaur comes out!\nIt is small and green.\n\"Hello!\" says the little dino.\n{{name}} wants to help it.\nThe baby wants its mom.\nBut where is mom now?\n{{name}} is brave and kind.\nThey walk to the green hill.\nA big dino waits there.\nIt is the baby's mom!\nThe mom dino is very happy.\nThe baby runs to its mom.\n\"Thank you!\" the mom dino smiles.\n{{name}} feels warm and glad.\n{{name}} likes new friends today.\nDinosaurs are the best!",
+  "glossary": [
+    {
+      "word": "dinosaur",
+      "zh": "恐龙"
+    },
+    {
+      "word": "egg",
+      "zh": "蛋"
+    },
+    {
+      "word": "dino",
+      "zh": "恐龙(口语简称)"
+    }
+  ],
+  "questions": [
+    {
+      "prompt": "What does {{name}} find in the park?",
+      "options": ["A big egg", "A small dog", "A red ball"],
+      "answer": 0
+    },
+    {
+      "prompt": "What does the baby dinosaur want?",
+      "options": ["Some food", "Its mom", "A new toy"],
+      "answer": 1
+    },
+    {
+      "prompt": "How does {{name}} feel at the end?",
+      "options": ["Sad and tired", "Angry and cold", "Warm and glad"],
+      "answer": 2
+    }
+  ],
+  "status": "draft"
+}
