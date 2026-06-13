@@ -1,0 +1,27 @@
+{
+  "slug": "magic-l7-the-magic-pen",
+  "title": "{{name}} and the Magic Pen",
+  "levelId": 7,
+  "interest": "magic",
+  "summary": "得到会发光的魔法笔(创造):主角捡到一支会发光的魔法笔,画什么就活什么——画蝴蝶飞起、阴雨天画太阳让花园变亮,最后给朋友画风筝逗她开心。",
+  "text": "{{name}} found an old pen in the garden. It was not just an old pen. It glowed with a soft, magic light.\n\n{{name}} drew a little butterfly on a page. Suddenly, the butterfly moved! It flew off the page and into the sky. {{name}} laughed with joy.\n\n\"This pen is magic!\" {{name}} said. \"I will draw more!\"\n\n{{name}} drew a red flower by the gate. Slowly, a real flower grew there. Then {{name}} drew a yellow bird. It began to sing a sweet song.\n\nBut that day was grey and rainy. The garden looked cold and sad. So {{name}} had a bright idea. {{name}} drew a big, warm sun in the sky.\n\nAt once, bright light came into the garden. The flowers opened wide. The rain went away.\n\n{{name}}'s friend Mia walked by. She looked a little sad. {{name}} wanted to help. So {{name}} quickly drew a beautiful kite for her. The kite became real and flew up high.\n\nMia smiled and ran after the kite. \"Thank you!\" she shouted.\n\n{{name}} looked at the magic pen and smiled. The best magic was making a friend happy.",
+  "glossary": [],
+  "questions": [
+    {
+      "prompt": "What was special about the pen {{name}} found?",
+      "options": ["It was very big", "It glowed with a magic light", "It could not write"],
+      "answer": 1
+    },
+    {
+      "prompt": "What did {{name}} draw to help the cold, rainy garden?",
+      "options": ["A big, warm sun", "A grey cloud", "More cold rain"],
+      "answer": 0
+    },
+    {
+      "prompt": "Why did {{name}} draw a kite for Mia?",
+      "options": ["To fly it away", "To win a game", "Because Mia looked sad"],
+      "answer": 2
+    }
+  ],
+  "status": "draft"
+}
