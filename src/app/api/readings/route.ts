@@ -1,6 +1,6 @@
 import { NextResponse } from "next/server";
 import { prisma } from "@/lib/db";
-import { getSessionParent } from "@/lib/session";
+import { getSessionParent, getActiveChild } from "@/lib/session";
 import { getStreak, getLevelSuggestion } from "@/lib/stats";
 import { decideAutoLevelChange } from "@/lib/progression";
 import { parseQuestions, dateKeyOf } from "@/lib/story-types";
@@ -9,7 +9,7 @@ import { parseQuestions, dateKeyOf } from "@/lib/story-types";
 export async function POST(req: Request) {
   const parent = await getSessionParent();
   if (!parent) return NextResponse.json({ error: "未登录" }, { status: 401 });
-  const child = parent.children[0];
+  const child = await getActiveChild(parent.children);
   if (!child) return NextResponse.json({ error: "没有孩子档案" }, { status: 400 });
 
   const body = (await req.json()) as {

@@ -3,7 +3,7 @@
 import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
 import { prisma } from "@/lib/db";
-import { getSessionParent } from "@/lib/session";
+import { getSessionParent, getActiveChild } from "@/lib/session";
 import { LEVELS } from "@/lib/levels";
 
 /**
@@ -13,7 +13,7 @@ import { LEVELS } from "@/lib/levels";
 export async function acceptLevelSuggestion(toLevel: number) {
   const parent = await getSessionParent();
   if (!parent) redirect("/login");
-  const child = parent.children[0];
+  const child = await getActiveChild(parent.children);
   if (!child) redirect("/onboarding");
 
   const clamped = Math.max(1, Math.min(LEVELS.length, Math.round(toLevel)));
@@ -28,7 +28,7 @@ export async function acceptLevelSuggestion(toLevel: number) {
 export async function setAutoFollowLevel(enabled: boolean) {
   const parent = await getSessionParent();
   if (!parent) redirect("/login");
-  const child = parent.children[0];
+  const child = await getActiveChild(parent.children);
   if (!child) redirect("/onboarding");
   await prisma.child.update({ where: { id: child.id }, data: { autoFollowLevel: enabled } });
   revalidatePath("/home");
@@ -38,7 +38,7 @@ export async function setAutoFollowLevel(enabled: boolean) {
 export async function undoLevelChange(changeId: string) {
   const parent = await getSessionParent();
   if (!parent) redirect("/login");
-  const child = parent.children[0];
+  const child = await getActiveChild(parent.children);
   if (!child) redirect("/onboarding");
 
   const change = await prisma.levelChange.findUnique({ where: { id: changeId } });

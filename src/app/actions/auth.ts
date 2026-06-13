@@ -1,9 +1,19 @@
 "use server";
 
 import { redirect } from "next/navigation";
+import { revalidatePath } from "next/cache";
+import { cookies } from "next/headers";
 import { hash, compare } from "bcryptjs";
 import { prisma } from "@/lib/db";
 import { createSession, destroySession, getSessionParent } from "@/lib/session";
+import { ACTIVE_CHILD_COOKIE, MAX_CHILDREN } from "@/lib/active-child";
+
+const ACTIVE_CHILD_COOKIE_OPTS = {
+  httpOnly: true,
+  sameSite: "lax",
+  path: "/",
+  maxAge: 60 * 60 * 24 * 365,
+} as const;
 
 /**
  * 家长注册制(儿童个人信息合规的根基):
@@ -58,17 +68,29 @@ export async function createChild(_prev: { error: string } | null, formData: For
     return { error: "请填孩子的英文名/昵称(2-12 个英文字母,不要用真实姓名)" };
   }
   if (interests.length === 0) return { error: "至少选一个孩子喜欢的主题" };
+  if (parent.children.length >= MAX_CHILDREN) {
+    return { error: `一个账号最多 ${MAX_CHILDREN} 个孩子档案` };
+  }
 
-  // MVP:一个家长一个孩子档案
-  const existing = await prisma.child.findFirst({ where: { parentId: parent.id } });
-  if (existing) redirect("/home");
-
-  await prisma.child.create({
+  const child = await prisma.child.create({
     data: {
       parentId: parent.id,
       nickname,
       interests: JSON.stringify(interests),
     },
   });
+  // 新建的孩子设为当前活跃,接着去做入级测评
+  const cookieStore = await cookies();
+  cookieStore.set(ACTIVE_CHILD_COOKIE, child.id, ACTIVE_CHILD_COOKIE_OPTS);
   redirect("/placement");
+}
+
+/** 切换当前活跃孩子(多孩子档案,BACKLOG#4):只允许切到本账号名下的孩子 */
+export async function switchChild(childId: string) {
+  const parent = await getSessionParent();
+  if (!parent) redirect("/login");
+  if (!parent.children.some((c) => c.id === childId)) return;
+  const cookieStore = await cookies();
+  cookieStore.set(ACTIVE_CHILD_COOKIE, childId, ACTIVE_CHILD_COOKIE_OPTS);
+  revalidatePath("/home");
 }

@@ -62,15 +62,17 @@
 
 ---
 
-## 4. 多孩子档案 · AFK
+## 4. 多孩子档案 · AFK ✅ 已完成(2026-06-13)
 
 **What**:一个 **Parent** 支持多个 **Child**(现为一个)。主页加孩子切换。
 
 **Acceptance**
 
-- [ ] 家长可建多个孩子档案
-- [ ] 阅读/打卡/周报按孩子隔离
-- [ ] 切换孩子后推荐、统计正确
+- [x] 家长可建多个孩子档案(去掉 `createChild` 单孩子守卫,上限 `MAX_CHILDREN=6`;主页「＋添加孩子」入口)
+- [x] 阅读/打卡/周报按孩子隔离(各表本就以 childId 为键;请求级别用「活跃孩子」解析,8 处 `children[0]` 全部改用 `getActiveChild`)
+- [x] 切换孩子后推荐、统计正确(`ChildSwitcher` + `switchChild` 设 cookie;preview 验证:Leo L3/streak5 ↔ 新建 Mia L1/streak0 完全隔离)
+
+**实现要点**:活跃孩子记在 cookie(`sprout_active_child`,按设备),纯函数 `resolveActiveChild`(命中用它 / 否则回退第一个,4 个单测)+ `getActiveChild` 读 cookie;无需加 schema 字段。新建孩子自动设为活跃并去入级测评。
 
 **Blocked by**:None
 

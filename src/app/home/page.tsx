@@ -1,6 +1,6 @@
 import Link from "next/link";
 import { redirect } from "next/navigation";
-import { getSessionParent } from "@/lib/session";
+import { getSessionParent, getActiveChild } from "@/lib/session";
 import { recommendStory } from "@/lib/recommend";
 import { getStreak, getCalendar, getLevelSuggestion, getLatestAutoLevelChange } from "@/lib/stats";
 import { getDueCount } from "@/lib/wordbook";
@@ -9,11 +9,12 @@ import { dateKeyOf, renderWithName } from "@/lib/story-types";
 import { logout } from "@/app/actions/auth";
 import { LevelSuggestionBanner } from "./suggestion-banner";
 import { AutoFollowToggle, AutoChangeNotice } from "./auto-follow";
+import { ChildSwitcher } from "./child-switcher";
 
 export default async function HomePage() {
   const parent = await getSessionParent();
   if (!parent) redirect("/login");
-  const child = parent.children[0];
+  const child = await getActiveChild(parent.children);
   if (!child) redirect("/onboarding");
   if (!child.placementDone) redirect("/placement");
 
@@ -42,6 +43,11 @@ export default async function HomePage() {
           <div className="text-sm font-bold text-amber-600">{streak} 天</div>
         </div>
       </header>
+
+      <ChildSwitcher
+        kids={parent.children.map((c) => ({ id: c.id, nickname: c.nickname }))}
+        activeId={child.id}
+      />
 
       {/* 升降级:自动跟随开 → 显示最近自动调级 + 撤销;关 → 显示手动建议横幅 */}
       {child.autoFollowLevel

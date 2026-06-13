@@ -1,6 +1,6 @@
 import { notFound, redirect } from "next/navigation";
 import { prisma } from "@/lib/db";
-import { getSessionParent } from "@/lib/session";
+import { getSessionParent, getActiveChild } from "@/lib/session";
 import { parseGlossary, parseQuestions, renderWithName } from "@/lib/story-types";
 import { Reader } from "./reader";
 
@@ -8,7 +8,7 @@ export default async function ReadPage({ params }: { params: Promise<{ storyId: 
   const { storyId } = await params;
   const parent = await getSessionParent();
   if (!parent) redirect("/login");
-  const child = parent.children[0];
+  const child = await getActiveChild(parent.children);
   if (!child) redirect("/onboarding");
 
   const story = await prisma.story.findUnique({ where: { id: storyId } });

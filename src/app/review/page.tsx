@@ -1,12 +1,12 @@
 import { redirect } from "next/navigation";
-import { getSessionParent } from "@/lib/session";
+import { getSessionParent, getActiveChild } from "@/lib/session";
 import { getDueWords } from "@/lib/wordbook";
 import { ReviewSession } from "./review-session";
 
 export default async function ReviewPage() {
   const parent = await getSessionParent();
   if (!parent) redirect("/login");
-  const child = parent.children[0];
+  const child = await getActiveChild(parent.children);
   if (!child) redirect("/onboarding");
 
   const due = await getDueWords(child.id);
