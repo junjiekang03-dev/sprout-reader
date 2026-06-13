@@ -3,6 +3,7 @@ import { redirect } from "next/navigation";
 import { getSessionParent } from "@/lib/session";
 import { recommendStory } from "@/lib/recommend";
 import { getStreak, getCalendar, getLevelSuggestion } from "@/lib/stats";
+import { getDueCount } from "@/lib/wordbook";
 import { getLevel, INTERESTS } from "@/lib/levels";
 import { dateKeyOf } from "@/lib/story-types";
 import { logout } from "@/app/actions/auth";
@@ -15,11 +16,12 @@ export default async function HomePage() {
   if (!child) redirect("/onboarding");
   if (!child.placementDone) redirect("/placement");
 
-  const [story, streak, calendar, suggestion] = await Promise.all([
+  const [story, streak, calendar, suggestion, dueCount] = await Promise.all([
     recommendStory(child.id),
     getStreak(child.id),
     getCalendar(child.id, 28),
     getLevelSuggestion(child.id, child.levelId),
+    getDueCount(child.id),
   ]);
   const level = getLevel(child.levelId);
   const todayDone = calendar.find((c) => c.dateKey === dateKeyOf(new Date()))?.count ?? 0;
@@ -74,6 +76,25 @@ export default async function HomePage() {
           </div>
         )}
       </section>
+
+      {/* 复习生词(独立入口,不打断每日阅读主线;有到期词才显示) */}
+      {dueCount > 0 && (
+        <Link
+          href="/review"
+          className="mt-4 flex items-center justify-between rounded-3xl bg-white p-5 shadow-sm active:scale-95"
+        >
+          <div className="flex items-center gap-3">
+            <span className="text-2xl">📖</span>
+            <div>
+              <p className="font-bold">复习生词</p>
+              <p className="text-xs text-stone-400">读过、查过的词,趁热复习更记得牢</p>
+            </div>
+          </div>
+          <span className="rounded-full bg-amber-500 px-3 py-1 text-sm font-bold text-white">
+            {dueCount} 个待复习
+          </span>
+        </Link>
+      )}
 
       {/* 打卡日历 */}
       <section className="mt-6 rounded-3xl bg-white p-5 shadow-sm">

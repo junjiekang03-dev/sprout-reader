@@ -76,6 +76,14 @@ export function Reader(props: Props) {
         g.word.toLowerCase().startsWith(lower.slice(0, Math.max(3, lower.length - 2)))
     );
     setPopup({ word, zh: hit ? hit.zh : null });
+    // 有释义的生词记入生词本(fire-and-forget,不阻塞查词体验)
+    if (hit) {
+      fetch("/api/wordbook", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ word: hit.word, zh: hit.zh }),
+      }).catch(() => {});
+    }
     // 朗读这个词
     const synth = window.speechSynthesis;
     if (synth && !playing) {

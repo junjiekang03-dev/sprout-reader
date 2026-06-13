@@ -43,6 +43,7 @@ model Child {
   placementDone Boolean   @default(false)
   createdAt     DateTime  @default(now())
   readings      Reading[]
+  wordbook      WordbookEntry[]
 }
 
 model Story {
@@ -75,4 +76,22 @@ model Reading {
 
   @@unique([childId, storyId, dateKey])
   @@index([childId, dateKey])
+}
+
+// 生词本:孩子阅读中查过的词,进入 Leitner 间隔重复(见 src/lib/srs.ts)
+model WordbookEntry {
+  id           String   @id @default(cuid())
+  childId      String
+  child        Child    @relation(fields: [childId], references: [id], onDelete: Cascade)
+  word         String // 归一化小写
+  zh           String // 中文释义(查词时拿到的;无释义则空串)
+  box          Int      @default(1) // Leitner 盒子 1-5
+  dueDateKey   String // 下次复习日期 "2026-06-13"
+  timesCorrect Int      @default(0)
+  timesWrong   Int      @default(0)
+  createdAt    DateTime @default(now())
+  lastReviewedAt DateTime?
+
+  @@unique([childId, word])
+  @@index([childId, dueDateKey])
 }

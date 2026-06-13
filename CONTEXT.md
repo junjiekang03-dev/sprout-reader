@@ -68,3 +68,11 @@ _Avoid_: recommendation, promotion, 推荐
 **Weekly Report(家长周报)**:
 给 Parent 的周度学习报告页(阅读量、坚持天数、正确率、级别),免登录可分享。
 _Avoid_: dashboard, summary, 报表
+
+**Wordbook(生词本)**:
+Child 在阅读中查过的词的个人集合,进入间隔重复。与 Glossary 区分:Glossary 是某篇 Story 的生词表,Wordbook 是孩子跨故事积累的待复习词。
+_Avoid_: vocabulary list, dictionary, 单词表
+
+**Review(复习)**:
+基于 Leitner 间隔重复对 Wordbook 里到期词的小测;独立入口,不打断每日阅读主线。
+_Avoid_: quiz, test, drill, 测验
