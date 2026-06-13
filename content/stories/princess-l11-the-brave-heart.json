@@ -1,0 +1,13 @@
+{
+  "slug": "princess-l11-the-brave-heart",
+  "title": "The Princess with the Brave Heart",
+  "levelId": 11,
+  "interest": "princess",
+  "text": "Long ago, there was a kingdom behind the high mountains. The king and queen had one child, Princess Aria. Aria was kind, but she was never allowed to leave the palace. She used to watch the village children from her window. \"I have read every book in this palace,\" she told her father. \"Now I want to see the real world.\" \"The world is dangerous,\" said the king. \"A dragon lives in the mountains.\" One night, smoke rose over the village. The dragon had come down from the mountains! People were running and shouting in the streets. The king's men were brave, but they were afraid of the fire. Aria knew that she had to do something. She took her warm coat and climbed out of the window. {{name}}, her best friend from the village, was waiting outside. \"You came!\" said Aria. \"I knew you would help.\" Together they ran to the dark mountain. \"Why is the dragon angry?\" asked {{name}}. \"I have read about dragons,\" said Aria. \"They only get angry when they have lost something.\" Near the cave, they heard a small, sad cry. It was not the dragon — it was a baby dragon! Its leg was stuck between two rocks. The big dragon was flying above it. It could not help its own baby. Aria and {{name}} moved the rocks one by one. The baby dragon was free! It flew up to its mother, and the fire stopped. The dragon looked at the children with kind eyes. Then it flew away over the mountains, and the village was safe. When they came back, everyone cheered. \"You have saved us all,\" said the king. \"Father, the dragon was never our enemy,\" said Aria. \"It was just a mother who loved her baby.\" From that day, Aria was allowed to visit the village every week. And the people of the kingdom called her the Princess with the Brave Heart.",
+  "glossary": [{ "word": "kingdom", "zh": "王国" }],
+  "questions": [
+    { "prompt": "Who was Aria?", "options": ["A princess", "A teacher", "A dragon"], "answer": 0 },
+    { "prompt": "Why was the dragon angry?", "options": ["Its baby was stuck", "It was hungry", "It hated the king"], "answer": 0 },
+    { "prompt": "What did Aria and {{name}} do?", "options": ["They moved the rocks and saved the baby dragon", "They ran away from the village", "They closed the palace door"], "answer": 0 }
+  ]
+}

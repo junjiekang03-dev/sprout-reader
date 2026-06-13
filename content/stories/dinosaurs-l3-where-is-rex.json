@@ -1,0 +1,13 @@
+{
+  "slug": "dinosaurs-l3-where-is-rex",
+  "title": "Where Is Rex?",
+  "levelId": 3,
+  "interest": "dinosaurs",
+  "text": "{{name}} likes dinosaurs. {{name}} has a toy dinosaur. It is Rex. Rex is big and green. Rex can run and jump. Can you see Rex? Rex is not in the room. Where is Rex? Is Rex in the bag? No. Is Rex in the box? No. {{name}} looks at the bed. The dog is on the bed. Rex is with the dog! The dog likes Rex too. {{name}} is happy. Rex is happy too.",
+  "glossary": [{ "word": "dinosaur", "zh": "恐龙" }],
+  "questions": [
+    { "prompt": "What is Rex?", "options": ["A toy dinosaur", "A real dog", "A little cat"], "answer": 0 },
+    { "prompt": "Where is Rex?", "options": ["On the bed", "In the bag", "In the box"], "answer": 0 },
+    { "prompt": "Who likes Rex?", "options": ["The dog", "The cat", "The bird"], "answer": 0 }
+  ]
+}

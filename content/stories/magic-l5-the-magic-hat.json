@@ -1,0 +1,16 @@
+{
+  "slug": "magic-l5-the-magic-hat",
+  "title": "The Magic Hat",
+  "levelId": 5,
+  "interest": "magic",
+  "text": "{{name}} finds an old box at home. In the box, there is a black hat. There is a little wand too. \"What is this?\" {{name}} asks. Grandma looks at the hat. \"It is a magic hat,\" she says. \"Can I try?\" asks {{name}}. Grandma sings a funny song. Then a white rabbit jumps out! \"Wow! Can I do it too?\" \"Yes, but you must learn,\" says Grandma. Every day, {{name}} learns the funny song. {{name}} works hard with the wand. One day, the hat moves! A little bird flies out of the hat. \"I did it! I did magic!\" Grandma is very happy. \"Now you are my little helper,\" she says.",
+  "glossary": [
+    { "word": "magic", "zh": "魔法" },
+    { "word": "wand", "zh": "魔杖" }
+  ],
+  "questions": [
+    { "prompt": "What is in the old box?", "options": ["A hat and a wand", "A red ball", "A toy car"], "answer": 0 },
+    { "prompt": "Who helps {{name}} learn?", "options": ["Grandma", "Dad", "A friend"], "answer": 0 },
+    { "prompt": "What flies out of the hat at the end?", "options": ["A little bird", "A white rabbit", "A black cat"], "answer": 0 }
+  ]
+}

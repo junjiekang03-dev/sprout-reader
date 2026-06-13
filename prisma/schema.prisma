@@ -1,0 +1,78 @@
+// 数据模型
+//
+// 本地开发用 SQLite(零安装);部署时把 provider 换成 "postgresql" 即可。
+// 注意:SQLite 不支持 Prisma 的 Json 标量,所以 glossary/questions/interests
+// 统一用 String 存 JSON 文本,应用层解析——这样 schema 在两种库之间完全可移植。
+//
+// 合规设计(儿童个人信息保护):
+//   - 注册主体是家长(Parent,手机号),孩子只作为子档案(Child)存在
+//   - 孩子档案只收昵称/英文名,不收真实姓名、不收任何身份信息
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+model Parent {
+  id           String    @id @default(cuid())
+  phone        String    @unique
+  passwordHash String
+  createdAt    DateTime  @default(now())
+  children     Child[]
+  sessions     Session[]
+}
+
+model Session {
+  token     String   @id
+  parentId  String
+  parent    Parent   @relation(fields: [parentId], references: [id], onDelete: Cascade)
+  expiresAt DateTime
+}
+
+model Child {
+  id            String    @id @default(cuid())
+  parentId      String
+  parent        Parent    @relation(fields: [parentId], references: [id], onDelete: Cascade)
+  nickname      String // 仅昵称/英文名,故事名字槽位也用它
+  levelId       Int       @default(1)
+  interests     String    @default("[]") // JSON: InterestKey[]
+  placementDone Boolean   @default(false)
+  createdAt     DateTime  @default(now())
+  readings      Reading[]
+}
+
+model Story {
+  id            String    @id @default(cuid())
+  slug          String    @unique
+  title         String
+  levelId       Int
+  interest      String // 兴趣主题轨道 key
+  wordCount     Int
+  text          String // 正文;主角名用 {{name}} 槽位,渲染时替换为孩子英文名
+  glossaryJson  String    @default("[]") // JSON: [{ word, zh }]
+  questionsJson String // JSON: [{ prompt, options: string[], answer: number }]
+  audioUrl      String? // 预生成 TTS 音频;为空时前端回退 Web Speech
+  status        String    @default("published") // draft | published
+  createdAt     DateTime  @default(now())
+  readings      Reading[]
+}
+
+model Reading {
+  id           String   @id @default(cuid())
+  childId      String
+  child        Child    @relation(fields: [childId], references: [id], onDelete: Cascade)
+  storyId      String
+  story        Story    @relation(fields: [storyId], references: [id], onDelete: Cascade)
+  dateKey      String // 本地日期 "2026-06-13",打卡与周报的聚合键
+  correctCount Int
+  totalCount   Int
+  durationSec  Int      @default(0)
+  createdAt    DateTime @default(now())
+
+  @@unique([childId, storyId, dateKey])
+  @@index([childId, dateKey])
+}

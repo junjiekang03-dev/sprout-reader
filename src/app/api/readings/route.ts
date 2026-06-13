@@ -1,0 +1,48 @@
+import { NextResponse } from "next/server";
+import { prisma } from "@/lib/db";
+import { getSessionParent } from "@/lib/session";
+import { getStreak } from "@/lib/stats";
+import { parseQuestions, dateKeyOf } from "@/lib/story-types";
+
+/** 提交读后测验:服务端判分并记录阅读(同一天重复读同一篇只记一次) */
+export async function POST(req: Request) {
+  const parent = await getSessionParent();
+  if (!parent) return NextResponse.json({ error: "未登录" }, { status: 401 });
+  const child = parent.children[0];
+  if (!child) return NextResponse.json({ error: "没有孩子档案" }, { status: 400 });
+
+  const body = (await req.json()) as {
+    storyId: string;
+    answers: number[];
+    durationSec: number;
+  };
+
+  const story = await prisma.story.findUnique({ where: { id: body.storyId } });
+  if (!story) return NextResponse.json({ error: "故事不存在" }, { status: 404 });
+
+  const questions = parseQuestions(story.questionsJson);
+  const total = questions.length;
+  const correct = questions.reduce(
+    (sum, q, i) => sum + (body.answers[i] === q.answer ? 1 : 0),
+    0
+  );
+
+  const dateKey = dateKeyOf(new Date());
+  await prisma.reading.upsert({
+    where: {
+      childId_storyId_dateKey: { childId: child.id, storyId: story.id, dateKey },
+    },
+    create: {
+      childId: child.id,
+      storyId: story.id,
+      dateKey,
+      correctCount: correct,
+      totalCount: total,
+      durationSec: Math.max(0, Math.min(7200, Math.round(body.durationSec || 0))),
+    },
+    update: { correctCount: correct, totalCount: total },
+  });
+
+  const streak = await getStreak(child.id);
+  return NextResponse.json({ correct, total, streak });
+}

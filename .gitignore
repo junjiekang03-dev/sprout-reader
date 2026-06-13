@@ -1,0 +1,16 @@
+node_modules/
+.next/
+out/
+build/
+
+.env
+*.db
+*.db-journal
+
+npm-debug.log*
+.DS_Store
+*.tsbuildinfo
+next-env.d.ts
+
+# 预生成的 TTS 音频(体积大,部署时走对象存储)
+public/audio/

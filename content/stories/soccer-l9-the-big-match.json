@@ -1,0 +1,16 @@
+{
+  "slug": "soccer-l9-the-big-match",
+  "title": "The Big Match",
+  "levelId": 9,
+  "interest": "soccer",
+  "text": "Saturday was the day of the big match. {{name}}'s team had blue shirts. The other team had red shirts. They were called the Red Stars. {{name}} was the captain of the blue team. \"Play together and have fun,\" said Coach Lee. The match started in the morning sun. The Red Stars were fast and strong. Soon they got the first goal. Some kids on the blue team felt sad. \"Do not worry,\" said {{name}}. \"We can do this together.\" {{name}} was running fast when the ball came. {{name}} passed it to Mia. Mia kicked it into the goal! One to one! Then it began to rain. Rain was falling, but nobody stopped. The ground was wet, but the kids were still playing. Mom and Dad were watching by the road. \"Run, {{name}}, run!\" they shouted. Near the end, {{name}} got the ball again. Two players were standing in the way. {{name}} looked left, then went right. Then {{name}} kicked the ball very hard. The ball flew over their heads. Goal! The blue team won the match! What a great game! Everyone was jumping and shouting. Coach Lee gave each player a small medal. \"You played so well today,\" he said. {{name}} held the medal and smiled. \"We won because we played together,\" said {{name}}. It was the best day ever.",
+  "glossary": [
+    { "word": "captain", "zh": "队长" },
+    { "word": "medal", "zh": "奖牌" }
+  ],
+  "questions": [
+    { "prompt": "Who was the captain of the blue team?", "options": ["{{name}}", "Mia", "Coach Lee"], "answer": 0 },
+    { "prompt": "What was the weather like at the end?", "options": ["Rainy", "Snowy", "Very hot"], "answer": 0 },
+    { "prompt": "Why did the blue team win?", "options": ["They played together", "They had new shoes", "The other team went home"], "answer": 0 }
+  ]
+}

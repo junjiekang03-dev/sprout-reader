@@ -1,0 +1,125 @@
+/**
+ * 分级词表(5 档,累积生效)
+ *
+ * Level 1-3 → band 1;4-6 → band 2;7-9 → band 3;10-12 → band 4;13-15 → band 5。
+ * 某级别允许的词 = 该级别 band 及以下全部词表 ∪ 故事词汇表(生词) ∪ 专有名词。
+ *
+ * ⚠️ 这是启动用的高频词起步词表(对齐小学课标常见词 + sight words 思路),
+ * 不是正式课标词表。上线前应人工对照《义务教育英语课程标准》附录词表逐档扩充。
+ * 词表只收原形;校验脚本会做简单的屈折还原(复数/过去式/进行时/所有格)。
+ */
+
+import type { Band } from "./levels";
+
+const BAND1: string[] = [
+  // 功能词
+  "a", "an", "the", "and", "or", "but", "not", "no", "yes", "to", "of", "in", "on", "at", "with", "up", "down", "out", "for", "from", "too", "very", "here", "there", "this", "that", "these", "those",
+  // 代词
+  "i", "you", "he", "she", "it", "we", "they", "me", "him", "us", "them", "my", "your", "his", "her", "its", "our", "their",
+  // be/基础动词
+  "is", "am", "are", "was", "be", "do", "go", "come", "see", "look", "like", "love", "have", "has", "can", "get", "run", "jump", "play", "eat", "drink", "sit", "stand", "stop", "say", "sleep", "fly", "swim", "walk", "sing", "dance", "read", "draw", "open", "close", "put", "make", "help", "want",
+  // 疑问词/招呼
+  "what", "who", "where", "how", "hello", "hi", "bye", "goodbye", "please", "thank", "sorry", "ok", "oh", "wow", "name",
+  // 颜色/数字
+  "red", "blue", "green", "yellow", "black", "white", "pink", "orange", "purple", "brown", "one", "two", "three", "four", "five", "six", "seven", "eight", "nine", "ten",
+  // 形容词
+  "big", "small", "little", "good", "bad", "happy", "sad", "hot", "cold", "new", "old", "fast", "slow", "tall", "short", "long", "nice", "fun", "funny", "cute",
+  // 家庭/人
+  "boy", "girl", "mom", "dad", "mother", "father", "baby", "family", "friend", "teacher", "man", "woman", "kid",
+  // 学校/物品
+  "school", "book", "pen", "pencil", "bag", "desk", "chair", "ball", "toy", "car", "bus", "bike", "kite", "doll", "box", "hat", "shirt", "shoe", "dress", "cup",
+  // 动物/食物
+  "dog", "cat", "bird", "fish", "duck", "pig", "cow", "hen", "egg", "apple", "banana", "cake", "milk", "water", "rice", "bread", "candy",
+  // 自然/场所/时间
+  "tree", "flower", "sun", "moon", "star", "sky", "day", "night", "home", "house", "door", "window", "bed", "room", "park", "zoo", "farm",
+  // 身体
+  "hand", "head", "eye", "ear", "nose", "mouth", "leg", "foot", "face", "hair", "arm",
+];
+
+/** 情态动词与高频功能词(分散在各教材低年级,统一并入 band 2 起步) */
+const BAND2_FUNCTION: string[] = [
+  "will", "would", "could", "should", "must", "may", "might", "shall",
+  "as", "by", "lot", "okay", "zero", "thing", "way", "back",
+  "monday", "tuesday", "wednesday", "thursday", "friday", "saturday", "sunday",
+];
+
+const BAND2: string[] = [
+  // 动词
+  "does", "did", "take", "give", "find", "need", "know", "think", "tell", "ask", "answer", "write", "ride", "drive", "turn", "wash", "clean", "cook", "cut", "buy", "work", "study", "learn", "teach", "watch", "listen", "hear", "speak", "talk", "count", "live", "wear", "show", "feel", "let", "call", "wait", "stay", "start", "move", "smile", "cry", "laugh", "pick", "pull", "push", "catch", "throw", "kick", "carry", "hold", "meet", "visit", "use", "try", "win", "fall", "sound",
+  // 时间
+  "now", "today", "tomorrow", "yesterday", "morning", "afternoon", "evening", "week", "month", "year", "time", "clock", "hour", "minute", "spring", "summer", "autumn", "fall", "winter", "season", "birthday",
+  // 天气
+  "weather", "rain", "snow", "wind", "cloud", "cloudy", "sunny", "windy", "rainy", "warm", "cool",
+  // 数字/序数
+  "eleven", "twelve", "thirteen", "fourteen", "fifteen", "sixteen", "seventeen", "eighteen", "nineteen", "twenty", "thirty", "forty", "fifty", "hundred", "first", "second", "third", "next", "last",
+  // 副词/连词/限定
+  "before", "after", "then", "soon", "always", "often", "sometimes", "never", "also", "again", "all", "some", "many", "much", "more", "most", "few", "every", "each", "other", "another", "same", "different", "together", "about", "so", "because", "when", "why", "out", "into", "behind", "under", "near", "off",
+  // 家庭/职业
+  "brother", "sister", "grandma", "grandpa", "grandmother", "grandfather", "uncle", "aunt", "cousin", "people", "child", "children", "classmate", "doctor", "nurse", "farmer", "driver", "police", "worker", "student",
+  // 场所
+  "shop", "store", "street", "road", "city", "town", "village", "hospital", "library", "playground", "classroom", "garden", "kitchen", "bathroom", "bedroom", "floor", "wall",
+  // 食物
+  "food", "fruit", "vegetable", "meat", "chicken", "noodle", "dumpling", "juice", "tea", "soup", "ice", "pear", "grape", "watermelon", "potato", "tomato", "carrot", "breakfast", "lunch", "dinner",
+  // 形容词/感觉
+  "hungry", "thirsty", "full", "fine", "great", "high", "low", "fat", "thin", "strong", "young", "pretty", "clever", "kind", "angry", "afraid", "tired", "busy", "free", "right", "wrong", "easy", "hard", "dirty", "wet", "dry", "dark", "bright", "quiet", "loud",
+  // 身体/健康
+  "body", "finger", "tooth", "teeth", "knee", "shoulder", "ill", "sick",
+  // 动物
+  "animal", "tiger", "lion", "elephant", "monkey", "bear", "rabbit", "mouse", "horse", "sheep", "snake", "panda", "wolf", "fox", "frog", "ant", "bee", "butterfly", "turtle", "whale", "shark", "dolphin",
+  // 其他名词
+  "thing", "way", "door", "picture", "photo", "song", "game", "sport", "class", "lesson", "homework", "letter", "card", "gift", "present", "party", "money", "phone", "computer", "train", "boat", "ship", "plane", "subway", "taxi", "umbrella", "glasses", "watch", "coat", "sweater", "pants", "sock", "cap", "skirt",
+];
+
+const BAND3: string[] = [
+  // 动词(含常见不规则)
+  "begin", "became", "become", "believe", "bring", "build", "choose", "climb", "decide", "dream", "drop", "enjoy", "finish", "follow", "forget", "grow", "happen", "hate", "hide", "hope", "hurt", "invite", "join", "keep", "knock", "land", "leave", "lose", "miss", "notice", "paint", "pass", "pay", "plan", "plant", "point", "practice", "prepare", "promise", "protect", "reach", "remember", "return", "save", "send", "share", "shine", "shout", "skate", "ski", "smell", "spell", "spend", "surprise", "taste", "touch", "travel", "understand", "wake", "wave", "welcome", "wish", "worry", "agree", "arrive", "borrow", "break", "change", "check", "collect", "cross", "dig", "explain", "fix", "guess", "lift", "lie", "mean", "rest", "ring", "sail", "search", "stick", "test", "tidy", "marry", "fight", "hunt", "race", "feed", "act",
+  // 代词/限定
+  "mine", "yours", "ours", "theirs", "himself", "herself", "myself", "something", "anything", "nothing", "everything", "someone", "anyone", "everyone", "nobody", "both", "either", "any", "else",
+  // 介词/连词/副词
+  "around", "beside", "between", "far", "front", "inside", "outside", "over", "through", "across", "along", "above", "below", "if", "than", "while", "until", "later", "early", "late", "once", "ago", "still", "just", "even", "ever", "upon", "really", "maybe", "perhaps", "away", "back", "almost", "already", "yet", "everywhere", "suddenly", "quickly", "slowly", "carefully", "finally", "well",
+  // 自然/地理
+  "mountain", "river", "lake", "sea", "beach", "island", "forest", "field", "grass", "leaf", "rock", "stone", "sand", "world", "country", "place", "earth", "ground", "hill", "cave", "wood", "fire", "air", "rainbow", "storm", "lightning", "thunder",
+  // 主题词:恐龙/魔法/太空/运动(兴趣轨道高频)
+  "dinosaur", "bone", "dragon", "monster", "castle", "king", "queen", "prince", "princess", "knight", "crown", "magic", "wizard", "fairy", "giant", "treasure", "sword", "spell", "potion", "spaceship", "rocket", "planet", "space", "alien", "astronaut", "robot", "machine", "basketball", "football", "soccer", "tennis", "team", "player", "coach", "goal", "match", "winner", "medal", "prize",
+  // 生活/学校
+  "trip", "holiday", "festival", "music", "movie", "film", "story", "news", "email", "internet", "question", "problem", "idea", "grade", "exam", "science", "math", "history", "art", "map", "sign", "message", "ticket", "price", "menu", "restaurant", "hotel", "museum", "bridge", "tower", "corner", "middle", "top", "bottom", "side", "end", "part", "piece", "pair", "group", "list", "line", "circle", "page", "word", "sentence", "language", "voice", "noise", "sound",
+  // 形容词
+  "beautiful", "wonderful", "interesting", "boring", "exciting", "excited", "surprised", "scared", "brave", "careful", "lucky", "poor", "rich", "famous", "friendly", "lovely", "lazy", "smart", "special", "important", "dangerous", "safe", "deep", "wide", "heavy", "light", "clean", "delicious", "sweet", "sour", "fresh", "ready", "sure", "real", "true", "whole", "favorite", "best", "better", "worse", "worst",
+];
+
+const BAND4: string[] = [
+  // 动词
+  "accept", "add", "allow", "appear", "attack", "avoid", "burn", "care", "cause", "celebrate", "cheer", "communicate", "compare", "complete", "continue", "control", "copy", "cost", "cover", "create", "describe", "develop", "die", "discover", "discuss", "divide", "earn", "enter", "expect", "experience", "explore", "express", "fail", "fear", "fill", "fit", "flow", "force", "form", "guard", "guide", "hang", "imagine", "improve", "include", "increase", "introduce", "invent", "lead", "lend", "manage", "mark", "mention", "mix", "offer", "order", "organize", "own", "pour", "predict", "produce", "provide", "raise", "realize", "receive", "record", "refuse", "remain", "repair", "repeat", "replace", "report", "require", "rescue", "rise", "roll", "rush", "seem", "serve", "shake", "shape", "sink", "solve", "spread", "support", "suppose", "trust", "wonder", "appear", "disappear",
+  // 名词
+  "ability", "accident", "action", "address", "adult", "advice", "age", "airport", "amount", "area", "attention", "award", "beauty", "behavior", "bottle", "brain", "camera", "camp", "center", "century", "chance", "character", "chess", "choice", "climate", "coast", "competition", "condition", "contest", "conversation", "courage", "course", "culture", "danger", "date", "deal", "death", "decision", "degree", "desert", "design", "detail", "dictionary", "difference", "difficulty", "direction", "distance", "doubt", "duty", "edge", "education", "effort", "electricity", "enemy", "energy", "engineer", "environment", "event", "example", "exercise", "experiment", "expert", "fact", "fan", "fever", "flag", "flood", "fool", "fork", "future", "geography", "glass", "gold", "habit", "half", "hall", "health", "heart", "heat", "height", "hero", "hobby", "hole", "human", "humor", "hurry", "information", "insect", "instruction", "interest", "invention", "journey", "joy", "jungle", "knowledge", "leader", "level", "life", "luck", "manner", "market", "material", "meal", "meaning", "medicine", "member", "memory", "metal", "method", "mind", "mirror", "mistake", "model", "moment", "mystery", "nation", "nature", "neighbor", "nest", "net", "note", "object", "ocean", "oil", "opinion", "owner", "pain", "palace", "paper", "parent", "partner", "pattern", "peace", "period", "person", "pet", "piano", "pity", "plastic", "plate", "pleasure", "pocket", "poem", "pollution", "pool", "position", "power", "purpose", "rule", "ruler", "scientist", "secret", "shadow", "shelf", "silver", "situation", "skill", "smoke", "snack", "society", "soldier", "speed", "spirit", "stage", "step", "subject", "success", "temperature", "term", "tradition", "trouble", "truth", "value", "victory", "view", "visitor", "war", "wealth", "wing", "wisdom", "wound",
+  // 形容词/副词
+  "able", "active", "actually", "alive", "alone", "ancient", "asleep", "available", "average", "awake", "calm", "certain", "cheap", "clear", "comfortable", "common", "correct", "curious", "dead", "dear", "double", "east", "electric", "empty", "enough", "equal", "especially", "exact", "excellent", "expensive", "extra", "fair", "familiar", "fantastic", "final", "foreign", "forever", "forward", "general", "gentle", "glad", "golden", "hardly", "healthy", "honest", "however", "huge", "immediately", "impossible", "indeed", "instead", "international", "least", "less", "local", "lonely", "main", "modern", "narrow", "natural", "nearly", "necessary", "nervous", "noisy", "north", "online", "only", "opposite", "ordinary", "patient", "perfect", "personal", "pleasant", "plenty", "polite", "popular", "possible", "powerful", "probably", "proud", "public", "quite", "rather", "recently", "serious", "several", "silly", "simple", "single", "social", "south", "strange", "successful", "terrible", "thick", "thirsty", "though", "thousand", "tiny", "usual", "usually", "west", "wild", "wise", "worth",
+];
+
+const BAND5: string[] = [
+  // 动词
+  "achieve", "affect", "afford", "aim", "announce", "apologize", "appreciate", "approach", "arrange", "attend", "attract", "balance", "base", "battle", "beat", "behave", "belong", "bite", "blow", "boil", "bother", "breathe", "burst", "bury", "cancel", "capture", "challenge", "charge", "chat", "cheat", "claim", "combine", "comfort", "command", "comment", "complain", "concentrate", "confuse", "connect", "consider", "contain", "convince", "crash", "dare", "defeat", "defend", "delay", "deliver", "demand", "deny", "depend", "deserve", "destroy", "determine", "devote", "disagree", "disturb", "donate", "drag", "educate", "encourage", "escape", "examine", "exist", "expand", "fasten", "float", "fold", "forgive", "freeze", "gather", "graduate", "greet", "handle", "hesitate", "ignore", "influence", "injure", "insist", "inspire", "intend", "interview", "judge", "limit", "locate", "melt", "obey", "observe", "obtain", "occur", "operate", "overcome", "pack", "perform", "persuade", "praise", "press", "prevent", "print", "process", "progress", "pronounce", "prove", "publish", "punish", "pursue", "react", "recognize", "recommend", "recover", "reduce", "reflect", "regard", "regret", "reject", "relax", "remind", "remove", "respect", "respond", "satisfy", "scream", "select", "separate", "settle", "sigh", "slide", "slip", "spot", "squeeze", "struggle", "succeed", "suffer", "suggest", "supply", "survive", "tear", "tremble", "warn", "whisper", "wipe",
+  // 名词
+  "advantage", "adventure", "ancestor", "appearance", "argument", "article", "atmosphere", "attitude", "audience", "author", "benefit", "bill", "billion", "bit", "blood", "board", "border", "branch", "breath", "captain", "career", "case", "ceiling", "cell", "ceremony", "chain", "champion", "channel", "chapter", "chemistry", "chief", "citizen", "clue", "coal", "code", "community", "company", "conclusion", "congratulation", "continent", "court", "creature", "crowd", "curtain", "custom", "damage", "debate", "departure", "diagram", "diary", "discovery", "disease", "drum", "dust", "economy", "emergency", "emotion", "envelope", "evidence", "exhibition", "expression", "feature", "fence", "figure", "freedom", "fuel", "function", "generation", "goods", "growth", "guidance", "honor", "image", "industry", "instrument", "issue", "item", "justice", "labor", "law", "leisure", "literature", "magazine", "majority", "manner", "mass", "media", "mercy", "mission", "movement", "musician", "novel", "officer", "opportunity", "package", "passage", "passenger", "passion", "patience", "performance", "physics", "pioneer", "platform", "poet", "policy", "population", "poster", "presentation", "pressure", "pride", "principle", "process", "professor", "project", "promise", "purpose", "quality", "quantity", "relationship", "research", "resource", "responsibility", "result", "review", "reward", "risk", "role", "routine", "safety", "sample", "scene", "schedule", "scholarship", "section", "security", "series", "service", "shame", "sight", "signal", "silence", "source", "standard", "statement", "strength", "structure", "style", "suggestion", "surface", "survey", "symbol", "system", "talent", "target", "task", "teamwork", "technique", "technology", "theme", "theory", "tongue", "tool", "topic", "trade", "translation", "transport", "trend", "trick", "universe", "variety", "vehicle", "version", "volume", "volunteer", "weakness", "weight", "wildlife", "youth",
+  // 形容词/副词
+  "absent", "abstract", "academic", "accurate", "afraid", "aggressive", "amazed", "amazing", "anxious", "apart", "ashamed", "automatic", "awful", "basic", "bitter", "blank", "blind", "bored", "broad", "central", "classic", "complex", "confident", "convenient", "creative", "crazy", "critical", "cruel", "daily", "desperate", "digital", "direct", "distant", "eager", "effective", "efficient", "elderly", "electronic", "embarrassed", "entire", "essential", "eventually", "evil", "extreme", "fluent", "formal", "fortunate", "frequent", "generous", "gradually", "grateful", "guilty", "harmful", "helpful", "hopeful", "independent", "individual", "innocent", "intelligent", "jealous", "loyal", "magical", "medical", "mental", "mysterious", "negative", "obvious", "official", "original", "otherwise", "particular", "peaceful", "physical", "positive", "practical", "precious", "previous", "primary", "private", "professional", "proper", "rapid", "rare", "raw", "reasonable", "regular", "reliable", "remote", "responsible", "rough", "rude", "scientific", "secret", "sensitive", "severe", "sharp", "shy", "significant", "silent", "sincere", "smooth", "solid", "specific", "splendid", "steady", "strict", "stupid", "sudden", "talented", "thankful", "thorough", "thoughtful", "typical", "unique", "universal", "unusual", "urgent", "various", "violent", "visible", "vivid", "voluntary", "willing", "wooden",
+];
+
+const BANDS: Record<Band, string[]> = {
+  1: BAND1,
+  2: [...BAND2, ...BAND2_FUNCTION],
+  3: BAND3,
+  4: BAND4,
+  5: BAND5,
+};
+
+/** 累积词表:band N 的可用词 = band 1..N 的全部词(已小写、去重) */
+export function cumulativeWordSet(band: Band): Set<string> {
+  const set = new Set<string>();
+  for (let b = 1 as Band; b <= band; b++) {
+    for (const w of BANDS[b as Band]) set.add(w.toLowerCase());
+  }
+  return set;
+}
+
+export { BANDS };
