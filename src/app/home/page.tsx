@@ -5,7 +5,7 @@ import { recommendStory } from "@/lib/recommend";
 import { getStreak, getCalendar, getLevelSuggestion } from "@/lib/stats";
 import { getDueCount } from "@/lib/wordbook";
 import { getLevel, INTERESTS } from "@/lib/levels";
-import { dateKeyOf } from "@/lib/story-types";
+import { dateKeyOf, renderWithName } from "@/lib/story-types";
 import { logout } from "@/app/actions/auth";
 import { LevelSuggestionBanner } from "./suggestion-banner";
 
@@ -62,7 +62,9 @@ export default async function HomePage() {
               {INTERESTS.find((i) => i.key === story.interest)?.emoji}{" "}
               {INTERESTS.find((i) => i.key === story.interest)?.label}
             </p>
-            <h2 className="mt-2 text-2xl font-bold">{story.title}</h2>
+            <h2 className="mt-2 text-2xl font-bold">
+              {renderWithName(story.title, child.nickname)}
+            </h2>
             <p className="mt-1 text-sm opacity-90">
               {story.wordCount} 词 · 主角是 {child.nickname} 自己!
             </p>
