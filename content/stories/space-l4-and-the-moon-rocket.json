@@ -3,7 +3,7 @@
   "title": "{{name}} and the Moon Rocket",
   "levelId": 4,
   "interest": "space",
-  "text": "{{name}} looks up at the night sky. There are many stars. {{name}} sees a big rocket. It is going to the moon. {{name}} wants to go too. A kind robot waves to her. It is sitting in the rocket. {{name}} climbs in fast. The rocket is going up now. There are stars all around them. The moon is getting close. {{name}} sees grey rocks. She is jumping high and slow. The robot is laughing with her. They look back at Earth. It is a blue ball. It is far away. {{name}} feels very happy. She is brave and curious. The robot gives her a small star. {{name}} keeps it in her hand. Now they fly home together.",
+  "text": "{{name}} looks up at the night sky. There are many stars. {{name}} sees a big rocket. It is going to the moon. {{name}} wants to go too. A kind robot waves to {{name}}. It is sitting in the rocket. {{name}} climbs in fast. The rocket is going up now. There are stars all around them. The moon is getting close. {{name}} sees grey rocks. {{name}} is jumping high and slow. The robot is laughing with {{name}}. They look back at Earth. It is a blue ball. It is far away. {{name}} feels very happy. {{name}} is brave and curious. The robot gives {{name}} a small star. {{name}} keeps it in one hand. Now they fly home together.",
   "glossary": [
     {
       "word": "rocket",
@@ -26,7 +26,7 @@
     },
     {
       "prompt": "Who is with {{name}} in the rocket?",
-      "options": ["A kind robot", "Her mom", "A big dog"],
+      "options": ["A kind robot", "{{name}}'s mom", "A big dog"],
       "answer": 0
     },
     {
