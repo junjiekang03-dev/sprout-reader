@@ -9,6 +9,8 @@
     "db:push": "prisma db push",
     "db:seed": "tsx prisma/seed.ts",
     "validate:stories": "tsx scripts/validate-stories.ts",
+    "tts:generate": "tsx scripts/tts-generate.ts",
+    "tts:preview": "tsx scripts/tts-preview.ts",
     "test": "vitest run",
     "typecheck": "tsc --noEmit",
     "prepare": "husky"
