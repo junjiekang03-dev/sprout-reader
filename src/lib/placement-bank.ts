@@ -1,7 +1,11 @@
 /**
- * 入级测评题库:L1-L12 各 2 题。
+ * 入级测评题库:L1-L12 每级 4 题。
  * 低级别考词汇辨认(表情选项),中级别考句子理解(中文提问),
  * 高级别考英文短文理解(全英提问)——和正式阅读体验衔接。
+ *
+ * 约定:每题把「正确答案放在 options[0]」(answer 恒为 0),
+ * 由 placement 页面在渲染时乱序,避免孩子发现「总在第一个」的规律。
+ * 题库结构不变量由 __tests__/placement-bank.test.ts 守护(每级 ≥4 题等)。
  */
 
 export interface PlacementItem {
@@ -12,9 +16,13 @@ export interface PlacementItem {
 }
 
 export const PLACEMENT_BANK: PlacementItem[] = [
+  // ---------- L1:词汇辨认(表情) ----------
   { level: 1, prompt: "哪个是 “dog”?", options: ["🐶", "🐱", "🐟"], answer: 0 },
   { level: 1, prompt: "哪个是 “apple”?", options: ["🍎", "🍌", "🍰"], answer: 0 },
+  { level: 1, prompt: "哪个是 “cat”?", options: ["🐱", "🐶", "🐰"], answer: 0 },
+  { level: 1, prompt: "哪个是 “sun”?", options: ["☀️", "🌙", "⭐"], answer: 0 },
 
+  // ---------- L2:简单句理解 ----------
   {
     level: 2,
     prompt: "“The cat is black.” —— 猫是什么颜色?",
@@ -27,7 +35,20 @@ export const PLACEMENT_BANK: PlacementItem[] = [
     options: ["一个红球", "一只红鸟", "一顶红帽"],
     answer: 0,
   },
+  {
+    level: 2,
+    prompt: "“I see three birds.” —— 我看见几只鸟?",
+    options: ["三只", "两只", "五只"],
+    answer: 0,
+  },
+  {
+    level: 2,
+    prompt: "“The dog is happy.” —— 狗心情怎么样?",
+    options: ["开心", "难过", "生气"],
+    answer: 0,
+  },
 
+  // ---------- L3 ----------
   {
     level: 3,
     prompt: "“The dog is on the bed.” —— 狗在哪里?",
@@ -40,7 +61,20 @@ export const PLACEMENT_BANK: PlacementItem[] = [
     options: ["放风筝", "骑自行车", "游泳"],
     answer: 0,
   },
+  {
+    level: 3,
+    prompt: "“The bird can sing.” —— 鸟会做什么?",
+    options: ["唱歌", "跑步", "游泳"],
+    answer: 0,
+  },
+  {
+    level: 3,
+    prompt: "“My bag is on the desk.” —— 书包在哪里?",
+    options: ["桌子上", "床下", "门后"],
+    answer: 0,
+  },
 
+  // ---------- L4 ----------
   {
     level: 4,
     prompt: "“Tom plays soccer at the park every day.” —— Tom 多久去一次公园?",
@@ -53,7 +87,20 @@ export const PLACEMENT_BANK: PlacementItem[] = [
     options: ["3 只", "2 只", "5 只"],
     answer: 0,
   },
+  {
+    level: 4,
+    prompt: "“She is reading a book now.” —— 她正在做什么?",
+    options: ["看书", "睡觉", "吃饭"],
+    answer: 0,
+  },
+  {
+    level: 4,
+    prompt: "“There are two cats under the tree.” —— 树下有几只猫?",
+    options: ["两只", "三只", "一只"],
+    answer: 0,
+  },
 
+  // ---------- L5 ----------
   {
     level: 5,
     prompt: "“Lily wants to be a doctor when she grows up.” —— Lily 长大想做什么?",
@@ -66,7 +113,20 @@ export const PLACEMENT_BANK: PlacementItem[] = [
     options: ["因为下雨", "因为天黑", "因为太热"],
     answer: 0,
   },
+  {
+    level: 5,
+    prompt: "“Tom likes to play football after school.” —— Tom 放学后喜欢做什么?",
+    options: ["踢足球", "画画", "唱歌"],
+    answer: 0,
+  },
+  {
+    level: 5,
+    prompt: "“It is colder today than yesterday.” —— 今天比昨天怎么样?",
+    options: ["更冷", "更热", "一样"],
+    answer: 0,
+  },
 
+  // ---------- L6 ----------
   {
     level: 6,
     prompt: "“Yesterday Ben walked to school because his bike was broken.” —— Ben 昨天怎么去学校?",
@@ -79,7 +139,20 @@ export const PLACEMENT_BANK: PlacementItem[] = [
     options: ["摔倒了但没事", "受伤住院了", "睡着了"],
     answer: 0,
   },
+  {
+    level: 6,
+    prompt: "“Lucy was happy because she got a new bike.” —— Lucy 为什么开心?",
+    options: ["得到新自行车", "考了好成绩", "去了公园"],
+    answer: 0,
+  },
+  {
+    level: 6,
+    prompt: "“The boy helped an old man cross the road.” —— 男孩做了什么?",
+    options: ["帮老人过马路", "买东西", "写作业"],
+    answer: 0,
+  },
 
+  // ---------- L7:英文短文理解 ----------
   {
     level: 7,
     prompt:
@@ -94,7 +167,21 @@ export const PLACEMENT_BANK: PlacementItem[] = [
     options: ["His new robot", "His old bike", "His school bag"],
     answer: 0,
   },
+  {
+    level: 7,
+    prompt: "Ben woke up early. He fed his dog and then ran to school. — What did Ben do first?",
+    options: ["Woke up early", "Fed the dog", "Ran to school"],
+    answer: 0,
+  },
+  {
+    level: 7,
+    prompt:
+      "The little fox was lost in the forest. A kind owl showed it the way home. — Who helped the fox?",
+    options: ["An owl", "A dog", "A child"],
+    answer: 0,
+  },
 
+  // ---------- L8 ----------
   {
     level: 8,
     prompt:
@@ -109,7 +196,22 @@ export const PLACEMENT_BANK: PlacementItem[] = [
     options: ["Water", "Fire", "Gold"],
     answer: 0,
   },
+  {
+    level: 8,
+    prompt:
+      "Lily is going to visit her grandma this weekend. She wants to bring her some flowers. — What will Lily bring?",
+    options: ["Flowers", "A book", "A cake"],
+    answer: 0,
+  },
+  {
+    level: 8,
+    prompt:
+      "When the rain stopped, the children went outside to play. — When did the children go out?",
+    options: ["After the rain stopped", "Before lunch", "At night"],
+    answer: 0,
+  },
 
+  // ---------- L9 ----------
   {
     level: 9,
     prompt:
@@ -124,7 +226,22 @@ export const PLACEMENT_BANK: PlacementItem[] = [
     options: ["Two years", "Two weeks", "Ten years"],
     answer: 0,
   },
+  {
+    level: 9,
+    prompt:
+      "The runners were tired, but they did not give up, and they all finished the race. — What did the runners do?",
+    options: ["Finished the race", "Stopped running", "Went home"],
+    answer: 0,
+  },
+  {
+    level: 9,
+    prompt:
+      "Sam has been collecting stamps since he was six years old. — How long has Sam collected stamps?",
+    options: ["Since he was six", "For two days", "Since last week"],
+    answer: 0,
+  },
 
+  // ---------- L10 ----------
   {
     level: 10,
     prompt:
@@ -139,7 +256,22 @@ export const PLACEMENT_BANK: PlacementItem[] = [
     options: ["Visit the north in winter", "Buy a snow toy", "Stay at home"],
     answer: 0,
   },
+  {
+    level: 10,
+    prompt:
+      "If you water a plant too much, its roots may rot. Give it just enough and it will grow well. — What happens if you water a plant too much?",
+    options: ["Its roots may rot", "It grows faster", "Nothing changes"],
+    answer: 0,
+  },
+  {
+    level: 10,
+    prompt:
+      "Mia had never tried skating before, so she decided to take a lesson first. — What did Mia decide to do?",
+    options: ["Take a lesson first", "Skate alone", "Stay home"],
+    answer: 0,
+  },
 
+  // ---------- L11 ----------
   {
     level: 11,
     prompt:
@@ -158,7 +290,22 @@ export const PLACEMENT_BANK: PlacementItem[] = [
     ],
     answer: 0,
   },
+  {
+    level: 11,
+    prompt:
+      "The bridge, which was built over a hundred years ago, is still used by people every day. — How old is the bridge?",
+    options: ["Over a hundred years", "About ten years", "Brand new"],
+    answer: 0,
+  },
+  {
+    level: 11,
+    prompt:
+      "Although he was afraid of the dark, the boy walked into the cave to find his lost dog. — Why did the boy enter the cave?",
+    options: ["To find his lost dog", "To hide from the rain", "To sleep"],
+    answer: 0,
+  },
 
+  // ---------- L12 ----------
   {
     level: 12,
     prompt:
@@ -171,6 +318,20 @@ export const PLACEMENT_BANK: PlacementItem[] = [
     prompt:
       "Reading a little every day has been shown to build a larger vocabulary than studying for hours once a week. — What builds vocabulary better?",
     options: ["Reading a little every day", "Studying once a week", "Never reading at all"],
+    answer: 0,
+  },
+  {
+    level: 12,
+    prompt:
+      "Many people think bats are blind, but in fact most bats can see quite well. — What is true about most bats?",
+    options: ["They can see quite well", "They are all blind", "They cannot fly"],
+    answer: 0,
+  },
+  {
+    level: 12,
+    prompt:
+      "Spending a few minutes planning your day can save you hours of wasted time later. — What can planning your day do?",
+    options: ["Save you time later", "Make you tired", "Waste your morning"],
     answer: 0,
   },
 ];

@@ -30,12 +30,15 @@ export default function PlacementPage() {
   const item = useMemo(() => {
     const it = pickItem(level, used);
     used.add(it);
-    return it;
+    // 乱序选项,正确答案不再恒在第一个(题库里 answer 都是 0)
+    const options = it.options
+      .map((text, i) => ({ text, correct: i === it.answer }))
+      .sort(() => Math.random() - 0.5);
+    return { level: it.level, prompt: it.prompt, options };
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [step]);
 
-  function answer(idx: number) {
-    const correct = idx === item.answer;
+  function answer(correct: boolean) {
     const nextHistory = [...history, { level: item.level, correct }];
     setHistory(nextHistory);
 
@@ -81,10 +84,10 @@ export default function PlacementPage() {
           {item.options.map((opt, i) => (
             <button
               key={i}
-              onClick={() => answer(i)}
+              onClick={() => answer(opt.correct)}
               className="w-full rounded-2xl border-2 border-stone-200 bg-white px-5 py-4 text-left text-lg transition active:scale-95 active:border-amber-400"
             >
-              {opt}
+              {opt.text}
             </button>
           ))}
         </div>
