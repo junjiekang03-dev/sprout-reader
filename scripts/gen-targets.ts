@@ -5,7 +5,9 @@
  * 用法:npx tsx scripts/gen-targets.ts
  */
 
+import { join } from "path";
 import { getLevel, INTERESTS } from "../src/lib/levels";
+import { loadStoryCorpus, buildAvoidSection } from "../src/lib/story-corpus";
 
 // 聚焦 L4-L8(句长上限 8-12 词,AI 较易达标),填补现有种子故事的级别×主题空缺
 const targetDefs: [number, string][] = [
@@ -26,6 +28,9 @@ const targetDefs: [number, string][] = [
   [8, "princess"],
 ];
 
+// 同轨道已有情节梗概,随 target 一起喂 Workflow 做情节去重(BACKLOG#2 多样性约束)
+const corpus = loadStoryCorpus(join(__dirname, "..", "content", "stories"));
+
 const targets = targetDefs.map(([levelId, interest], i) => {
   const lv = getLevel(levelId);
   const it = INTERESTS.find((x) => x.key === interest)!;
@@ -43,6 +48,7 @@ const targets = targetDefs.map(([levelId, interest], i) => {
     maxNewWordRatio: lv.maxNewWordRatio,
     newWordBudget: Math.max(2, Math.round((lv.storyWordCount[1] * lv.maxNewWordRatio) / 2)),
     grammar: lv.grammar,
+    avoidPlots: buildAvoidSection(corpus, interest),
   };
 });
 

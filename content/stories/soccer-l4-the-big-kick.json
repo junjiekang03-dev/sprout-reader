@@ -3,6 +3,7 @@
   "title": "The Big Kick",
   "levelId": 4,
   "interest": "soccer",
+  "summary": "朋友小赛进球:主角和朋友 Lily、Ben 在公园踢小比赛,主角把球高高踢进得分,朋友欢呼。",
   "text": "{{name}} loves soccer. {{name}} plays with Lily and Ben. They play at the park every day. Today they have a little game. Lily runs fast with the ball. She kicks it to {{name}}. {{name}} runs and runs. A big boy stands in the way. {{name}} stops. Then {{name}} kicks the ball high. The ball goes up and up. It goes in! Goal! Lily and Ben laugh and jump. \"Good kick!\" says Ben. {{name}} is so happy. Soccer is fun with good friends.",
   "glossary": [
     { "word": "soccer", "zh": "足球" },

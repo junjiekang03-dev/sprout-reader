@@ -8,8 +8,10 @@
  * 模型按 JSON 格式返回故事,落盘到 content/stories/ 后跑 validate:stories。
  */
 
+import { join } from "path";
 import { getLevel, INTERESTS } from "../src/lib/levels";
 import { cumulativeWordSet } from "../src/lib/wordlists";
+import { loadStoryCorpus, buildAvoidSection } from "../src/lib/story-corpus";
 
 const levelId = Number(process.argv[2] ?? 3);
 const interestKey = process.argv[3] ?? "dinosaurs";
@@ -23,6 +25,10 @@ if (!interest) {
 }
 
 const wordList = [...cumulativeWordSet(level.band)].sort().join(", ");
+
+// 同轨道已有故事的情节梗概,喂给模型做情节去重(BACKLOG#2 多样性约束)
+const corpus = loadStoryCorpus(join(__dirname, "..", "content", "stories"));
+const avoidSection = buildAvoidSection(corpus, interest.key);
 
 const prompt = `你是一位专业的英语分级读物作者,为中国 8-12 岁小学生创作「母语化输入」故事。
 
@@ -43,6 +49,11 @@ const prompt = `你是一位专业的英语分级读物作者,为中国 8-12 岁
 - 价值观积极:友爱、勇气、好奇心、坚持
 - 故事要有起因-经过-结果,结尾温暖或有趣,不说教
 
+# 情节去重(BACKLOG#2:同轨道相邻级别曾套用同一模板,务必避开)
+${avoidSection || "(本轨道暂无已有故事——情节自由发挥,但仍要新颖)"}
+- 你写的每一篇情节必须与上面每一条都明显不同,绝不套用同一模板(如「帮迷路小动物找妈妈」「帮小星星发光」「苦练后大赛进球」)。
+- 若一次生成多篇,多篇之间情节也要各异。
+
 # 每篇配 3 道理解题
 - 单选,3 个选项,考查情节理解(不考语法)
 - 题干和选项用词不超出该级别词表
@@ -56,6 +67,7 @@ const prompt = `你是一位专业的英语分级读物作者,为中国 8-12 岁
     "interest": "${interest.key}",
     "text": "正文。{{name}} 是主角名。",
     "glossary": [{ "word": "生词", "zh": "中文释义" }],
+    "summary": "一句话中文情节梗概(起因-经过-结果),用于以后同轨道情节去重",
     "questions": [
       { "prompt": "问题", "options": ["A", "B", "C"], "answer": 0 }
     ]

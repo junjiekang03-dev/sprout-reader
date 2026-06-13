@@ -3,6 +3,7 @@
   "title": "The Red Star",
   "levelId": 8,
   "interest": "space",
+  "summary": "帮外星人取水:生日收到望远镜,看到的红星其实是外星人 Pip 的飞船,飞船缺水,主角拿水帮它成朋友。",
   "text": "On {{name}}'s birthday, Uncle Ben gave {{name}} a telescope. \"You can see the moon and stars with it,\" he said. That night, {{name}} looked at the dark sky. The moon was big and bright. Little stars were everywhere. \"Wow! I can see everything!\" {{name}} saw a little red star. But wait — the star was moving! \"Is that a spaceship?\" {{name}} asked. The red light came closer and closer. Then it stopped over the garden. A small door opened slowly. A funny green alien looked out. \"Hello! I am Pip from the star Vega,\" it said. \"My spaceship needs help.\" \"It needs water to fly home.\" \"Water? We have a lot of water!\" said {{name}}. {{name}} ran inside and got some water. Pip drank a little and put the water in the spaceship. \"Thank you, friend! You are very kind,\" said Pip. \"One day, you can visit my planet.\" \"I will show you all the stars.\" \"And you can meet my space friends.\" The spaceship flew up into the night sky. {{name}} watched it with the telescope until it was gone. \"Nobody will believe this!\" {{name}} said with a big smile.",
   "glossary": [{ "word": "telescope", "zh": "望远镜" }],
   "questions": [

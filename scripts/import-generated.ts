@@ -33,6 +33,7 @@ const results = parsed.result as Array<{
     text: string;
     glossary: { word: string; zh: string }[];
     questions: unknown[];
+    summary?: string;
   };
   verdict: { safe: boolean; valuesPositive: boolean; ageAppropriate: boolean; issues: string[] };
 }>;
@@ -70,6 +71,7 @@ for (const r of results) {
     glossary: r.story.glossary ?? [],
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     questions: r.story.questions as any,
+    summary: r.story.summary,
     status: "draft",
   };
 

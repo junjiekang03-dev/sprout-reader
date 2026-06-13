@@ -3,6 +3,7 @@
   "title": "The Dinosaur Museum",
   "levelId": 7,
   "interest": "dinosaurs",
+  "summary": "博物馆+挖化石:周日和爸爸去恐龙博物馆,看霸王龙、挖化石找到骨头,立志研究恐龙。",
   "text": "On Sunday, {{name}} went to the dinosaur museum with Dad. {{name}} was so excited. \"Will we see real dinosaur bones?\" {{name}} asked. \"Yes, and something more,\" said Dad with a smile. Inside, they saw a giant dinosaur. It was taller than the trees! \"This is a T-Rex,\" said Dad. \"It lived a long, long time ago.\" {{name}} looked at its big teeth. The teeth were as big as bananas! \"I am happy it cannot run now!\" {{name}} laughed. Then they found a special room. Kids could dig for fossils there! {{name}} dug in the sand very carefully. Soon, {{name}} found a little white bone. \"Dad, look! A real fossil!\" \"Well done! You found a treasure,\" said Dad. {{name}} will remember this day for a long time. \"Dad, when I grow up, I will study dinosaurs!\" \"Then you must read many dinosaur books,\" said Dad. \"Let's go to the library now!\" said {{name}}.",
   "glossary": [
     { "word": "fossil", "zh": "化石" },

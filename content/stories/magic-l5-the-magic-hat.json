@@ -3,6 +3,7 @@
   "title": "The Magic Hat",
   "levelId": 5,
   "interest": "magic",
+  "summary": "学魔法+苦练成功:主角发现旧魔法帽和魔杖,跟奶奶学念咒语苦练,终于自己变出一只鸟。",
   "text": "{{name}} finds an old box at home. In the box, there is a black hat. There is a little wand too. \"What is this?\" {{name}} asks. Grandma looks at the hat. \"It is a magic hat,\" she says. \"Can I try?\" asks {{name}}. Grandma sings a funny song. Then a white rabbit jumps out! \"Wow! Can I do it too?\" \"Yes, but you must learn,\" says Grandma. Every day, {{name}} learns the funny song. {{name}} works hard with the wand. One day, the hat moves! A little bird flies out of the hat. \"I did it! I did magic!\" Grandma is very happy. \"Now you are my little helper,\" she says.",
   "glossary": [
     { "word": "magic", "zh": "魔法" },

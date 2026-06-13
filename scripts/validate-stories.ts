@@ -30,6 +30,7 @@ const storySchema = z.object({
       })
     )
     .length(3),
+  summary: z.string().optional(),
   status: z.enum(["draft", "published"]).optional(),
 });
 

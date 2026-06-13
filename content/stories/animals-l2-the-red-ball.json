@@ -3,6 +3,7 @@
   "title": "The Red Ball",
   "levelId": 2,
   "interest": "animals",
+  "summary": "宠物玩耍:主角和小狗 Max 玩红球,扔球、狗狗叼回,一起开心。",
   "text": "{{name}} has a dog. The dog is Max. Max is little and white. {{name}} has a red ball. \"Look, Max! Look at the ball!\" The ball goes up. The ball goes down. Max runs to the ball. Max gets the ball. Good dog, Max! {{name}} is happy. Max is happy too.",
   "glossary": [],
   "questions": [

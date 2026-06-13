@@ -3,6 +3,7 @@
   "title": "{{name}} and the Moon Rocket",
   "levelId": 4,
   "interest": "space",
+  "summary": "去月球+机器人同伴:主角登上飞向月亮的火箭,友好机器人同行,在月球上跳、看到蓝色地球,机器人送一颗小星星后一起飞回家。",
   "text": "{{name}} looks up at the night sky. There are many stars. {{name}} sees a big rocket. It is going to the moon. {{name}} wants to go too. A kind robot waves to {{name}}. It is sitting in the rocket. {{name}} climbs in fast. The rocket is going up now. There are stars all around them. The moon is getting close. {{name}} sees grey rocks. {{name}} is jumping high and slow. The robot is laughing with {{name}}. They look back at Earth. It is a blue ball. It is far away. {{name}} feels very happy. {{name}} is brave and curious. The robot gives {{name}} a small star. {{name}} keeps it in one hand. Now they fly home together.",
   "glossary": [
     {

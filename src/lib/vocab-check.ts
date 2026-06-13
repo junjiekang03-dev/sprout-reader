@@ -215,6 +215,8 @@ export interface StoryInput {
   text: string;
   glossary: GlossaryEntry[];
   questions: QuizQuestion[];
+  /** 一句话情节梗概(起因-经过-结果),供同轨道情节去重(BACKLOG#2);仅内容文件用,不入库 */
+  summary?: string;
   /** 上架状态:人工通读前为 draft,通读发布后为 published(缺省视为 published) */
   status?: "draft" | "published";
 }

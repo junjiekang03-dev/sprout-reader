@@ -3,6 +3,7 @@
   "title": "Go to the Moon",
   "levelId": 3,
   "interest": "space",
+  "summary": "玩具火箭假装+睡前:主角拿玩具火箭在家假装飞去月亮,爸爸喊睡觉,床上看月亮入睡。",
   "text": "{{name}} has a rocket. It is a toy rocket. It is red and white. {{name}} looks at the sky. The moon is big. The stars are little. \"I can go to the moon!\" {{name}} runs with the rocket. Up, up, up! \"Look at me! I can fly!\" Dad comes home. \"{{name}}, come to bed.\" \"Dad, I like the moon.\" \"You can see it in bed.\" {{name}} is in bed. The moon looks at {{name}}. Good night, little one.",
   "glossary": [{ "word": "rocket", "zh": "火箭" }],
   "questions": [
