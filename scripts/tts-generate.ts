@@ -17,16 +17,28 @@ const prisma = new PrismaClient();
 
 const AZURE_KEY = process.env.AZURE_SPEECH_KEY;
 const AZURE_REGION = process.env.AZURE_SPEECH_REGION ?? "eastasia";
-/** 美音童声叙事;可换 en-US-AnaNeural(儿童音)做 A/B */
-const VOICE = "en-US-JennyNeural";
 
-async function azureTts(text: string): Promise<Buffer> {
-  const ssml = `<speak version='1.0' xml:lang='en-US'>
+// 地道美音 + 情感叙事。用 mstts:express-as 加「温暖友好」的讲故事语气,
+// 而不是平板的机器朗读。音色/风格/语气强度都可用环境变量覆盖做 A/B。
+// (为什么用情感 TTS 而非声音克隆:见 docs/adr/0007)
+const VOICE = process.env.AZURE_TTS_VOICE ?? "en-US-JennyNeural";
+const STYLE = process.env.AZURE_TTS_STYLE ?? "friendly"; // 温暖亲切;可选 cheerful/hopeful
+const STYLEDEGREE = process.env.AZURE_TTS_STYLEDEGREE ?? "1.6"; // 情感强度(0.01-2)
+
+/** 按级别调语速:低龄更慢、便于逐词跟读;高级别接近自然语速 */
+function rateForLevel(levelId: number): string {
+  if (levelId <= 4) return "-18%";
+  if (levelId <= 9) return "-10%";
+  return "-5%";
+}
+
+async function azureTts(text: string, rate: string): Promise<Buffer> {
+  const escaped = text.replaceAll("&", "&amp;").replaceAll("<", "&lt;").replaceAll(">", "&gt;");
+  const ssml = `<speak version='1.0' xmlns:mstts='https://www.w3.org/2001/mstts' xml:lang='en-US'>
   <voice name='${VOICE}'>
-    <prosody rate='-15%'>${text
-      .replaceAll("&", "&amp;")
-      .replaceAll("<", "&lt;")
-      .replaceAll(">", "&gt;")}</prosody>
+    <mstts:express-as style='${STYLE}' styledegree='${STYLEDEGREE}'>
+      <prosody rate='${rate}'>${escaped}</prosody>
+    </mstts:express-as>
   </voice>
 </speak>`;
   const res = await fetch(`https://${AZURE_REGION}.tts.speech.microsoft.com/cognitiveservices/v1`, {
@@ -61,7 +73,7 @@ async function main() {
     // 名字槽位读成通用昵称(音频是全体共享的,不能按孩子定制)
     const text = story.text.replaceAll("{{name}}", "Sam");
     try {
-      const mp3 = await azureTts(text);
+      const mp3 = await azureTts(text, rateForLevel(story.levelId));
       writeFileSync(join(audioDir, `${story.slug}.mp3`), mp3);
       await prisma.story.update({
         where: { id: story.id },
