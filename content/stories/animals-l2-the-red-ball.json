@@ -8,6 +8,10 @@
   "questions": [
     { "prompt": "Who is Max?", "options": ["A dog", "A cat", "A bird"], "answer": 0 },
     { "prompt": "What color is the ball?", "options": ["Red", "Blue", "Green"], "answer": 0 },
-    { "prompt": "Is Max happy at the end?", "options": ["Yes", "No", "We do not know"], "answer": 0 }
+    {
+      "prompt": "Is Max happy at the end?",
+      "options": ["Yes", "No", "We do not know"],
+      "answer": 0
+    }
   ]
 }

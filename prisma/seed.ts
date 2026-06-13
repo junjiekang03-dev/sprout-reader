@@ -11,6 +11,7 @@ import { join } from "path";
 import { PrismaClient } from "@prisma/client";
 import { hashSync } from "bcryptjs";
 import { validateStory, countWords, type StoryInput } from "../src/lib/vocab-check";
+import { dateKeyOf } from "../src/lib/story-types";
 
 const prisma = new PrismaClient();
 const STORIES_DIR = join(__dirname, "..", "content", "stories");
@@ -61,9 +62,9 @@ async function main() {
     create: { phone: "13800138000", passwordHash: hashSync("demo1234", 10) },
     update: {},
   });
-  const existingChild = await prisma.child.findFirst({ where: { parentId: demo.id } });
-  if (!existingChild) {
-    await prisma.child.create({
+  let demoChild = await prisma.child.findFirst({ where: { parentId: demo.id } });
+  if (!demoChild) {
+    demoChild = await prisma.child.create({
       data: {
         parentId: demo.id,
         nickname: "Leo",
@@ -72,8 +73,47 @@ async function main() {
         placementDone: true,
       },
     });
+  } else {
+    // 重置演示状态,让升级建议每次 seed 后都可重现
+    demoChild = await prisma.child.update({
+      where: { id: demoChild.id },
+      data: { levelId: 3, placementDone: true },
+    });
   }
-  console.log("演示账号就绪:13800138000 / demo1234(孩子 Leo,L3,恐龙+太空)");
+
+  // 给演示账号补齐过去 5 天的 L3 高分阅读(幂等),
+  // 让登录后能直接看到「连续打卡」与「升级建议」两个功能。
+  const l3Stories = await prisma.story.findMany({ where: { levelId: 3 }, take: 3 });
+  if (l3Stories.length >= 3) {
+    const plan = [
+      { storyIdx: 0, daysAgo: 5, correct: 3 },
+      { storyIdx: 1, daysAgo: 4, correct: 3 },
+      { storyIdx: 2, daysAgo: 3, correct: 2 },
+      { storyIdx: 0, daysAgo: 2, correct: 3 },
+      { storyIdx: 1, daysAgo: 1, correct: 3 },
+    ];
+    for (const p of plan) {
+      const d = new Date();
+      d.setDate(d.getDate() - p.daysAgo);
+      const dateKey = dateKeyOf(d);
+      const s = l3Stories[p.storyIdx];
+      await prisma.reading.upsert({
+        where: {
+          childId_storyId_dateKey: { childId: demoChild.id, storyId: s.id, dateKey },
+        },
+        create: {
+          childId: demoChild.id,
+          storyId: s.id,
+          dateKey,
+          correctCount: p.correct,
+          totalCount: 3,
+          durationSec: 300,
+        },
+        update: { correctCount: p.correct, totalCount: 3 },
+      });
+    }
+  }
+  console.log("演示账号就绪:13800138000 / demo1234(孩子 Leo,L3,恐龙+太空,含升级建议演示数据)");
 }
 
 main()

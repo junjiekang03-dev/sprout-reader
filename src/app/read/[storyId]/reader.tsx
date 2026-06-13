@@ -22,7 +22,9 @@ export function Reader(props: Props) {
   const [playing, setPlaying] = useState(false);
   const [qIndex, setQIndex] = useState(0);
   const [answers, setAnswers] = useState<number[]>([]);
-  const [result, setResult] = useState<{ correct: number; total: number; streak: number } | null>(null);
+  const [result, setResult] = useState<{ correct: number; total: number; streak: number } | null>(
+    null
+  );
   const [showRest, setShowRest] = useState(false);
   const startedAt = useRef(Date.now());
   const audioRef = useRef<HTMLAudioElement | null>(null);
@@ -116,9 +118,7 @@ export function Reader(props: Props) {
     return (
       <main className="mx-auto flex min-h-dvh max-w-md flex-col items-center justify-center px-6 text-center">
         <div className="text-7xl">{allRight ? "🏆" : result.correct > 0 ? "🌟" : "🌱"}</div>
-        <h1 className="mt-4 text-2xl font-bold">
-          {allRight ? "太棒了!" : "读完啦,继续加油!"}
-        </h1>
+        <h1 className="mt-4 text-2xl font-bold">{allRight ? "太棒了!" : "读完啦,继续加油!"}</h1>
         <p className="mt-2 text-stone-600">
           答对 {result.correct}/{result.total} 题
         </p>
@@ -189,10 +189,7 @@ export function Reader(props: Props) {
       <article className="mt-6 text-[1.35rem] leading-loose tracking-wide">
         {props.text.split(/\s+/).map((token, i) => (
           <span key={i}>
-            <button
-              onClick={() => lookup(token)}
-              className="rounded px-0.5 active:bg-amber-200"
-            >
+            <button onClick={() => lookup(token)} className="rounded px-0.5 active:bg-amber-200">
               {token}
             </button>{" "}
           </span>

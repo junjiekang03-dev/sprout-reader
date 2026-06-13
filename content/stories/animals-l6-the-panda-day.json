@@ -6,8 +6,16 @@
   "text": "Last week, {{name}} visited the zoo with Mom. {{name}} wanted to see the pandas. The pandas lived in a big house. One panda sat by a tree. It was fat and very cute. \"Look, Mom! It eats and eats!\" The little panda liked the bamboo. It ate a lot of bamboo. Then a baby panda walked out. It was small and black and white. The baby panda played with a ball. It fell down, but it was okay. {{name}} laughed and laughed. \"Mom, can we stay here all day?\" \"No, but we can come back,\" said Mom. \"Pandas need to sleep too,\" she said. {{name}} said bye to the pandas. \"Bye, little pandas! See you soon!\" It was a happy day at the zoo.",
   "glossary": [{ "word": "bamboo", "zh": "竹子" }],
   "questions": [
-    { "prompt": "Where did {{name}} go last week?", "options": ["To the zoo", "To school", "To the park"], "answer": 0 },
+    {
+      "prompt": "Where did {{name}} go last week?",
+      "options": ["To the zoo", "To school", "To the park"],
+      "answer": 0
+    },
     { "prompt": "What did the panda eat?", "options": ["Bamboo", "Cake", "Rice"], "answer": 0 },
-    { "prompt": "What did the baby panda play with?", "options": ["A ball", "A box", "A kite"], "answer": 0 }
+    {
+      "prompt": "What did the baby panda play with?",
+      "options": ["A ball", "A box", "A kite"],
+      "answer": 0
+    }
   ]
 }

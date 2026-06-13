@@ -9,8 +9,20 @@
     { "word": "wand", "zh": "魔杖" }
   ],
   "questions": [
-    { "prompt": "What is in the old box?", "options": ["A hat and a wand", "A red ball", "A toy car"], "answer": 0 },
-    { "prompt": "Who helps {{name}} learn?", "options": ["Grandma", "Dad", "A friend"], "answer": 0 },
-    { "prompt": "What flies out of the hat at the end?", "options": ["A little bird", "A white rabbit", "A black cat"], "answer": 0 }
+    {
+      "prompt": "What is in the old box?",
+      "options": ["A hat and a wand", "A red ball", "A toy car"],
+      "answer": 0
+    },
+    {
+      "prompt": "Who helps {{name}} learn?",
+      "options": ["Grandma", "Dad", "A friend"],
+      "answer": 0
+    },
+    {
+      "prompt": "What flies out of the hat at the end?",
+      "options": ["A little bird", "A white rabbit", "A black cat"],
+      "answer": 0
+    }
   ]
 }

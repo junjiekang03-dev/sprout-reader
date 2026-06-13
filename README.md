@@ -11,7 +11,7 @@
 - **15 级自研分级体系**:底层锚定 CEFR + 课标词表(5 档累积词表),对外映射牛津树级别 + 校内年级双坐标 — [levels.ts](src/lib/levels.ts)
 - **内容流水线**:AI 生成 prompt 模板 → 程序化校验(词表/句长/生词密度)→ 人工通读 → 入库
   - `npx tsx scripts/story-prompt.ts <级别> <主题> [数量]` 生成创作 prompt
-  - `npm run validate:stories` 校验 content/stories/*.json(上架门禁)
+  - `npm run validate:stories` 校验 content/stories/\*.json(上架门禁)
   - `npm run db:seed` 校验并导入数据库(幂等)
   - `npx tsx scripts/tts-generate.ts` 预生成 TTS 朗读(需 Azure key,无 key 时阅读器回退浏览器 Web Speech)
 - **入级测评**:8 题自适应阶梯(L1-L12 题库),保守定级

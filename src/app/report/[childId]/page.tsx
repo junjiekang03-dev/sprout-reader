@@ -10,11 +10,7 @@ import { getLevel } from "@/lib/levels";
  * 页面只展示孩子昵称与学习统计,不含任何个人身份信息。
  * 二期:接微信服务号模板消息,每周日晚自动推送本页链接。
  */
-export default async function ReportPage({
-  params,
-}: {
-  params: Promise<{ childId: string }>;
-}) {
+export default async function ReportPage({ params }: { params: Promise<{ childId: string }> }) {
   const { childId } = await params;
   const child = await prisma.child.findUnique({ where: { id: childId } });
   if (!child) notFound();
@@ -93,14 +89,11 @@ export default async function ReportPage({
           </>
         ) : report.storiesRead > 0 ? (
           <>
-            🌱 本周读了 {report.storiesRead} 篇,是个好开始。试试固定在每天同一时间
-            (比如睡前 15 分钟)打开故事,更容易养成习惯。
+            🌱 本周读了 {report.storiesRead} 篇,是个好开始。试试固定在每天同一时间 (比如睡前 15
+            分钟)打开故事,更容易养成习惯。
           </>
         ) : (
-          <>
-            😴 本周还没有开始阅读。挑一个孩子喜欢的主题故事一起读 10 分钟,
-            是最好的重启方式。
-          </>
+          <>😴 本周还没有开始阅读。挑一个孩子喜欢的主题故事一起读 10 分钟, 是最好的重启方式。</>
         )}
       </section>
 

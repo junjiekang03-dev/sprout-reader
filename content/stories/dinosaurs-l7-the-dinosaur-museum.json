@@ -9,8 +9,20 @@
     { "word": "museum", "zh": "博物馆" }
   ],
   "questions": [
-    { "prompt": "Where did {{name}} go on Sunday?", "options": ["To the dinosaur museum", "To the zoo", "To the beach"], "answer": 0 },
-    { "prompt": "What did {{name}} find in the sand?", "options": ["A little white bone", "A gold ring", "An old map"], "answer": 0 },
-    { "prompt": "What does {{name}} want to do later?", "options": ["Study dinosaurs", "Drive a bus", "Cook food"], "answer": 0 }
+    {
+      "prompt": "Where did {{name}} go on Sunday?",
+      "options": ["To the dinosaur museum", "To the zoo", "To the beach"],
+      "answer": 0
+    },
+    {
+      "prompt": "What did {{name}} find in the sand?",
+      "options": ["A little white bone", "A gold ring", "An old map"],
+      "answer": 0
+    },
+    {
+      "prompt": "What does {{name}} want to do later?",
+      "options": ["Study dinosaurs", "Drive a bus", "Cook food"],
+      "answer": 0
+    }
   ]
 }

@@ -9,8 +9,20 @@
     { "word": "goal", "zh": "进球" }
   ],
   "questions": [
-    { "prompt": "Who plays with {{name}}?", "options": ["Lily and Ben", "Mom and Dad", "The teacher"], "answer": 0 },
-    { "prompt": "Where do they play?", "options": ["At the park", "At school", "At home"], "answer": 0 },
-    { "prompt": "What does {{name}} do at the end?", "options": ["Kicks the ball in", "Goes to bed", "Eats cake"], "answer": 0 }
+    {
+      "prompt": "Who plays with {{name}}?",
+      "options": ["Lily and Ben", "Mom and Dad", "The teacher"],
+      "answer": 0
+    },
+    {
+      "prompt": "Where do they play?",
+      "options": ["At the park", "At school", "At home"],
+      "answer": 0
+    },
+    {
+      "prompt": "What does {{name}} do at the end?",
+      "options": ["Kicks the ball in", "Goes to bed", "Eats cake"],
+      "answer": 0
+    }
   ]
 }

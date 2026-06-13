@@ -2,10 +2,11 @@ import Link from "next/link";
 import { redirect } from "next/navigation";
 import { getSessionParent } from "@/lib/session";
 import { recommendStory } from "@/lib/recommend";
-import { getStreak, getCalendar } from "@/lib/stats";
+import { getStreak, getCalendar, getLevelSuggestion } from "@/lib/stats";
 import { getLevel, INTERESTS } from "@/lib/levels";
 import { dateKeyOf } from "@/lib/story-types";
 import { logout } from "@/app/actions/auth";
+import { LevelSuggestionBanner } from "./suggestion-banner";
 
 export default async function HomePage() {
   const parent = await getSessionParent();
@@ -14,10 +15,11 @@ export default async function HomePage() {
   if (!child) redirect("/onboarding");
   if (!child.placementDone) redirect("/placement");
 
-  const [story, streak, calendar] = await Promise.all([
+  const [story, streak, calendar, suggestion] = await Promise.all([
     recommendStory(child.id),
     getStreak(child.id),
     getCalendar(child.id, 28),
+    getLevelSuggestion(child.id, child.levelId),
   ]);
   const level = getLevel(child.levelId);
   const todayDone = calendar.find((c) => c.dateKey === dateKeyOf(new Date()))?.count ?? 0;
@@ -36,6 +38,15 @@ export default async function HomePage() {
           <div className="text-sm font-bold text-amber-600">{streak} 天</div>
         </div>
       </header>
+
+      {/* 升降级建议 */}
+      {suggestion && (
+        <LevelSuggestionBanner
+          direction={suggestion.direction}
+          toLevel={suggestion.toLevel}
+          toLevelName={getLevel(suggestion.toLevel).name}
+        />
+      )}
 
       {/* 今日故事 */}
       <section className="mt-8">

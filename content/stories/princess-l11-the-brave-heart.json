@@ -7,7 +7,19 @@
   "glossary": [{ "word": "kingdom", "zh": "王国" }],
   "questions": [
     { "prompt": "Who was Aria?", "options": ["A princess", "A teacher", "A dragon"], "answer": 0 },
-    { "prompt": "Why was the dragon angry?", "options": ["Its baby was stuck", "It was hungry", "It hated the king"], "answer": 0 },
-    { "prompt": "What did Aria and {{name}} do?", "options": ["They moved the rocks and saved the baby dragon", "They ran away from the village", "They closed the palace door"], "answer": 0 }
+    {
+      "prompt": "Why was the dragon angry?",
+      "options": ["Its baby was stuck", "It was hungry", "It hated the king"],
+      "answer": 0
+    },
+    {
+      "prompt": "What did Aria and {{name}} do?",
+      "options": [
+        "They moved the rocks and saved the baby dragon",
+        "They ran away from the village",
+        "They closed the palace door"
+      ],
+      "answer": 0
+    }
   ]
 }

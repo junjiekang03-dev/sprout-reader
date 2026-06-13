@@ -9,8 +9,20 @@
     { "word": "medal", "zh": "奖牌" }
   ],
   "questions": [
-    { "prompt": "Who was the captain of the blue team?", "options": ["{{name}}", "Mia", "Coach Lee"], "answer": 0 },
-    { "prompt": "What was the weather like at the end?", "options": ["Rainy", "Snowy", "Very hot"], "answer": 0 },
-    { "prompt": "Why did the blue team win?", "options": ["They played together", "They had new shoes", "The other team went home"], "answer": 0 }
+    {
+      "prompt": "Who was the captain of the blue team?",
+      "options": ["{{name}}", "Mia", "Coach Lee"],
+      "answer": 0
+    },
+    {
+      "prompt": "What was the weather like at the end?",
+      "options": ["Rainy", "Snowy", "Very hot"],
+      "answer": 0
+    },
+    {
+      "prompt": "Why did the blue team win?",
+      "options": ["They played together", "They had new shoes", "The other team went home"],
+      "answer": 0
+    }
   ]
 }

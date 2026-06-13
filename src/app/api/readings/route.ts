@@ -22,10 +22,7 @@ export async function POST(req: Request) {
 
   const questions = parseQuestions(story.questionsJson);
   const total = questions.length;
-  const correct = questions.reduce(
-    (sum, q, i) => sum + (body.answers[i] === q.answer ? 1 : 0),
-    0
-  );
+  const correct = questions.reduce((sum, q, i) => sum + (body.answers[i] === q.answer ? 1 : 0), 0);
 
   const dateKey = dateKeyOf(new Date());
   await prisma.reading.upsert({

@@ -8,7 +8,10 @@
     "start": "next start",
     "db:push": "prisma db push",
     "db:seed": "tsx prisma/seed.ts",
-    "validate:stories": "tsx scripts/validate-stories.ts"
+    "validate:stories": "tsx scripts/validate-stories.ts",
+    "test": "vitest run",
+    "typecheck": "tsc --noEmit",
+    "prepare": "husky"
   },
   "dependencies": {
     "@prisma/client": "^6.8.0",
@@ -23,9 +26,13 @@
     "@types/node": "^22",
     "@types/react": "^19",
     "@types/react-dom": "^19",
+    "husky": "^9.1.7",
+    "lint-staged": "^17.0.7",
+    "prettier": "^3.8.4",
     "prisma": "^6.8.0",
     "tailwindcss": "^4.1.0",
     "tsx": "^4.19.0",
-    "typescript": "^5.8.0"
+    "typescript": "^5.8.0",
+    "vitest": "^4.1.8"
   }
 }

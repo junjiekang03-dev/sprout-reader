@@ -29,18 +29,15 @@ async function azureTts(text: string): Promise<Buffer> {
       .replaceAll(">", "&gt;")}</prosody>
   </voice>
 </speak>`;
-  const res = await fetch(
-    `https://${AZURE_REGION}.tts.speech.microsoft.com/cognitiveservices/v1`,
-    {
-      method: "POST",
-      headers: {
-        "Ocp-Apim-Subscription-Key": AZURE_KEY!,
-        "Content-Type": "application/ssml+xml",
-        "X-Microsoft-OutputFormat": "audio-24khz-48kbitrate-mono-mp3",
-      },
-      body: ssml,
-    }
-  );
+  const res = await fetch(`https://${AZURE_REGION}.tts.speech.microsoft.com/cognitiveservices/v1`, {
+    method: "POST",
+    headers: {
+      "Ocp-Apim-Subscription-Key": AZURE_KEY!,
+      "Content-Type": "application/ssml+xml",
+      "X-Microsoft-OutputFormat": "audio-24khz-48kbitrate-mono-mp3",
+    },
+    body: ssml,
+  });
   if (!res.ok) throw new Error(`Azure TTS ${res.status}: ${await res.text()}`);
   return Buffer.from(await res.arrayBuffer());
 }

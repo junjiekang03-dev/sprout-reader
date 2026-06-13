@@ -33,7 +33,7 @@ const prompt = `你是一位专业的英语分级读物作者,为中国 8-12 岁
 1. 词数:每篇 ${level.storyWordCount[0]}-${level.storyWordCount[1]} 词
 2. 句长:任何一句不超过 ${level.maxSentenceWords} 个单词
 3. 词汇:只能使用下方词表中的词(含其常规屈折变化:复数/过去式/进行时/比较级)
-4. 例外:最多 ${Math.max(2, Math.round(level.storyWordCount[1] * level.maxNewWordRatio / 2))} 个词表外的主题生词(如恐龙名),每个必须收录进 glossary 并给出中文释义;生词总出现次数 ≤ 全文词数的 ${(level.maxNewWordRatio * 100).toFixed(0)}%
+4. 例外:最多 ${Math.max(2, Math.round((level.storyWordCount[1] * level.maxNewWordRatio) / 2))} 个词表外的主题生词(如恐龙名),每个必须收录进 glossary 并给出中文释义;生词总出现次数 ≤ 全文词数的 ${(level.maxNewWordRatio * 100).toFixed(0)}%
 5. 语法只用:${level.grammar.join(";")}
 6. 主角名一律写作 {{name}}(两层花括号,平台会替换为孩子的英文名)
 7. 专有名词(角色名、地名)可以自创,但要简单可读

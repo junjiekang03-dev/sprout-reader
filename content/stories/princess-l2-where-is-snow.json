@@ -7,7 +7,15 @@
   "glossary": [{ "word": "princess", "zh": "公主" }],
   "questions": [
     { "prompt": "Who is Mia?", "options": ["A princess", "A teacher", "A dog"], "answer": 0 },
-    { "prompt": "What is Snow?", "options": ["A white cat", "A black dog", "A red bird"], "answer": 0 },
-    { "prompt": "Where is Snow?", "options": ["In the bag", "In the bed", "In the box"], "answer": 0 }
+    {
+      "prompt": "What is Snow?",
+      "options": ["A white cat", "A black dog", "A red bird"],
+      "answer": 0
+    },
+    {
+      "prompt": "Where is Snow?",
+      "options": ["In the bag", "In the bed", "In the box"],
+      "answer": 0
+    }
   ]
 }

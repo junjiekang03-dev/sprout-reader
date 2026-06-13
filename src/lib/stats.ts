@@ -1,5 +1,27 @@
 import { prisma } from "./db";
 import { dateKeyOf } from "./story-types";
+import { suggestLevelChange, type LevelSuggestion } from "./progression";
+
+/** 取该孩子的升降级建议(DB 适配:把阅读记录喂给纯函数 suggestLevelChange) */
+export async function getLevelSuggestion(
+  childId: string,
+  currentLevel: number
+): Promise<LevelSuggestion | null> {
+  const readings = await prisma.reading.findMany({
+    where: { childId },
+    orderBy: { createdAt: "desc" },
+    take: 30,
+    include: { story: { select: { levelId: true } } },
+  });
+  return suggestLevelChange({
+    currentLevel,
+    readings: readings.map((r) => ({
+      storyLevelId: r.story.levelId,
+      correctCount: r.correctCount,
+      totalCount: r.totalCount,
+    })),
+  });
+}
 
 /** 连续打卡天数(从今天或昨天往前数,缺一天即断) */
 export async function getStreak(childId: string): Promise<number> {
