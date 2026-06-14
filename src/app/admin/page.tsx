@@ -20,8 +20,8 @@ export default async function AdminPage({
     return (
       <main className="mx-auto max-w-md px-6 py-20 text-center">
         <h1 className="text-xl font-bold">内容审核台</h1>
-        <p className="mt-3 text-sm text-stone-500">
-          请通过 <code className="rounded bg-stone-100 px-1">/admin?key=管理密钥</code> 访问。
+        <p className="mt-3 text-sm text-muted">
+          请通过 <code className="rounded bg-primary-soft px-1">/admin?key=管理密钥</code> 访问。
         </p>
       </main>
     );
@@ -37,14 +37,14 @@ export default async function AdminPage({
     <main className="mx-auto max-w-2xl px-6 py-8">
       <header className="mb-6">
         <h1 className="text-2xl font-bold">内容审核台</h1>
-        <p className="mt-1 text-sm text-stone-500">
-          待通读发布 <b className="text-amber-600">{drafts.length}</b> 篇 · 已发布 {publishedCount}{" "}
-          篇。AI 生成 + 程序校验 + 安全审核已过,最后一道是你的人工通读。
+        <p className="mt-1 text-sm text-muted">
+          待通读发布 <b className="text-primary-ink">{drafts.length}</b> 篇 · 已发布{" "}
+          {publishedCount} 篇。AI 生成 + 程序校验 + 安全审核已过,最后一道是你的人工通读。
         </p>
       </header>
 
       {drafts.length === 0 && (
-        <p className="rounded-2xl bg-white p-6 text-center text-stone-400 shadow-sm">
+        <p className="rounded-xl bg-card p-6 text-center text-faint shadow-card">
           没有待审核的草稿 🎉
         </p>
       )}
@@ -57,10 +57,10 @@ export default async function AdminPage({
           const glossary = parseGlossary(s.glossaryJson);
           const questions = parseQuestions(s.questionsJson);
           return (
-            <article key={s.id} className="rounded-3xl bg-white p-6 shadow-sm">
+            <article key={s.id} className="rounded-card bg-card p-6 shadow-card">
               <div className="flex items-baseline justify-between">
                 <h2 className="text-xl font-bold">{renderWithName(s.title, "Sam")}</h2>
-                <span className="text-xs text-stone-400">
+                <span className="text-xs text-faint">
                   L{s.levelId} {level.name} · {interest?.emoji} {interest?.label} · {s.wordCount} 词
                 </span>
               </div>
@@ -68,13 +68,13 @@ export default async function AdminPage({
               <p className="mt-3 whitespace-pre-wrap text-lg leading-relaxed">{text}</p>
 
               {glossary.length > 0 && (
-                <p className="mt-3 text-sm text-stone-500">
+                <p className="mt-3 text-sm text-muted">
                   生词:
                   {glossary.map((g) => `${g.word}(${g.zh})`).join("、")}
                 </p>
               )}
 
-              <ol className="mt-3 space-y-1 text-sm text-stone-600">
+              <ol className="mt-3 space-y-1 text-sm text-muted">
                 {questions.map((q, i) => (
                   <li key={i}>
                     {i + 1}. {renderWithName(q.prompt, "Sam")} —{" "}
@@ -87,14 +87,14 @@ export default async function AdminPage({
                 <form action={publishStory}>
                   <input type="hidden" name="key" value={key} />
                   <input type="hidden" name="storyId" value={s.id} />
-                  <button className="rounded-2xl bg-emerald-500 px-6 py-2.5 text-sm font-bold text-white active:scale-95">
+                  <button className="rounded-xl bg-primary px-6 py-2.5 text-sm font-bold text-white active:scale-[0.98]">
                     ✓ 发布
                   </button>
                 </form>
                 <form action={rejectStory}>
                   <input type="hidden" name="key" value={key} />
                   <input type="hidden" name="storyId" value={s.id} />
-                  <button className="rounded-2xl border border-stone-200 px-6 py-2.5 text-sm text-stone-500 active:scale-95">
+                  <button className="rounded-xl border border-line px-6 py-2.5 text-sm text-muted active:scale-[0.98]">
                     退回
                   </button>
                 </form>

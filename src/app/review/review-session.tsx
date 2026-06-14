@@ -55,10 +55,10 @@ export function ReviewSession({ words }: { words: Word[] }) {
       <main className="mx-auto flex min-h-dvh max-w-md flex-col items-center justify-center px-6 text-center">
         <div className="text-6xl">🌳</div>
         <h1 className="mt-4 text-2xl font-bold">今天没有要复习的生词</h1>
-        <p className="mt-2 text-stone-500">读故事时点不认识的词,它们会进生词本,到点再来复习。</p>
+        <p className="mt-2 text-muted">读故事时点不认识的词,它们会进生词本,到点再来复习。</p>
         <Link
           href="/home"
-          className="mt-8 rounded-2xl bg-amber-500 px-8 py-3 font-bold text-white active:scale-95"
+          className="mt-8 rounded-xl bg-primary px-8 py-3 font-bold text-white active:scale-[0.98]"
         >
           去读故事
         </Link>
@@ -73,15 +73,13 @@ export function ReviewSession({ words }: { words: Word[] }) {
       <main className="mx-auto flex min-h-dvh max-w-md flex-col items-center justify-center px-6 text-center">
         <div className="text-7xl">{allRight ? "🏆" : "🌟"}</div>
         <h1 className="mt-4 text-2xl font-bold">复习完成!</h1>
-        <p className="mt-2 text-stone-600">
+        <p className="mt-2 text-muted">
           复习了 {total} 个词,答对 {correctCount} 个
         </p>
-        <p className="mt-3 text-sm text-stone-400">
-          答对的词,下次复习会隔得更久;答错的,过两天再练。
-        </p>
+        <p className="mt-3 text-sm text-faint">答对的词,下次复习会隔得更久;答错的,过两天再练。</p>
         <Link
           href="/home"
-          className="mt-8 rounded-2xl bg-amber-500 px-8 py-3 font-bold text-white active:scale-95"
+          className="mt-8 rounded-xl bg-primary px-8 py-3 font-bold text-white active:scale-[0.98]"
         >
           回到主页
         </Link>
@@ -93,19 +91,19 @@ export function ReviewSession({ words }: { words: Word[] }) {
   return (
     <main className="mx-auto flex min-h-dvh max-w-md flex-col px-6 py-10">
       <div className="flex items-center gap-3">
-        <div className="h-2 flex-1 overflow-hidden rounded-full bg-stone-200">
+        <div className="h-2 flex-1 overflow-hidden rounded-full bg-primary-soft">
           <div
-            className="h-full bg-amber-500 transition-all"
+            className="h-full bg-primary transition-all"
             style={{ width: `${(idx / total) * 100}%` }}
           />
         </div>
-        <span className="text-sm text-stone-500">
+        <span className="text-sm text-muted">
           {idx + 1}/{total}
         </span>
       </div>
 
       <div className="mt-10 flex-1">
-        <p className="text-center text-sm text-stone-400">这个词是什么意思?</p>
+        <p className="text-center text-sm text-faint">这个词是什么意思?</p>
         <p className="mt-3 text-center text-4xl font-bold">{current.word}</p>
         <div className="mt-10 space-y-3">
           {options.map((opt) => {
@@ -117,12 +115,12 @@ export function ReviewSession({ words }: { words: Word[] }) {
                 key={opt}
                 onClick={() => pick(opt)}
                 disabled={showState}
-                className={`w-full rounded-2xl border-2 px-5 py-4 text-left text-lg transition active:scale-95 ${
+                className={`w-full rounded-xl border-2 px-5 py-4 text-left text-lg transition active:scale-[0.98] ${
                   showState && isAnswer
-                    ? "border-emerald-400 bg-emerald-50"
+                    ? "border-primary bg-primary-soft"
                     : showState && isPicked
                       ? "border-red-300 bg-red-50"
-                      : "border-stone-200 bg-white active:border-amber-400"
+                      : "border-line bg-card active:border-primary"
                 }`}
               >
                 {opt}
@@ -132,7 +130,7 @@ export function ReviewSession({ words }: { words: Word[] }) {
         </div>
       </div>
 
-      <p className="text-center text-xs text-stone-400">答错也没关系,过两天再见到它就记住了</p>
+      <p className="text-center text-xs text-faint">答错也没关系,过两天再见到它就记住了</p>
     </main>
   );
 }

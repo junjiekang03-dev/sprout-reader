@@ -16,27 +16,27 @@ export default function LoginPage() {
           type="tel"
           inputMode="numeric"
           placeholder="家长手机号"
-          className="w-full rounded-2xl border border-stone-200 bg-white px-5 py-4 text-lg outline-amber-400"
+          className="w-full rounded-xl border border-line bg-card px-5 py-4 text-lg outline-secondary"
           required
         />
         <input
           name="password"
           type="password"
           placeholder="密码"
-          className="w-full rounded-2xl border border-stone-200 bg-white px-5 py-4 text-lg outline-amber-400"
+          className="w-full rounded-xl border border-line bg-card px-5 py-4 text-lg outline-secondary"
           required
         />
         {state?.error && <p className="text-sm text-red-500">{state.error}</p>}
         <button
           disabled={pending}
-          className="w-full rounded-2xl bg-amber-500 py-4 text-lg font-bold text-white shadow active:scale-95 disabled:opacity-50"
+          className="w-full rounded-xl bg-primary py-4 text-lg font-bold text-white shadow-card active:scale-[0.98] disabled:opacity-50"
         >
           {pending ? "登录中..." : "登录"}
         </button>
       </form>
-      <p className="mt-6 text-center text-sm text-stone-500">
+      <p className="mt-6 text-center text-sm text-muted">
         还没有账号?{" "}
-        <Link href="/register" className="font-bold text-amber-600">
+        <Link href="/register" className="font-bold text-primary-ink">
           免费注册
         </Link>
       </p>

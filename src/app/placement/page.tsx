@@ -67,13 +67,13 @@ export default function PlacementPage() {
   return (
     <main className="mx-auto flex min-h-dvh max-w-md flex-col px-6 py-10">
       <div className="flex items-center gap-3">
-        <div className="h-2 flex-1 overflow-hidden rounded-full bg-stone-200">
+        <div className="h-2 flex-1 overflow-hidden rounded-full bg-line">
           <div
-            className="h-full bg-amber-500 transition-all"
+            className="h-full bg-primary transition-all"
             style={{ width: `${(step / TOTAL) * 100}%` }}
           />
         </div>
-        <span className="text-sm text-stone-500">
+        <span className="text-sm text-muted">
           {step + 1}/{TOTAL}
         </span>
       </div>
@@ -85,7 +85,7 @@ export default function PlacementPage() {
             <button
               key={i}
               onClick={() => answer(opt.correct)}
-              className="w-full rounded-2xl border-2 border-stone-200 bg-white px-5 py-4 text-left text-lg transition active:scale-95 active:border-amber-400"
+              className="w-full rounded-xl border-2 border-line bg-card px-5 py-4 text-left text-lg transition active:scale-[0.98] active:border-primary"
             >
               {opt.text}
             </button>
@@ -93,9 +93,7 @@ export default function PlacementPage() {
         </div>
       </div>
 
-      <p className="text-center text-xs text-stone-400">
-        做错也没关系,我们只是在找最适合孩子的起点
-      </p>
+      <p className="text-center text-xs text-faint">做错也没关系,我们只是在找最适合孩子的起点</p>
     </main>
   );
 }

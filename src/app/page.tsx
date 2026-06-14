@@ -11,8 +11,8 @@ export default async function Landing() {
       <div className="text-center">
         <div className="text-6xl">🌱</div>
         <h1 className="mt-4 text-3xl font-bold">芽芽阅读</h1>
-        <p className="mt-1 text-sm tracking-widest text-amber-600">SPROUT READER</p>
-        <p className="mt-6 text-lg leading-relaxed text-stone-600">
+        <p className="mt-1 text-sm tracking-widest text-primary-ink">SPROUT READER</p>
+        <p className="mt-6 text-lg leading-relaxed text-muted">
           像母语者一样习得英语。
           <br />
           每天一个为孩子兴趣定制的英文故事,
@@ -21,7 +21,7 @@ export default async function Landing() {
         </p>
       </div>
 
-      <ul className="space-y-3 rounded-3xl bg-white p-6 shadow-sm">
+      <ul className="space-y-3 rounded-card bg-card p-6 shadow-card">
         <li className="flex gap-3">
           <span>📚</span>
           <span>15 级自研分级,对标牛津树与校内年级</span>
@@ -43,19 +43,19 @@ export default async function Landing() {
       <div className="space-y-3">
         <Link
           href="/register"
-          className="block rounded-2xl bg-amber-500 py-4 text-center text-lg font-bold text-white shadow active:scale-95"
+          className="block rounded-xl bg-primary py-4 text-center text-lg font-bold text-white shadow-card active:scale-[0.98]"
         >
           免费开始(5 分钟测出阅读级别)
         </Link>
         <Link
           href="/login"
-          className="block rounded-2xl border border-stone-200 bg-white py-4 text-center text-stone-600 active:scale-95"
+          className="block rounded-xl border border-line bg-card py-4 text-center text-muted active:scale-[0.98]"
         >
           已有账号,直接登录
         </Link>
       </div>
 
-      <p className="text-center text-xs text-stone-400">
+      <p className="text-center text-xs text-faint">
         家长注册 · 孩子档案仅需英文昵称 · 内置 20 分钟护眼提醒
       </p>
     </main>
