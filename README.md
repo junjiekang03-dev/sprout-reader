@@ -10,8 +10,9 @@
 
 - **15 级自研分级体系**:底层锚定 CEFR + 课标词表(5 档累积词表),对外映射牛津树级别 + 校内年级双坐标 — [levels.ts](src/lib/levels.ts)
 - **三层内容管线**:AI 生成 → 程序化校验(词表/句长/生词密度)→ 人工通读发布
-  - `npx tsx scripts/story-prompt.ts <级别> <主题> [数量]` 生成单条创作 prompt
-  - 批量:Workflow 多代理生成 + 对抗式安全审核 → `scripts/import-generated.ts` 过程序校验 → 落 **draft**(实测产出率约 80%)
+  - `npx tsx scripts/story-prompt.ts <级别> <主题> [数量]` 生成单条创作 prompt(供人工粘贴)
+  - 一条命令直连 API:`npm run content:generate`(需 `.env` 配 `ANTHROPIC_API_KEY`)→ 调 Claude 批量产出 → 校验 → 落 **draft** + 产出率统计;prompt 自动注入「同轨道已有情节,务必避开」做去重
+  - 批量(多代理):Workflow 生成 + 对抗式安全审核 → `scripts/import-generated.ts` 过程序校验 → 落 **draft**(实测产出率约 80%)
   - `npm run validate:stories` 校验 content/stories/\*.json(上架门禁)
   - `/admin?key=<ADMIN_KEY>` 人工通读后「发布」或「退回」(第 3 层)
   - 主题词按兴趣轨道豁免「超纲/生词密度」(选恐龙轨道的孩子本就熟悉 dinosaur)

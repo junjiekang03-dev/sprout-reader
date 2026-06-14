@@ -9,6 +9,7 @@
     "db:push": "prisma db push",
     "db:seed": "tsx prisma/seed.ts",
     "validate:stories": "tsx scripts/validate-stories.ts",
+    "content:generate": "tsx scripts/generate-content.ts",
     "tts:generate": "tsx scripts/tts-generate.ts",
     "tts:preview": "tsx scripts/tts-preview.ts",
     "test": "vitest run",
@@ -16,6 +17,7 @@
     "prepare": "husky"
   },
   "dependencies": {
+    "@anthropic-ai/sdk": "^0.104.1",
     "@prisma/client": "^6.8.0",
     "bcryptjs": "^3.0.2",
     "next": "^15.3.0",

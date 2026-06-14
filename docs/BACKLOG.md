@@ -22,15 +22,15 @@
 
 ---
 
-## 2. 内容批量生成接入 API · AFK
+## 2. 内容批量生成接入 API · AFK ✅ 已完成(2026-06-14)
 
 **What**:把现在「手动跑 Workflow → 导出 → import-generated」的内容管线接成可重复脚本/后台任务,直接调模型 API 批量产出 → 程序校验 → 落 **Draft**。
 
 **Acceptance**
 
-- [ ] 一条命令完成「生成 N 篇 → 校验 → 写入 draft」
-- [ ] 复用现有 `validateStory` 门禁与主题词豁免
-- [ ] 产出率、拒绝原因有统计输出
+- [x] 一条命令完成「生成 N 篇 → 校验 → 写入 draft」(`npm run content:generate`,见 `scripts/generate-content.ts`;直连 Claude API,默认 `claude-opus-4-8`,结构化 JSON Schema 输出)
+- [x] 复用现有 `validateStory` 门禁与主题词豁免(运行器逐篇过 `validateStory` 才落 draft,slug 程序重建去重)
+- [x] 产出率、拒绝原因有统计输出(结尾打印产出率 + 按校验错误分类的退回原因)
 - [x] **情节多样性约束**(2026-06-13 完成):生成时自动提供「同轨道已有情节摘要」让模型避开雷同。每篇故事加 `summary` 情节弧梗概字段;`src/lib/story-corpus.ts` 的 `buildAvoidSection`(有单测)按轨道汇总梗概并排除自身,`story-prompt.ts` 注入 prompt、`gen-targets.ts` 随 target 输出 `avoidPlots`、`import-generated.ts` 携带模型产出的 summary 形成闭环。起因:首批批量产出里同一兴趣轨道相邻级别套用了相同情节模板(帮迷路小动物找妈妈 / 帮小星星发光 / 苦练后大赛进球)
 
 **待重写 → ✅ 已重写并发布(2026-06-13)**:用 Workflow 喂「同轨道全部已有情节摘要 + 必须避开」生成,过分级校验 + 对抗式安全/多样性审核,人工通读后发布,均已生成童声(Ana)音频:
@@ -40,7 +40,8 @@
 - ~~`soccer-l8-and-the-big-match`~~ → `soccer-l8-the-goalkeeper`(临危当门将做出关键扑救,而非进球)
 
 > 旧 slug 的 draft 行已用新增的 `scripts/delete-stories.ts` 从库中清除。
-> ✅「同轨道情节去重」已固化进生成脚本(见上「情节多样性约束」)。本条 #2 仍开放的是「一条命令直连模型 API 批量产出」——当前生成仍走手动 / Workflow,产出率与拒绝原因统计也待补(需先选定 API/SDK 与计费)。
+> ✅「同轨道情节去重」已固化进生成脚本(见上「情节多样性约束」)。
+> ✅ 一条命令直连 API 已落地:prompt 组装抽到 `src/lib/story-prompt-builder.ts`(CLI/API 共用),`scripts/generate-content.ts` 用官方 `@anthropic-ai/sdk` + 结构化 JSON Schema 产出 → 校验 → 落 draft。需在 `.env` 配 `ANTHROPIC_API_KEY`;落 draft 后仍须人工在 `/admin` 通读发布(第 3 层不可省)。后续可选优化:Batches API(半价)、prompt caching 缓存词表。
 
 **Blocked by**:None(已有 Workflow 与 import 脚本作基础)
 
