@@ -1,0 +1,27 @@
+{
+  "slug": "animals-l4-the-shy-duck",
+  "title": "The Shy Duck",
+  "levelId": 4,
+  "interest": "animals",
+  "text": "Every morning {{name}} walks to the park. There are many ducks in the water. {{name}} carries some bread for them. The ducks swim near and eat fast. But one little duck is very shy. This duck always stays far away. It hides behind a green bush. {{name}} wants to be its friend. So {{name}} sits down and waits. Day after day, {{name}} comes back. {{name}} throws bread to the shy duck. The little duck swims a bit closer. One sunny morning it eats from {{name}}'s hand. The duck is not afraid now. It makes a happy little sound. {{name}} smiles and feels so glad. Now they are good friends.",
+  "glossary": [],
+  "questions": [
+    {
+      "prompt": "What does {{name}} carry for the ducks?",
+      "options": ["Bread", "Cake", "Fish"],
+      "answer": 0
+    },
+    {
+      "prompt": "How is the one little duck at first?",
+      "options": ["Brave", "Shy", "Big"],
+      "answer": 1
+    },
+    {
+      "prompt": "What does the shy duck do at the end?",
+      "options": ["It swims away", "It hides again", "It eats from {{name}}'s hand"],
+      "answer": 2
+    }
+  ],
+  "summary": "主角每天去公园喂鸭子,发现一只害羞的小鸭子总躲得远远的;主角耐心地天天来、慢慢扔面包给它,小鸭子一点点靠近,终于从主角手里吃食,两人成了好朋友。",
+  "status": "draft"
+}

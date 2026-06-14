@@ -1,0 +1,36 @@
+{
+  "slug": "dinosaurs-l6-dino-and-the-dark-night",
+  "title": "Dino and the Dark Night",
+  "levelId": 6,
+  "interest": "dinosaurs",
+  "text": "This is Dino. Dino is a big, kind dinosaur. Dino lived by {{name}}'s house. But Dino was afraid of the dark. Every night, Dino could not sleep. Dino was scared and sad. One night, {{name}} heard Dino cry. {{name}} ran to help Dino. \"Do not be afraid,\" said {{name}}. They sat on the soft grass. The wind was cool and soft. {{name}} held Dino's big hand. {{name}} looked up at the night sky. \"Look at the moon,\" said {{name}}. The moon was big and bright. \"Look at the stars too!\" said {{name}}. The stars were small and pretty. {{name}} sang a little song. Dino listened and felt calm. Dino looked up and smiled. \"The night is so beautiful,\" said Dino. Now Dino was not afraid. \"Thank you, my friend,\" said Dino. {{name}} gave Dino a big hug. Then Dino went to sleep. {{name}} was very happy too.",
+  "glossary": [
+    {
+      "word": "dinosaur",
+      "zh": "恐龙"
+    },
+    {
+      "word": "Dino",
+      "zh": "迪诺(恐龙的名字)"
+    }
+  ],
+  "questions": [
+    {
+      "prompt": "Why could Dino not sleep?",
+      "options": ["Dino was afraid of the dark", "Dino was hungry", "Dino was too cold"],
+      "answer": 0
+    },
+    {
+      "prompt": "What did {{name}} and Dino look at?",
+      "options": ["The sun", "The moon and stars", "The flowers"],
+      "answer": 1
+    },
+    {
+      "prompt": "How did Dino feel at the end?",
+      "options": ["Sad and scared", "Angry", "Happy and not afraid"],
+      "answer": 2
+    }
+  ],
+  "summary": "主角的恐龙朋友迪诺怕黑睡不着,主角陪它坐在草地上看月亮和星星、唱歌安慰它,迪诺不再害怕,安心入睡。",
+  "status": "draft"
+}

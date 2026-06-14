@@ -1,0 +1,27 @@
+{
+  "slug": "soccer-l7-the-new-kid",
+  "title": "The New Kid",
+  "levelId": 7,
+  "interest": "soccer",
+  "text": "A new boy came to {{name}}'s class on Monday. His name was Sam. Sam did not know anyone. Sam sat alone at lunch. Sam looked shy and sad. {{name}} saw Sam by the wall. \"Hi! Do you want to play soccer?\" {{name}} asked. Sam smiled. \"Yes, please!\" They went to the playground together. Other kids were playing on the field. {{name}} kicked the ball to Sam. Sam stopped the ball with one foot. Then Sam kicked it high and far. The ball flew into the goal! \"Wow! You are so good!\" {{name}} said. Sam laughed. \"I played a lot before.\" The other kids ran over to see. \"Play with us!\" they shouted. Sam was happy now. More kids came to play with them. They played all afternoon. Sam ran fast and passed well. The team won by three goals. After the game, Sam said thank you. \"You were my first friend here,\" Sam said. {{name}} smiled. \"Now you have many friends.\" Sam gave {{name}} a big hug. They walked home together. The next day, Sam was not shy at all.",
+  "glossary": [],
+  "questions": [
+    {
+      "prompt": "What did Sam do at lunch?",
+      "options": ["Sat alone", "Played soccer", "Ate cake"],
+      "answer": 0
+    },
+    {
+      "prompt": "What happened when Sam kicked the ball?",
+      "options": ["It hit the wall", "The ball flew into the goal", "The ball was lost"],
+      "answer": 1
+    },
+    {
+      "prompt": "How did Sam feel at the end of the day?",
+      "options": ["Sad", "Angry", "Happy"],
+      "answer": 2
+    }
+  ],
+  "summary": "主角发现班上新来的同学独自坐着很害羞,主动邀请他一起踢足球;新同学球技很好,大家欢迎他加入,球队赢了比赛,新同学交到第一个朋友不再害羞。",
+  "status": "draft"
+}

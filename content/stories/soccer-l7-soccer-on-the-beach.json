@@ -1,0 +1,27 @@
+{
+  "slug": "soccer-l7-soccer-on-the-beach",
+  "title": "Soccer on the Beach",
+  "levelId": 7,
+  "interest": "soccer",
+  "text": "{{name}} went to the beach with family. The sea was blue and the sand was soft. The wind was cool and the sky was clear. Birds flew high above the sea. {{name}} felt very happy on the trip. {{name}} brought a soccer ball. {{name}} played soccer with a cousin. The cousin's name was Lily. They kicked the ball on the warm sand. \"Catch it!\" {{name}} shouted to Lily. Lily kicked the ball very high. The ball went to the water. A wave came and pushed the ball. The ball went into the sea! \"Oh no!\" Lily cried. {{name}} ran fast to the water. {{name}} jumped and got the wet ball. \"I have it!\" {{name}} said. Lily clapped and laughed. They sat on the sand to rest. Then they made a goal with two hats. {{name}} kicked the ball into the goal. \"Goal!\" they shouted together. The family watched and clapped too. They played more games until the sun went down. {{name}} will go to the beach again next year.",
+  "glossary": [],
+  "questions": [
+    {
+      "prompt": "Where did the ball go?",
+      "options": ["into the sea", "up a tree", "into a car"],
+      "answer": 0
+    },
+    {
+      "prompt": "Who got the wet ball?",
+      "options": ["Lily", "{{name}}", "Mom"],
+      "answer": 1
+    },
+    {
+      "prompt": "What did they make a goal with?",
+      "options": ["two rocks", "a box", "two hats"],
+      "answer": 2
+    }
+  ],
+  "summary": "主角和家人去海边度假,与表亲在沙滩踢球,球被海浪冲进水里,主角跑去捡回湿球,两人用帽子做球门继续开心比赛,度过最棒的海滩日。",
+  "status": "draft"
+}

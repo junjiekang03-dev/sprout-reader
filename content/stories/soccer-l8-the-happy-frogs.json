@@ -1,0 +1,27 @@
+{
+  "slug": "soccer-l8-the-happy-frogs",
+  "title": "The Happy Frogs",
+  "levelId": 8,
+  "interest": "soccer",
+  "text": "{{name}} and three friends loved to play soccer. They played every day after school. One sunny day, {{name}} had a big idea. 'We should make our own team!' said {{name}}. Everyone clapped. 'Yes! But our team needs a name,' said Ben. They sat under a tree and started to think. 'We should call it the Blue Lions,' said Lily. 'I like the Fast Foxes,' said Ben. Sam wanted the Green Dragons. Everyone wanted a different name. They could not agree. {{name}} looked at the sky. A little frog hopped onto the ball. It sat there and did not move. The friends began to laugh. 'Look! Our ball has a friend,' said Lily. Then {{name}} had a new idea. 'We should be the Happy Frogs!' Everyone smiled. 'That is a funny name,' said Ben. 'But I like it!' They all said yes. The frog hopped away into the grass. It seemed to like the name too. The friends found some paint at home. They painted a green frog on an old sign. When the sign was dry, they put it up by the field. 'Now we are a real team,' said {{name}}. They kicked the ball until the sun went down. The Happy Frogs were ready for their first game. What a wonderful day it was!",
+  "glossary": [],
+  "questions": [
+    {
+      "prompt": "What did {{name}} want to make?",
+      "options": ["A cake", "A team", "A kite"],
+      "answer": 1
+    },
+    {
+      "prompt": "What hopped onto the ball?",
+      "options": ["A frog", "A dog", "A bird"],
+      "answer": 0
+    },
+    {
+      "prompt": "What name did the friends choose?",
+      "options": ["Fast Foxes", "Blue Lions", "Happy Frogs"],
+      "answer": 2
+    }
+  ],
+  "summary": "主角和三个朋友想组建足球队,却为队名争执不下;一只青蛙跳到球上逗笑大家,主角灵机一动提议叫\"快乐青蛙队\",众人一致同意,合力画好队牌挂在球场边,球队正式成立,迎接第一场比赛。",
+  "status": "draft"
+}

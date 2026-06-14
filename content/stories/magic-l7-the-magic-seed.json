@@ -1,0 +1,27 @@
+{
+  "slug": "magic-l7-the-magic-seed",
+  "title": "The Magic Seed",
+  "levelId": 7,
+  "interest": "magic",
+  "text": "One sunny morning, {{name}} walked in the garden. {{name}} found a tiny gold seed in the grass. The seed was warm and bright. \"This seed looks like magic,\" said {{name}}. {{name}} put the seed into the soft ground. Then {{name}} gave it some water. Wow! The seed began to grow very fast. It grew into a tall green tree. The tree was so high it reached the clouds. {{name}} was curious and started to climb. Up and up, {{name}} climbed for an hour. At the top, {{name}} found a little dragon. The dragon looked sad and alone. \"Why are you crying?\" asked {{name}}. \"I have no friends here,\" said the dragon. {{name}} smiled and gave the dragon a hug. \"I will be your friend,\" said {{name}}. The dragon was so happy and made a warm fire. They played games all afternoon. The dragon showed {{name}} how to fly. They flew over the hills and the lake. Later, {{name}} climbed back down the tree. \"I will come again tomorrow,\" said {{name}}. Every day, {{name}} and the dragon played together.",
+  "glossary": [],
+  "questions": [
+    {
+      "prompt": "What did {{name}} find in the grass?",
+      "options": ["A gold seed", "A gold key", "A gold ring"],
+      "answer": 0
+    },
+    {
+      "prompt": "Who lived at the top of the tall tree?",
+      "options": ["A bird", "A little dragon", "A fairy"],
+      "answer": 1
+    },
+    {
+      "prompt": "Why was the dragon sad?",
+      "options": ["It was hungry", "It was lost", "It had no friends"],
+      "answer": 2
+    }
+  ],
+  "summary": "主角在花园发现一颗金色魔法种子,种下浇水后长成直插云霄的大树;主角爬到树顶遇到孤单的小龙,主动和它做朋友,小龙带主角飞翔,从此天天一起玩。",
+  "status": "draft"
+}

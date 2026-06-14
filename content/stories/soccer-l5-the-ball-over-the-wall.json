@@ -1,0 +1,32 @@
+{
+  "slug": "soccer-l5-the-ball-over-the-wall",
+  "title": "The Ball Over the Wall",
+  "levelId": 5,
+  "interest": "soccer",
+  "text": "{{name}} likes to play soccer every day. Today {{name}} kicks the ball very hard. The ball flies up high. It goes past a tall wall. Oh no! The ball is gone. {{name}} feels sad now. A garden is behind the wall. {{name}} is afraid to go there. But {{name}} wants the ball back. So {{name}} is brave today. {{name}} walks to the green gate. An old man opens the door. The man has a kind smile. 'Hello,' says {{name}}. 'My ball is in your garden.' The man laughs. 'Come in!' says the man. The ball is by a rose bush. {{name}} picks it up. 'Thank you,' says {{name}}. 'Can you play with me?' The old man smiles. They kick the ball together. Now they are good friends. What a happy afternoon!",
+  "glossary": [
+    {
+      "word": "soccer",
+      "zh": "足球(运动)"
+    }
+  ],
+  "questions": [
+    {
+      "prompt": "Where does the ball go?",
+      "options": ["Past a tall wall", "Into the water", "Up a tree"],
+      "answer": 0
+    },
+    {
+      "prompt": "How does {{name}} feel before going to the gate?",
+      "options": ["Happy", "Afraid", "Sleepy"],
+      "answer": 1
+    },
+    {
+      "prompt": "What do {{name}} and the old man do at the end?",
+      "options": ["Eat lunch", "Play soccer together", "Go to school"],
+      "answer": 1
+    }
+  ],
+  "summary": "主角踢球太用力,球飞过高墙落入邻居花园;主角鼓起勇气去敲门,善良的老人把球还给主角并一起踢球,两人成了好朋友。",
+  "status": "draft"
+}

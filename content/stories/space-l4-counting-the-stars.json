@@ -1,0 +1,32 @@
+{
+  "slug": "space-l4-counting-the-stars",
+  "title": "Counting the Stars",
+  "levelId": 4,
+  "interest": "space",
+  "text": "It is night now. {{name}} sits in the garden. The big sky is dark and clear. There are so many stars! {{name}} starts to count them. 'One, two, three, four...' There are too many stars! {{name}} laughs. The stars shine like little lights. Then one star moves very fast. It is a comet! It is bright and white. 'Wow! Look at it!' {{name}} shouts. {{name}} points at the comet. {{name}} stands up and waves. The comet seems to wink. It flies away into the dark. 'Goodbye, little comet,' says {{name}}. Mom comes and looks too. They count the stars together. What a beautiful night this is!",
+  "glossary": [
+    {
+      "word": "comet",
+      "zh": "彗星(拖着明亮光尾、快速划过天空的星体)"
+    }
+  ],
+  "questions": [
+    {
+      "prompt": "Where does {{name}} sit at night?",
+      "options": ["In the garden", "In the bedroom", "In the classroom"],
+      "answer": 0
+    },
+    {
+      "prompt": "What moves very fast in the sky?",
+      "options": ["A bird", "A comet", "A plane"],
+      "answer": 1
+    },
+    {
+      "prompt": "Who comes to look and count too?",
+      "options": ["A friend", "Dad", "Mom"],
+      "answer": 2
+    }
+  ],
+  "summary": "主角夜晚在花园数星星,数不清便笑了;一颗移动很快的彗星划过天空,主角指着它、挥手道别,妈妈也来一起数星星,共度温暖美好的夜晚。",
+  "status": "draft"
+}

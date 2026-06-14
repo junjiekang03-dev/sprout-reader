@@ -1,0 +1,27 @@
+{
+  "slug": "space-l5-the-moon-in-the-day",
+  "title": "The Moon in the Day",
+  "levelId": 5,
+  "interest": "space",
+  "text": "One morning {{name}} looked up at the sky. The sun was bright and warm. But there was the moon too! \"The moon is out in the day!\" {{name}} said. {{name}} felt very curious. \"Why is the moon here now?\" Dad came to look. \"The moon is always there,\" said Dad. \"Sometimes we see it in the day.\" {{name}} watched the moon all day long. The sun was big and gold. The moon was small and gray. {{name}} drew a picture of them. After lunch the moon was still there. \"Hello, little moon,\" {{name}} said with a smile. Soon the evening came. The sun went down slow. Now the moon was bright and white. The stars came out, one by one. {{name}} looked up and felt glad. The moon was a friend all day.",
+  "glossary": [],
+  "questions": [
+    {
+      "prompt": "Where did {{name}} see the moon at first?",
+      "options": ["In the day sky", "In a book", "In bed"],
+      "answer": 0
+    },
+    {
+      "prompt": "What did {{name}} draw?",
+      "options": ["A cat", "The sun and moon", "A car"],
+      "answer": 1
+    },
+    {
+      "prompt": "When the evening came, the moon was...",
+      "options": ["dark", "gone", "bright and white"],
+      "answer": 2
+    }
+  ],
+  "summary": "主角某天早晨惊讶地发现白天的天空里也有月亮,好奇地问爸爸,得知月亮其实一直都在;主角一整天观察月亮、为太阳和月亮画画,到傍晚太阳落下、月亮变亮、星星出来,主角开心地把月亮当成了一整天的朋友。",
+  "status": "draft"
+}

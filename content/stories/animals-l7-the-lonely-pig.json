@@ -1,0 +1,27 @@
+{
+  "slug": "animals-l7-the-lonely-pig",
+  "title": "The Lonely Pig",
+  "levelId": 7,
+  "interest": "animals",
+  "text": "Last Saturday, {{name}} went to Grandpa's farm. The sun was warm and bright. {{name}} ran to see the animals. A little pig sat alone by the gate. The pig looked very sad and quiet. 'Why are you sad?' {{name}} asked softly. The pig had no friends to play with. {{name}} wanted to help the little pig. Near the lake, a duck swam alone. By the grass, a hen looked for food. {{name}} had a good idea. 'Let us all play together!' {{name}} said. {{name}} took some bread and called the animals. The duck came first, then the hen. The little pig ran to them quickly. {{name}} threw bread on the soft grass. The pig and the duck ate side by side. The hen jumped and made a funny noise. Soon all the animals played in the sun. The little pig was not sad now. It ran and hopped around the farm. {{name}} laughed and clapped both hands. Grandpa came and saw the happy animals. 'You are a kind friend,' Grandpa said. {{name}} smiled at the little pig. Now the pig had three new friends.",
+  "glossary": [],
+  "questions": [
+    {
+      "prompt": "Why was the little pig sad?",
+      "options": ["It had no friends", "It was hungry", "It was ill"],
+      "answer": 0
+    },
+    {
+      "prompt": "What did {{name}} throw on the grass?",
+      "options": ["A ball", "Some bread", "A bone"],
+      "answer": 1
+    },
+    {
+      "prompt": "How many new friends did the pig get?",
+      "options": ["Two", "One", "Three"],
+      "answer": 2
+    }
+  ],
+  "summary": "主角去爷爷农场,发现一只孤单伤心的小猪,便用面包把鸭子和母鸡引来一起玩,帮小猪交到三个新朋友,小猪变得开心。",
+  "status": "draft"
+}

@@ -1,0 +1,27 @@
+{
+  "slug": "space-l6-the-sun-is-a-star",
+  "title": "The Sun Is a Star",
+  "levelId": 6,
+  "interest": "space",
+  "text": "One morning {{name}} sat in class. The teacher had a big picture of the sun. \"The sun is a star,\" the teacher said. {{name}} was very curious. The sun looked so big and bright. But the stars at night looked tiny. \"Why are the stars so small?\" {{name}} asked. \"They are very far away,\" the teacher said. \"The sun is near. That is why it is big.\" {{name}} smiled and felt happy. The teacher gave {{name}} a gold star. {{name}} was very glad. After school {{name}} looked up at the sun. It was warm and yellow. At night {{name}} saw many little stars. They were suns too, but far away. {{name}} drew a big yellow sun on a card. \"You are my star,\" {{name}} said. {{name}} put the card on the wall. The sun was a new friend now. Every day {{name}} looked up and smiled.",
+  "glossary": [],
+  "questions": [
+    {
+      "prompt": "What did the teacher say the sun is?",
+      "options": ["a moon", "a cloud", "a star"],
+      "answer": 2
+    },
+    {
+      "prompt": "Why are the other stars so small?",
+      "options": ["because they are far away", "because they are cold", "because they are near"],
+      "answer": 0
+    },
+    {
+      "prompt": "What did {{name}} draw on a card?",
+      "options": ["a blue moon", "a big yellow sun", "a green tree"],
+      "answer": 1
+    }
+  ],
+  "summary": "主角在课堂上得知太阳其实是一颗星星,因好奇而提问,老师解释其他星星因离得远才显得小;主角白天看太阳、夜里看星星,明白星星也是太阳,最后画下太阳贴在墙上,把太阳当成了新朋友。",
+  "status": "draft"
+}

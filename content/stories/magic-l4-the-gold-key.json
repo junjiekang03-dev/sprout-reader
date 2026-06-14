@@ -1,0 +1,32 @@
+{
+  "slug": "magic-l4-the-gold-key",
+  "title": "The Gold Key",
+  "levelId": 4,
+  "interest": "magic",
+  "text": "{{name}} is in the garden today. There is a key in the grass. The key is gold and bright. It shines in {{name}}'s hand. {{name}} is very curious now. Look! There is a tiny door in a tree. {{name}} puts the key in it. The little door opens. Wow! There is a small room there. A little bird sits on a rock. The bird is shy and quiet. {{name}} sits down and waits. {{name}} smiles at the bird. Then the bird starts to sing. The song is soft and clear. {{name}} laughs and claps. The bird is happy too. Now they are good friends. {{name}} comes back every day to play.",
+  "glossary": [
+    {
+      "word": "key",
+      "zh": "钥匙"
+    }
+  ],
+  "questions": [
+    {
+      "prompt": "What does {{name}} find in the grass?",
+      "options": ["A bird", "A gold key", "A hat"],
+      "answer": 1
+    },
+    {
+      "prompt": "What is in the little room?",
+      "options": ["A small bird", "A big dog", "A cat"],
+      "answer": 0
+    },
+    {
+      "prompt": "What does the bird do at the end?",
+      "options": ["Runs away", "Sleeps", "Sings a song"],
+      "answer": 2
+    }
+  ],
+  "summary": "主角在花园草地上发现一把发光的金钥匙,用它打开树上的小门,里面有只害羞的小鸟;主角耐心坐下等待并微笑,小鸟终于为主角唱起歌,两人成了好朋友,主角每天都来玩。",
+  "status": "draft"
+}

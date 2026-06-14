@@ -1,0 +1,27 @@
+{
+  "slug": "soccer-l7-the-lost-shoe",
+  "title": "The Lost Shoe",
+  "levelId": 7,
+  "interest": "soccer",
+  "text": "Today was the big soccer game. {{name}} woke up early and felt excited. {{name}} put on one soccer shoe. But the other shoe was lost! {{name}} looked under the bed. The shoe was not there. {{name}} looked behind the door. It was not there either. {{name}} looked everywhere in the bedroom. Where could the shoe be? \"Where is my shoe?\" {{name}} said. Mom came to help look. They looked in the bag and the box. Then {{name}} heard a soft noise. The little dog ran into the room. The dog had the shoe in its mouth! \"There it is!\" {{name}} laughed. The dog liked to hide things. {{name}} gave the dog a gentle hug. Then {{name}} put on the shoe fast. {{name}} ran to the soccer field. The game was about to start. {{name}} played well and had fun. {{name}}'s team won the game. Everyone clapped for the team. {{name}} thanked Mom and the funny dog. It was a wonderful day for {{name}}.",
+  "glossary": [],
+  "questions": [
+    {
+      "prompt": "What did {{name}} lose?",
+      "options": ["a shoe", "a ball", "a hat"],
+      "answer": 0
+    },
+    {
+      "prompt": "Who had the shoe?",
+      "options": ["Mom", "the dog", "a friend"],
+      "answer": 1
+    },
+    {
+      "prompt": "What happened at the game?",
+      "options": ["the game stopped", "it rained", "{{name}}'s team won"],
+      "answer": 2
+    }
+  ],
+  "summary": "比赛日清晨主角找不到一只足球鞋,翻遍床下门后和包里都没有,最后发现是小狗把鞋藏起来叼在嘴里,主角穿好鞋赶到球场,球队赢得比赛。",
+  "status": "draft"
+}

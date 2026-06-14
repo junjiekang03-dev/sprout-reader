@@ -14,3 +14,6 @@ next-env.d.ts
 
 # 预生成的 TTS 音频(体积大,部署时走对象存储)
 public/audio/
+
+# Stitch 设计交接参考(非 app 代码,不入库)
+design/

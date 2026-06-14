@@ -1,0 +1,32 @@
+{
+  "slug": "dinosaurs-l6-the-kite-in-the-tree",
+  "title": "The Kite in the Tree",
+  "levelId": 6,
+  "interest": "dinosaurs",
+  "text": "{{name}} played with a red kite in the park. The wind was strong today. The kite went up and up. But the kite stayed in a tall tree. {{name}} could not get it. {{name}} looked up at the tree. {{name}} felt very sad. Then a big dinosaur came. It came to {{name}}. It was very tall and kind. \"Hello! I am Spike,\" it said. \"I can help you,\" Spike said. Spike put its head up high. The kite was very high too. Spike got the kite gently. Then Spike gave it back. \"Thank you, Spike!\" {{name}} said. {{name}} was so happy again. They played with the kite together. The kite flew in the blue sky. {{name}} and Spike ran and laughed. What a fun afternoon!",
+  "glossary": [
+    {
+      "word": "dinosaur",
+      "zh": "恐龙"
+    }
+  ],
+  "questions": [
+    {
+      "prompt": "What did {{name}} fly in the park?",
+      "options": ["A ball", "A red kite", "A plane"],
+      "answer": 1
+    },
+    {
+      "prompt": "Why was {{name}} sad?",
+      "options": ["The kite stayed in a tree", "It was rainy", "Spike was angry"],
+      "answer": 0
+    },
+    {
+      "prompt": "How did Spike help {{name}}?",
+      "options": ["Spike sang a song", "Spike ran fast", "Spike got the kite"],
+      "answer": 2
+    }
+  ],
+  "summary": "主角的红风筝被风吹到高高的树上拿不下来很伤心,一只高大友善的恐龙斯派克用高高的头帮忙取下风筝,两人一起开心地放风筝玩耍。",
+  "status": "draft"
+}

@@ -1,0 +1,36 @@
+{
+  "slug": "princess-l6-the-quiet-castle",
+  "title": "The Quiet Castle",
+  "levelId": 6,
+  "interest": "princess",
+  "text": "Princess Lily lived in a big castle. The castle was very quiet. Lily had no friends, so Lily was sad. One day {{name}} came to the gate. {{name}} called and asked, \"Can I play?\" Lily was glad and opened the door. \"Yes! Come in!\" Lily said with a smile. They ran into the big hall. {{name}} said, \"Let us play a game!\" They played hide and find. {{name}} hid behind a chair. Lily looked and looked. \"I found you!\" Lily said. They laughed together. Then they danced in the hall. The room was not quiet now. It was full of fun. {{name}} taught Lily a new song. They sang it loud and clear. The sun went down. {{name}} had to go home. \"Will you come back?\" Lily asked. \"Yes, I will come tomorrow,\" {{name}} said. Lily gave {{name}} a big hug. Now the castle was not quiet. And Lily was not alone. They were good friends.",
+  "glossary": [
+    {
+      "word": "princess",
+      "zh": "公主"
+    },
+    {
+      "word": "castle",
+      "zh": "城堡"
+    }
+  ],
+  "questions": [
+    {
+      "prompt": "Why was Lily sad at first?",
+      "options": ["Lily had no friends.", "Lily was hungry.", "Lily was ill."],
+      "answer": 0
+    },
+    {
+      "prompt": "What did {{name}} teach Lily?",
+      "options": ["a new game", "a dance", "a new song"],
+      "answer": 2
+    },
+    {
+      "prompt": "How did Lily feel at the end?",
+      "options": ["sad and alone", "happy with a friend", "tired and quiet"],
+      "answer": 1
+    }
+  ],
+  "summary": "主角拜访住在大城堡里孤单的公主莉莉,陪她玩捉迷藏、跳舞、教她新歌,城堡不再安静,两人成为好朋友。",
+  "status": "draft"
+}

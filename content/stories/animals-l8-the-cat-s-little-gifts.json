@@ -1,0 +1,32 @@
+{
+  "slug": "animals-l8-the-cat-s-little-gifts",
+  "title": "The Cat's Little Gifts",
+  "levelId": 8,
+  "interest": "animals",
+  "text": "Every morning, {{name}} found a little gift by the door. One day it was a leaf. Next day it was a small stone. Then a yellow flower came too. {{name}} was very curious. \"Who brings these gifts to me?\" {{name}} said.\n\nOne morning, {{name}} woke up early. A gray cat was at the door! The cat put down a tiny stone. Then the cat ran away fast. {{name}} wanted to know more. \"I am going to follow the cat,\" said {{name}}.\n\n{{name}} walked slowly behind the cat. The cat went past the garden. It went under a big tree. There was an old box on the ground. {{name}} looked inside the box. Three tiny kittens were sleeping there!\n\nThe cat looked up at {{name}}. The kittens were hungry and cold. \"I should help them,\" {{name}} said. {{name}} ran home and got some milk. {{name}} also brought a soft coat for the box.\n\nThe kittens drank the milk happily. The mother cat was very glad. When {{name}} sat down, one kitten climbed onto a knee. {{name}} smiled and felt warm inside.\n\nNow {{name}} visits the box every day. The cat brings no more gifts. But {{name}} has a better gift now. Four new animal friends wait by the tree. They are the best friends in town.",
+  "glossary": [
+    {
+      "word": "kitten",
+      "zh": "小猫"
+    }
+  ],
+  "questions": [
+    {
+      "prompt": "What did {{name}} find by the door each morning?",
+      "options": ["A little gift", "A big ball", "A book"],
+      "answer": 0
+    },
+    {
+      "prompt": "What was inside the old box?",
+      "options": ["Some toys", "Three kittens", "A dog"],
+      "answer": 1
+    },
+    {
+      "prompt": "How did {{name}} feel at the end?",
+      "options": ["Angry", "Sad", "Warm and happy"],
+      "answer": 2
+    }
+  ],
+  "summary": "主角发现每天门口都有小礼物,出于好奇跟踪一只灰猫,发现树下旧箱子里有三只又冷又饿的小猫;主角拿来牛奶和软外套帮助它们,从此和猫妈妈与小猫成了好朋友。",
+  "status": "draft"
+}

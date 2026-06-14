@@ -1,0 +1,32 @@
+{
+  "slug": "princess-l8-the-castle-garden",
+  "title": "The Castle Garden",
+  "levelId": 8,
+  "interest": "princess",
+  "text": "Princess Rosa lived in a big castle. The castle had a garden by the gate. But the garden had no flowers. It looked gray and sad. \"I want flowers for the festival,\" said Rosa. {{name}} came to visit on Monday. \"I am going to help you,\" said {{name}}. The two friends went to the garden. They put many little seeds in the ground. Then they gave the seeds some water. \"When will the flowers grow?\" asked Rosa. \"We must wait,\" said {{name}}. Every day the two friends came back. They gave the plants water with gentle hands. But no flowers came up. Rosa felt sad and tired. \"Maybe we should stop,\" said Rosa. \"No, we must not give up,\" said {{name}}. \"Good things take time.\" So they waited and waited. The two friends sang songs near the seeds. They hoped the flowers would come soon. One sunny morning, Rosa ran to the garden. \"Wow! Come and look!\" yelled Rosa. Pink and yellow flowers were everywhere. The garden was bright and beautiful now. {{name}} gave Rosa a big hug. \"We did it together!\" said {{name}}. The festival began that afternoon. People came to see the lovely garden. The king smiled at the flowers. \"This is the best gift,\" said the king. Rosa and {{name}} were very happy.",
+  "glossary": [
+    {
+      "word": "seed",
+      "zh": "种子"
+    }
+  ],
+  "questions": [
+    {
+      "prompt": "What did Rosa want for the festival?",
+      "options": ["Flowers", "A new cat", "A gold crown"],
+      "answer": 0
+    },
+    {
+      "prompt": "When no flowers came up, what did {{name}} say?",
+      "options": ["Let us stop now", "We must not give up", "Let us go home"],
+      "answer": 1
+    },
+    {
+      "prompt": "Who helped Rosa with the garden?",
+      "options": ["The king", "A little cat", "{{name}}"],
+      "answer": 2
+    }
+  ],
+  "summary": "主角帮公主罗莎在城堡没有花的花园里种花准备节日,花迟迟不开罗莎想放弃,主角鼓励她坚持继续浇水照料,最终鲜花盛开,花园成了节日里国王最喜欢的礼物。",
+  "status": "draft"
+}
