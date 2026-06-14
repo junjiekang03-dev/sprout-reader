@@ -5,9 +5,18 @@
   "interest": "princess",
   "summary": "找丢失的宠物:小公主 Mia 的白猫 Snow 不见了到处找,主角来玩时发现 Snow 在包里。",
   "text": "This is Mia. Mia is a little princess. She is six. Mia has a white cat. The cat is Snow. Where is Snow? Snow is not in the bed. Snow is not in the box. {{name}} comes to play. Look! Snow is here! Snow is in the bag! Mia is happy. {{name}} is happy too.",
-  "glossary": [{ "word": "princess", "zh": "公主" }],
+  "glossary": [
+    {
+      "word": "princess",
+      "zh": "公主"
+    }
+  ],
   "questions": [
-    { "prompt": "Who is Mia?", "options": ["A princess", "A teacher", "A dog"], "answer": 0 },
+    {
+      "prompt": "Who is Mia?",
+      "options": ["A princess", "A teacher", "A dog"],
+      "answer": 0
+    },
     {
       "prompt": "What is Snow?",
       "options": ["A white cat", "A black dog", "A red bird"],
@@ -18,5 +27,6 @@
       "options": ["In the bag", "In the bed", "In the box"],
       "answer": 0
     }
-  ]
+  ],
+  "status": "published"
 }

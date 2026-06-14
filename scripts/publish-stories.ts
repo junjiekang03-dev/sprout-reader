@@ -4,6 +4,7 @@
  */
 
 import { join } from "path";
+import { readFileSync, writeFileSync, existsSync } from "fs";
 import { PrismaClient } from "@prisma/client";
 
 try {
@@ -13,6 +14,7 @@ try {
 }
 
 const prisma = new PrismaClient();
+const STORIES_DIR = join(__dirname, "..", "content", "stories");
 const slugs = process.argv.slice(2);
 
 if (slugs.length === 0) {
@@ -23,6 +25,15 @@ if (slugs.length === 0) {
 (async () => {
   for (const slug of slugs) {
     const r = await prisma.story.updateMany({ where: { slug }, data: { status: "published" } });
+    // 同步回写 JSON 源文件的 status,否则全新环境 db:seed 会把它当 draft 导入(部署隐患)
+    const file = join(STORIES_DIR, `${slug}.json`);
+    if (existsSync(file)) {
+      const data = JSON.parse(readFileSync(file, "utf-8"));
+      if (data.status !== "published") {
+        data.status = "published";
+        writeFileSync(file, JSON.stringify(data, null, 2) + "\n");
+      }
+    }
     console.log(r.count > 0 ? `✅ 已发布 ${slug}` : `⚠️ 未找到 ${slug}`);
   }
   await prisma.$disconnect();

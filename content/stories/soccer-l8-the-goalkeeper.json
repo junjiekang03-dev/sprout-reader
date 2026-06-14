@@ -5,7 +5,12 @@
   "interest": "soccer",
   "summary": "当门将做出关键扑救:球队守门员病了,主角临危守门很紧张,最后时刻对方射门时鼓起勇气扑出关键球守住球队。",
   "text": "{{name}} loved soccer. But {{name}} never played in goal.\n\nToday the team had a big match. But the goalkeeper was sick in bed. The coach looked at {{name}}.\n\n\"You must play in goal today,\" the coach said.\n\n{{name}} felt scared. The net looked so big. \"I must stop the ball,\" {{name}} thought. \"I should be brave.\"\n\nThe whistle gave a loud sound. The match started. Both teams were quick and strong. The score stayed close. No team could win.\n\nTime was almost up. Then a player on the other team got the ball. The player ran fast. Soon nobody was near the goal.\n\n\"They are going to score!\" a friend yelled.\n\n{{name}} stood ready. The player gave the ball a hard kick. The ball flew high to the net.\n\nWhen the ball came, {{name}} jumped up. {{name}} reached far. {{name}} caught the ball! It was a great save!\n\nThe match was over. The team did not lose. The players ran to {{name}}.\n\n\"What a save!\" they cheered. \"You were so brave!\"\n\n{{name}} smiled. At first {{name}} felt scared. But {{name}} was brave, and {{name}} stopped the ball.\n\nEvery player is important. Now {{name}} is not afraid of the goal.",
-  "glossary": [{ "word": "goalkeeper", "zh": "守门员(守球门的球员)" }],
+  "glossary": [
+    {
+      "word": "goalkeeper",
+      "zh": "守门员(守球门的球员)"
+    }
+  ],
   "questions": [
     {
       "prompt": "Why did {{name}} have to play in goal today?",
@@ -35,5 +40,5 @@
       "answer": 0
     }
   ],
-  "status": "draft"
+  "status": "published"
 }

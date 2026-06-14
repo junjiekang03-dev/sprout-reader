@@ -7,12 +7,21 @@
   "text": "{{name}} has a dog. The dog is Max. Max is little and white. {{name}} has a red ball. \"Look, Max! Look at the ball!\" The ball goes up. The ball goes down. Max runs to the ball. Max gets the ball. Good dog, Max! {{name}} is happy. Max is happy too.",
   "glossary": [],
   "questions": [
-    { "prompt": "Who is Max?", "options": ["A dog", "A cat", "A bird"], "answer": 0 },
-    { "prompt": "What color is the ball?", "options": ["Red", "Blue", "Green"], "answer": 0 },
+    {
+      "prompt": "Who is Max?",
+      "options": ["A dog", "A cat", "A bird"],
+      "answer": 0
+    },
+    {
+      "prompt": "What color is the ball?",
+      "options": ["Red", "Blue", "Green"],
+      "answer": 0
+    },
     {
       "prompt": "Is Max happy at the end?",
       "options": ["Yes", "No", "We do not know"],
       "answer": 0
     }
-  ]
+  ],
+  "status": "published"
 }

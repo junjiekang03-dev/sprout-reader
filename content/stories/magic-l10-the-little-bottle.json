@@ -5,7 +5,12 @@
   "interest": "magic",
   "summary": "得到魔法物+为他人所用:主角躲雨进森林老奶奶家,得一只「只能为别人用」的魔法小瓶,次日用它救出掉进洞的小猫。",
   "text": "Deep in the green forest, there was a little house. An old woman named Granny Rose lived there. People said that she knew old magic. One afternoon, {{name}} walked into the forest to pick fruit. Suddenly, dark clouds covered the sky. Rain fell like a river, and {{name}} ran to the little house. Granny Rose opened the door with a warm smile. \"Come in, child. I have waited for you,\" she said. \"Waited for me? But you have never met me!\" said {{name}}. \"My owl has told me everything,\" she laughed. A big old owl sat by the fire. Its eyes were bright like gold. \"I have lived here for a hundred years,\" said Granny Rose. \"And I have helped everyone who comes to this forest.\" She gave {{name}} a cup of hot tea. Then she pointed at a small bottle on the shelf. \"If you ever need help, open this bottle,\" she said. \"But you must use it only for someone else.\" {{name}} thanked her and put the bottle in the bag. When the rain stopped, {{name}} walked home and thought about the strange day. The next morning, {{name}} heard a sad sound near the school. A little cat had fallen into a deep hole. Nobody could reach it, and the cat was crying. Then {{name}} remembered the little bottle. \"This is for someone else, just like she said!\" {{name}} opened the bottle, and silver light flew out. The light lifted the little cat up into the air. The cat was safe! Everyone asked, \"How have you done this?\" {{name}} just smiled and looked at the sky. Far away, an old owl was flying over the forest. Some secrets are best when they stay secret.",
-  "glossary": [{ "word": "owl", "zh": "猫头鹰" }],
+  "glossary": [
+    {
+      "word": "owl",
+      "zh": "猫头鹰"
+    }
+  ],
   "questions": [
     {
       "prompt": "Who lived in the little house in the forest?",
@@ -22,5 +27,6 @@
       "options": ["To help a cat", "To buy candy", "To fly home"],
       "answer": 0
     }
-  ]
+  ],
+  "status": "published"
 }

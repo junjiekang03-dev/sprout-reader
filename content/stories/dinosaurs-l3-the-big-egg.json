@@ -5,7 +5,12 @@
   "interest": "dinosaurs",
   "summary": "孵蛋+找妈妈:公园发现大蛋孵出小恐龙找妈妈,恐龙妈妈出现,小恐龙跑向妈妈。",
   "text": "{{name}} is at the park. {{name}} sees a big egg. It is white and big. What is in the egg? Is it a bird? No. Is it a duck? No. The egg opens! A baby dinosaur looks out. It is little and green. The baby looks at {{name}}. \"Mom? Mom?\" it says. \"No, no! I am not a mom!\" A big dinosaur comes. She is very big! The baby runs to her. \"Bye, little dinosaur!\" says {{name}}.",
-  "glossary": [{ "word": "dinosaur", "zh": "恐龙" }],
+  "glossary": [
+    {
+      "word": "dinosaur",
+      "zh": "恐龙"
+    }
+  ],
   "questions": [
     {
       "prompt": "What does {{name}} see at the park?",
@@ -22,5 +27,6 @@
       "options": ["A big dinosaur", "A teacher", "A cat"],
       "answer": 0
     }
-  ]
+  ],
+  "status": "published"
 }
