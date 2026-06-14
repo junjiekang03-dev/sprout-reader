@@ -12,6 +12,8 @@ interface Props {
   questions: { prompt: string; options: { text: string; value: number }[] }[];
   audioUrl: string | null;
   childName: string;
+  interest: string;
+  slug: string;
 }
 
 const EYE_REST_MS = 20 * 60 * 1000; // 20 分钟护眼提醒
@@ -126,21 +128,21 @@ export function Reader(props: Props) {
     return (
       <main className="mx-auto flex min-h-dvh max-w-md flex-col items-center justify-center px-6 text-center">
         <div className="text-7xl">{allRight ? "🏆" : result.correct > 0 ? "🌟" : "🌱"}</div>
-        <h1 className="mt-4 text-2xl font-bold">{allRight ? "太棒了!" : "读完啦,继续加油!"}</h1>
-        <p className="mt-2 text-stone-600">
+        <h1 className="mt-4 text-2xl font-bold text-ink">
+          {allRight ? "太棒了!" : "读完啦,继续加油!"}
+        </h1>
+        <p className="mt-2 text-muted">
           答对 {result.correct}/{result.total} 题
         </p>
-        <div className="mt-6 w-full rounded-3xl bg-white p-6 shadow-sm">
-          <p className="text-sm text-stone-500">连续阅读</p>
-          <p className="mt-1 text-4xl font-bold text-amber-500">🔥 {result.streak} 天</p>
-          <p className="mt-3 text-xs text-stone-400">
-            {props.childName} 又离「用英语想事情」近了一步
-          </p>
+        <div className="mt-6 w-full rounded-card bg-card p-6 shadow-card">
+          <p className="text-sm text-muted">连续阅读</p>
+          <p className="mt-1 text-4xl font-bold text-accent">🔥 {result.streak} 天</p>
+          <p className="mt-3 text-xs text-faint">{props.childName} 又离「用英语想事情」近了一步</p>
         </div>
         <div className="mt-8 flex w-full gap-3">
           <Link
             href="/home"
-            className="flex-1 rounded-2xl bg-amber-500 py-4 font-bold text-white active:scale-95"
+            className="flex-1 rounded-xl bg-primary py-4 font-bold text-white shadow-sm active:scale-[0.98]"
           >
             回到主页
           </Link>
@@ -154,16 +156,16 @@ export function Reader(props: Props) {
     const q = props.questions[qIndex];
     return (
       <main className="mx-auto flex min-h-dvh max-w-md flex-col px-6 py-10">
-        <p className="text-sm text-stone-500">
+        <p className="text-sm text-muted">
           读懂了吗?第 {qIndex + 1}/{props.questions.length} 题
         </p>
-        <h2 className="mt-4 text-xl leading-relaxed font-medium">{q.prompt}</h2>
+        <h2 className="mt-4 text-xl leading-relaxed font-semibold text-ink">{q.prompt}</h2>
         <div className="mt-8 space-y-3">
           {q.options.map((opt) => (
             <button
               key={opt.value}
               onClick={() => pickAnswer(opt.value)}
-              className="w-full rounded-2xl border-2 border-stone-200 bg-white px-5 py-4 text-left text-lg active:scale-95 active:border-amber-400"
+              className="w-full rounded-xl border-2 border-line bg-card px-5 py-4 text-left text-lg text-ink shadow-card transition active:scale-[0.98] active:border-primary"
             >
               {opt.text}
             </button>
@@ -175,14 +177,16 @@ export function Reader(props: Props) {
 
   /* ---------- 阅读页 ---------- */
   return (
-    <main className="mx-auto max-w-md px-6 py-8 pb-32">
+    <main className="mx-auto max-w-md px-6 py-8 pb-32 md:max-w-5xl">
       <header className="flex items-center justify-between">
-        <Link href="/home" className="text-stone-400">
+        <Link href="/home" className="text-sm text-faint">
           ← 返回
         </Link>
         <button
           onClick={toggleAudio}
-          className="rounded-full bg-amber-100 px-4 py-2 text-sm font-bold text-amber-700 active:scale-95"
+          className={`rounded-full px-4 py-2 text-sm font-bold transition active:scale-95 ${
+            playing ? "bg-secondary text-white" : "bg-secondary-soft text-secondary-ink"
+          }`}
         >
           {playing ? "⏸ 暂停朗读" : "🎧 听老师读"}
         </button>
@@ -191,26 +195,54 @@ export function Reader(props: Props) {
         <audio ref={audioRef} src={props.audioUrl} onEnded={() => setPlaying(false)} />
       )}
 
-      <h1 className="mt-6 text-2xl font-bold">{props.title}</h1>
-      <p className="mt-1 text-xs text-stone-400">看不懂的单词,点一下试试 👆</p>
+      {/* 左图右文(宽屏两栏 / 窄屏图在上) */}
+      <div className="md:flex md:items-start md:gap-10">
+        {/* 故事插画:按篇取图,缺图回退到本轨道插画 */}
+        <figure className="mt-5 md:sticky md:top-6 md:mt-1 md:w-2/5 md:shrink-0">
+          <div className="overflow-hidden rounded-card bg-secondary-soft shadow-card">
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img
+              src={`/illustrations/stories/${props.slug}.jpg`}
+              alt={`${props.title} 故事插画`}
+              onError={(e) => {
+                const img = e.currentTarget;
+                if (!img.dataset.fb) {
+                  img.dataset.fb = "1";
+                  img.src = `/illustrations/${props.interest}.svg`;
+                }
+              }}
+              className="block aspect-square w-full object-cover"
+            />
+          </div>
+        </figure>
 
-      <article className="mt-6 text-[1.35rem] leading-loose tracking-wide">
-        {props.text.split(/\s+/).map((token, i) => (
-          <span key={i}>
-            <button onClick={() => lookup(token)} className="rounded px-0.5 active:bg-amber-200">
-              {token}
-            </button>{" "}
-          </span>
-        ))}
-      </article>
+        {/* 正文 */}
+        <div className="md:min-w-0 md:flex-1">
+          <h1 className="mt-6 text-2xl font-bold text-ink md:mt-1">{props.title}</h1>
+          <p className="mt-1 text-xs text-faint">看不懂的单词,点一下试试 👆</p>
 
-      <div className="fixed inset-x-0 bottom-0 mx-auto max-w-md bg-gradient-to-t from-[#fffbf2] via-[#fffbf2] to-transparent p-6">
+          <article className="mt-6 font-serif text-[1.3rem] leading-[1.9] text-ink">
+            {props.text.split(/\s+/).map((token, i) => (
+              <span key={i}>
+                <button
+                  onClick={() => lookup(token)}
+                  className="rounded px-0.5 active:bg-accent-soft"
+                >
+                  {token}
+                </button>{" "}
+              </span>
+            ))}
+          </article>
+        </div>
+      </div>
+
+      <div className="fixed inset-x-0 bottom-0 mx-auto max-w-md bg-gradient-to-t from-background via-background to-transparent p-6 md:max-w-5xl md:px-8">
         <button
           onClick={() => {
             window.speechSynthesis?.cancel();
             setMode("quiz");
           }}
-          className="w-full rounded-2xl bg-amber-500 py-4 text-lg font-bold text-white shadow-lg active:scale-95"
+          className="w-full rounded-xl bg-primary py-4 text-lg font-bold text-white shadow-hover active:scale-[0.98] md:mx-auto md:block md:max-w-sm"
         >
           我读完了 →
         </button>
@@ -222,12 +254,15 @@ export function Reader(props: Props) {
           className="fixed inset-0 z-10 flex items-end justify-center bg-black/20"
           onClick={() => setPopup(null)}
         >
-          <div className="mb-28 w-[88%] max-w-sm rounded-3xl bg-white p-6 shadow-xl">
-            <p className="text-2xl font-bold">{popup.word}</p>
+          <div className="mb-28 w-[88%] max-w-sm rounded-card bg-card p-6 shadow-hover">
+            <span className="inline-block rounded-full bg-accent-soft px-2.5 py-0.5 text-xs font-semibold text-accent-ink">
+              生词
+            </span>
+            <p className="mt-2 text-2xl font-bold text-ink">{popup.word}</p>
             {popup.zh ? (
-              <p className="mt-2 text-lg text-stone-600">{popup.zh}</p>
+              <p className="mt-2 text-lg text-muted">{popup.zh}</p>
             ) : (
-              <p className="mt-2 text-sm text-stone-400">
+              <p className="mt-2 text-sm text-faint">
                 这个词不难,先从故事里猜猜看?猜词也是母语者的本事 🙂
               </p>
             )}
@@ -238,15 +273,15 @@ export function Reader(props: Props) {
       {/* 护眼提醒 */}
       {showRest && (
         <div className="fixed inset-0 z-20 flex items-center justify-center bg-black/50 px-8">
-          <div className="rounded-3xl bg-white p-8 text-center">
+          <div className="rounded-card bg-card p-8 text-center">
             <div className="text-5xl">🌳</div>
-            <h2 className="mt-3 text-xl font-bold">休息一下眼睛吧</h2>
-            <p className="mt-2 text-sm text-stone-500">
+            <h2 className="mt-3 text-xl font-bold text-ink">休息一下眼睛吧</h2>
+            <p className="mt-2 text-sm text-muted">
               已经读了 20 分钟啦,看看窗外远处的东西,20 秒后再回来。
             </p>
             <button
               onClick={() => setShowRest(false)}
-              className="mt-6 rounded-2xl bg-emerald-500 px-8 py-3 font-bold text-white active:scale-95"
+              className="mt-6 rounded-xl bg-primary px-8 py-3 font-bold text-white active:scale-[0.98]"
             >
               好的,休息好了
             </button>

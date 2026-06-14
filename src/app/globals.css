@@ -1,13 +1,51 @@
 @import "tailwindcss";
 
-:root {
-  --background: #fffbf2;
-  --foreground: #3b2f24;
+/* ──────────────────────────────────────────────────────────────
+   Organic Growth System — 设计系统(来源:design/.../DESIGN.md)
+   品牌:Encouraging / Clear / Vital。现代极简 + 触感暖意,
+   冷调成长花园配色,白卡 + 软阴影(不用硬边框)。
+   ────────────────────────────────────────────────────────────── */
+@theme {
+  /* 画布与中性色(Slate,"原生 app"专业感) */
+  --color-background: #f8f9ff; /* 页面底:极浅蓝白 */
+  --color-card: #ffffff; /* 卡片面 Level 1 */
+  --color-ink: #0b1c30; /* 主文本 on-surface */
+  --color-muted: #64748b; /* 次要文本 slate-500 */
+  --color-faint: #94a3b8; /* 更弱文本 slate-400 */
+  --color-line: #e6ecf5; /* 描边/分隔(替代硬边框) */
+
+  /* Sprout Green:成长 / 成功 / 主操作 */
+  --color-primary: #22c55e;
+  --color-primary-ink: #006e2f; /* 绿色文本 / 绿底更深字 */
+  --color-primary-soft: #dcfce7; /* 绿色浅底 */
+
+  /* Learning Blue:导航 / 交互 / 信息 */
+  --color-secondary: #3b82f6;
+  --color-secondary-ink: #0058be;
+  --color-secondary-soft: #dbeafe;
+
+  /* Playful Orange:奖励 / 词汇 chip / 高亮 */
+  --color-accent: #f97316;
+  --color-accent-ink: #9d4300;
+  --color-accent-soft: #ffedd5;
+
+  /* 圆角:卡片 1rem,按钮/输入 .5rem(组件直接用 rounded-card / rounded-lg) */
+  --radius-card: 1rem;
+
+  /* 软环境阴影(Soft Ambient,替代硬边框) */
+  --shadow-card: 0 4px 12px rgb(11 28 48 / 0.05); /* Level 1 卡片 */
+  --shadow-hover: 0 8px 20px rgb(11 28 48 / 0.1); /* Level 2 可交互 */
+  --shadow-glow: 0 8px 24px rgb(34 197 94 / 0.18); /* 庆祝/浮层绿色辉光 */
+
+  /* 字体:UI=Be Vietnam Pro,正文阅读=Literata(见 layout.tsx) */
+  --font-sans:
+    var(--font-be-vietnam), ui-sans-serif, system-ui, "PingFang SC", "Microsoft YaHei", sans-serif;
+  --font-serif: var(--font-literata), Georgia, "Songti SC", serif;
 }
 
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: ui-rounded, "PingFang SC", "Microsoft YaHei", system-ui, sans-serif;
+  background: var(--color-background);
+  color: var(--color-ink);
+  font-family: var(--font-sans);
   -webkit-tap-highlight-color: transparent;
 }

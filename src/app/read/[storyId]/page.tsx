@@ -32,6 +32,8 @@ export default async function ReadPage({ params }: { params: Promise<{ storyId: 
       questions={questions}
       audioUrl={story.audioUrl}
       childName={child.nickname}
+      interest={story.interest}
+      slug={story.slug}
     />
   );
 }

@@ -25,8 +25,8 @@ export function ChildSwitcher({
             onClick={() => startTransition(() => switchChild(c.id))}
             className={`rounded-full px-4 py-1.5 text-sm font-bold transition active:scale-95 ${
               active
-                ? "bg-amber-500 text-white"
-                : "bg-white text-stone-600 shadow-sm disabled:opacity-50"
+                ? "bg-primary text-white"
+                : "bg-card text-muted shadow-card disabled:opacity-50"
             }`}
           >
             {c.nickname}
@@ -35,7 +35,7 @@ export function ChildSwitcher({
       })}
       <Link
         href="/onboarding"
-        className="rounded-full border border-dashed border-stone-300 px-4 py-1.5 text-sm text-stone-400 active:scale-95"
+        className="rounded-full border border-dashed border-line px-4 py-1.5 text-sm text-faint active:scale-95"
       >
         ＋ 添加孩子
       </Link>

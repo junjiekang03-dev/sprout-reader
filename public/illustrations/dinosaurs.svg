@@ -1,0 +1,303 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 260">
+<defs>
+<radialGradient id="dino-skyglow" cx="62%" cy="30%" r="80%">
+<stop offset="0%" stop-color="#fef9c3"/>
+<stop offset="28%" stop-color="#fde68a"/>
+<stop offset="55%" stop-color="#fbcfe8"/>
+<stop offset="80%" stop-color="#c7d2fe"/>
+<stop offset="100%" stop-color="#a5b4fc"/>
+</radialGradient>
+<linearGradient id="dino-skytop" x1="0" y1="0" x2="0" y2="1">
+<stop offset="0%" stop-color="#818cf8"/>
+<stop offset="45%" stop-color="#a5b4fc" stop-opacity="0.55"/>
+<stop offset="100%" stop-color="#a5b4fc" stop-opacity="0"/>
+</linearGradient>
+<radialGradient id="dino-sun" cx="50%" cy="50%" r="50%">
+<stop offset="0%" stop-color="#ffffff"/>
+<stop offset="35%" stop-color="#fef9c3"/>
+<stop offset="70%" stop-color="#fde68a"/>
+<stop offset="100%" stop-color="#fde68a" stop-opacity="0"/>
+</radialGradient>
+<linearGradient id="dino-mtfar" x1="0" y1="0" x2="0" y2="1">
+<stop offset="0%" stop-color="#c7d2fe"/>
+<stop offset="100%" stop-color="#a5b4fc"/>
+</linearGradient>
+<linearGradient id="dino-mtmid" x1="0" y1="0" x2="0" y2="1">
+<stop offset="0%" stop-color="#a5b4fc"/>
+<stop offset="100%" stop-color="#818cf8"/>
+</linearGradient>
+<linearGradient id="dino-hillback" x1="0" y1="0" x2="0" y2="1">
+<stop offset="0%" stop-color="#86efac"/>
+<stop offset="100%" stop-color="#4ade80"/>
+</linearGradient>
+<linearGradient id="dino-hillmid" x1="0" y1="0" x2="0" y2="1">
+<stop offset="0%" stop-color="#4ade80"/>
+<stop offset="100%" stop-color="#22c55e"/>
+</linearGradient>
+<linearGradient id="dino-ground" x1="0" y1="0" x2="0" y2="1">
+<stop offset="0%" stop-color="#22c55e"/>
+<stop offset="100%" stop-color="#16a34a"/>
+</linearGradient>
+<linearGradient id="dino-water" x1="0" y1="0" x2="0" y2="1">
+<stop offset="0%" stop-color="#fef9c3"/>
+<stop offset="45%" stop-color="#bfdbfe"/>
+<stop offset="100%" stop-color="#93c5fd"/>
+</linearGradient>
+<linearGradient id="dino-body" x1="0" y1="0" x2="0.4" y2="1">
+<stop offset="0%" stop-color="#86efac"/>
+<stop offset="55%" stop-color="#4ade80"/>
+<stop offset="100%" stop-color="#22c55e"/>
+</linearGradient>
+<linearGradient id="dino-belly" x1="0" y1="0" x2="0" y2="1">
+<stop offset="0%" stop-color="#fef9c3"/>
+<stop offset="100%" stop-color="#bbf7d0"/>
+</linearGradient>
+<radialGradient id="dino-godray" cx="50%" cy="0%" r="100%">
+<stop offset="0%" stop-color="#fef9c3" stop-opacity="0.85"/>
+<stop offset="100%" stop-color="#fef9c3" stop-opacity="0"/>
+</radialGradient>
+<radialGradient id="dino-particle" cx="50%" cy="50%" r="50%">
+<stop offset="0%" stop-color="#fffbe0"/>
+<stop offset="60%" stop-color="#fde68a" stop-opacity="0.7"/>
+<stop offset="100%" stop-color="#fde68a" stop-opacity="0"/>
+</radialGradient>
+<filter id="dino-soft" x="-60%" y="-60%" width="220%" height="220%">
+<feGaussianBlur stdDeviation="3.2"/>
+</filter>
+<filter id="dino-softbig" x="-80%" y="-80%" width="260%" height="260%">
+<feGaussianBlur stdDeviation="7"/>
+</filter>
+<filter id="dino-mist" x="-40%" y="-40%" width="180%" height="180%">
+<feGaussianBlur stdDeviation="4.5"/>
+</filter>
+<clipPath id="dino-frame"><rect x="0" y="0" width="400" height="260" rx="16"/></clipPath>
+</defs>
+
+<g clip-path="url(#dino-frame)">
+<rect x="0" y="0" width="400" height="260" fill="url(#dino-skyglow)"/>
+<rect x="0" y="0" width="400" height="150" fill="url(#dino-skytop)"/>
+
+<g opacity="0.7" fill="none" stroke-linecap="round">
+<path d="M30 40 Q70 60 95 110" stroke="#f9a8d4" stroke-width="6" opacity="0.5"/>
+<path d="M40 36 Q82 58 108 112" stroke="#fde68a" stroke-width="6" opacity="0.5"/>
+<path d="M50 33 Q94 56 121 114" stroke="#bbf7d0" stroke-width="6" opacity="0.45"/>
+<path d="M60 31 Q106 55 134 116" stroke="#bfdbfe" stroke-width="6" opacity="0.4"/>
+</g>
+
+<circle cx="248" cy="72" r="44" fill="url(#dino-sun)" filter="url(#dino-softbig)"/>
+<circle cx="248" cy="72" r="17" fill="#fffdf2"/>
+
+<g opacity="0.55">
+<polygon points="248,72 196,260 300,260" fill="url(#dino-godray)" filter="url(#dino-soft)"/>
+<polygon points="248,72 236,260 268,260" fill="url(#dino-godray)" filter="url(#dino-soft)"/>
+<polygon points="248,72 150,260 220,260" fill="url(#dino-godray)" filter="url(#dino-soft)" opacity="0.7"/>
+<polygon points="248,72 320,260 372,260" fill="url(#dino-godray)" filter="url(#dino-soft)" opacity="0.6"/>
+</g>
+
+<g filter="url(#dino-soft)">
+<ellipse cx="95" cy="50" rx="42" ry="17" fill="#ffffff" opacity="0.9"/>
+<ellipse cx="118" cy="44" rx="30" ry="14" fill="#fef9c3" opacity="0.85"/>
+<ellipse cx="340" cy="40" rx="48" ry="18" fill="#ffffff" opacity="0.85"/>
+<ellipse cx="318" cy="34" rx="26" ry="12" fill="#fbcfe8" opacity="0.8"/>
+<ellipse cx="200" cy="28" rx="34" ry="12" fill="#ffffff" opacity="0.6"/>
+</g>
+
+<path d="M0 124 Q45 92 92 110 Q140 86 188 108 Q230 92 270 110 L270 150 L0 150 Z" fill="url(#dino-mtfar)" opacity="0.85"/>
+<path d="M150 132 Q210 88 262 116 Q320 90 372 120 Q392 110 400 116 L400 160 L150 160 Z" fill="url(#dino-mtmid)" opacity="0.9"/>
+<polygon points="262,116 270,128 254,128" fill="#e0e7ff" opacity="0.8"/>
+<polygon points="372,120 380,132 364,132" fill="#e0e7ff" opacity="0.8"/>
+
+<g filter="url(#dino-mist)" opacity="0.7">
+<ellipse cx="90" cy="142" rx="90" ry="13" fill="#f8f9ff"/>
+<ellipse cx="300" cy="148" rx="110" ry="14" fill="#f8f9ff"/>
+<ellipse cx="200" cy="138" rx="70" ry="10" fill="#ffffff" opacity="0.8"/>
+</g>
+
+<path d="M0 150 Q90 132 190 150 Q290 134 400 152 L400 200 L0 200 Z" fill="url(#dino-hillback)"/>
+<path d="M0 172 Q110 152 230 174 Q320 158 400 178 L400 260 L0 260 Z" fill="url(#dino-hillmid)"/>
+
+<g stroke="#bfdbfe" stroke-width="3" fill="none" opacity="0.9" stroke-linecap="round">
+<path d="M352 150 Q350 168 356 186 Q352 200 358 214"/>
+<path d="M358 150 Q357 168 362 186 Q359 202 364 216"/>
+</g>
+<ellipse cx="358" cy="218" rx="14" ry="4" fill="#dbeafe" opacity="0.8" filter="url(#dino-soft)"/>
+
+<path d="M0 198 Q130 178 270 200 Q340 188 400 202 L400 260 L0 260 Z" fill="url(#dino-ground)"/>
+
+<path d="M40 240 Q120 218 220 236 Q300 224 380 240 Q300 256 200 250 Q110 256 40 248 Z" fill="url(#dino-water)" opacity="0.92"/>
+<ellipse cx="210" cy="237" rx="150" ry="6" fill="#ffffff" opacity="0.35" filter="url(#dino-soft)"/>
+
+<g opacity="0.5">
+<path d="M-10 250 L420 250" stroke="#bbf7d0" stroke-width="3" opacity="0.4"/>
+</g>
+
+<g stroke="#16a34a" stroke-width="3.5" fill="none" stroke-linecap="round">
+<path d="M30 232 Q24 210 16 196"/>
+<path d="M30 232 Q30 208 28 192"/>
+<path d="M30 232 Q38 212 46 198"/>
+<path d="M30 232 Q44 218 56 210"/>
+<path d="M30 232 Q18 218 8 212"/>
+</g>
+<g stroke="#22c55e" stroke-width="2.5" fill="none" stroke-linecap="round" opacity="0.9">
+<path d="M372 236 Q380 214 388 200"/>
+<path d="M372 236 Q372 212 370 196"/>
+<path d="M372 236 Q364 214 356 202"/>
+<path d="M372 236 Q386 220 396 214"/>
+</g>
+
+<g stroke="#15803d" stroke-width="5" fill="none" stroke-linecap="round">
+<path d="M348 232 Q352 170 360 120"/>
+</g>
+<g fill="#22c55e">
+<ellipse cx="358" cy="116" rx="26" ry="11" transform="rotate(-18 358 116)"/>
+<ellipse cx="372" cy="128" rx="24" ry="10" transform="rotate(20 372 128)"/>
+<ellipse cx="344" cy="130" rx="24" ry="10" transform="rotate(-44 344 130)"/>
+<ellipse cx="366" cy="104" rx="20" ry="9" transform="rotate(-4 366 104)"/>
+</g>
+<g fill="#4ade80" opacity="0.85">
+<ellipse cx="356" cy="113" rx="16" ry="6" transform="rotate(-18 356 113)"/>
+<ellipse cx="370" cy="126" rx="14" ry="5" transform="rotate(20 370 126)"/>
+</g>
+
+<g stroke="#16a34a" stroke-width="4" fill="none" stroke-linecap="round">
+<path d="M16 230 Q12 184 6 150"/>
+</g>
+<g fill="#16a34a">
+<path d="M8 150 Q-14 140 -22 122 Q2 134 8 150" transform="translate(8 4)"/>
+<ellipse cx="2" cy="150" rx="20" ry="8" transform="rotate(-30 2 150)"/>
+<ellipse cx="22" cy="158" rx="20" ry="8" transform="rotate(34 22 158)"/>
+<ellipse cx="6" cy="132" rx="16" ry="7" transform="rotate(-8 6 132)"/>
+</g>
+
+<ellipse cx="178" cy="247" rx="78" ry="9" fill="#15803d" opacity="0.35" filter="url(#dino-soft)"/>
+
+<path d="M148 240 Q150 224 168 222 Q188 220 200 230 Q208 226 218 232 Q224 220 240 224 Q252 228 248 240 Z" fill="#16a34a"/>
+<g fill="#15803d">
+<ellipse cx="162" cy="232" rx="9" ry="4" transform="rotate(-30 162 232)"/>
+<ellipse cx="182" cy="226" rx="9" ry="4" transform="rotate(-12 182 226)"/>
+<ellipse cx="206" cy="226" rx="9" ry="4" transform="rotate(10 206 226)"/>
+<ellipse cx="228" cy="228" rx="9" ry="4" transform="rotate(26 228 228)"/>
+</g>
+<ellipse cx="180" cy="236" rx="13" ry="11" fill="#f8f9ff"/>
+<ellipse cx="200" cy="237" rx="14" ry="12" fill="#fef9c3"/>
+<ellipse cx="219" cy="236" rx="12" ry="10" fill="#ffffff"/>
+<ellipse cx="195" cy="232" rx="5" ry="4" fill="#ffffff" opacity="0.9"/>
+<ellipse cx="184" cy="232" rx="3.5" ry="3" fill="#ffffff" opacity="0.85"/>
+
+<g>
+<path d="M242 240 Q300 244 326 226 Q352 210 332 196 Q318 188 326 174 Q336 154 318 146 Q330 130 314 122 Q300 116 304 106" fill="none" stroke="#22c55e" stroke-width="20" stroke-linecap="round"/>
+<path d="M242 240 Q300 244 326 226 Q352 210 332 196 Q318 188 326 174 Q336 154 318 146 Q330 130 314 122 Q300 116 304 106" fill="none" stroke="#4ade80" stroke-width="11" stroke-linecap="round"/>
+
+<ellipse cx="208" cy="222" rx="74" ry="42" fill="url(#dino-body)"/>
+<path d="M150 232 Q176 250 210 252 Q256 252 270 232 Q244 244 208 244 Q176 244 150 232 Z" fill="#16a34a" opacity="0.5"/>
+<ellipse cx="196" cy="236" rx="46" ry="26" fill="url(#dino-belly)" opacity="0.95"/>
+
+<ellipse cx="172" cy="252" rx="14" ry="20" fill="#22c55e"/>
+<ellipse cx="234" cy="254" rx="14" ry="20" fill="#16a34a"/>
+<ellipse cx="200" cy="254" rx="14" ry="20" fill="#22c55e"/>
+
+<path d="M256 226 Q252 178 246 138 Q242 104 264 86 Q284 70 306 76" fill="none" stroke="#4ade80" stroke-width="26" stroke-linecap="round"/>
+<path d="M256 226 Q252 178 246 138 Q242 104 264 86 Q284 70 306 76" fill="none" stroke="#86efac" stroke-width="13" stroke-linecap="round"/>
+<path d="M250 200 Q246 160 244 130" fill="none" stroke="#bbf7d0" stroke-width="7" stroke-linecap="round" opacity="0.8"/>
+
+<g fill="#16a34a" opacity="0.85">
+<path d="M252 130 l8 -7 l8 7 z"/>
+<path d="M250 154 l8 -7 l8 7 z"/>
+<path d="M250 178 l8 -7 l8 7 z"/>
+<path d="M252 202 l8 -7 l8 7 z"/>
+</g>
+
+<ellipse cx="304" cy="78" rx="30" ry="24" fill="url(#dino-body)"/>
+<ellipse cx="318" cy="86" rx="20" ry="14" fill="url(#dino-belly)" opacity="0.9"/>
+<path d="M280 64 Q272 56 278 50 Q284 54 286 62 Z" fill="#22c55e"/>
+<path d="M292 58 Q286 48 293 44 Q299 50 299 60 Z" fill="#4ade80"/>
+
+<ellipse cx="328" cy="92" rx="13" ry="9" fill="#bbf7d0"/>
+<circle cx="326" cy="74" r="6.5" fill="#ffffff"/>
+<circle cx="327" cy="75" r="3.6" fill="#1e3a1e"/>
+<circle cx="328.4" cy="73.6" r="1.3" fill="#ffffff"/>
+<circle cx="332" cy="90" r="1.6" fill="#16a34a"/>
+<path d="M320 96 Q328 102 336 96" fill="none" stroke="#15803d" stroke-width="2" stroke-linecap="round"/>
+<ellipse cx="316" cy="90" rx="5" ry="3.5" fill="#f9a8d4" opacity="0.7"/>
+<path d="M294 64 Q300 56 312 60" fill="none" stroke="#86efac" stroke-width="4" stroke-linecap="round" opacity="0.7"/>
+</g>
+
+<g>
+<path d="M120 250 Q110 222 124 214 Q138 222 132 250" fill="none" stroke="#4ade80" stroke-width="13" stroke-linecap="round"/>
+<ellipse cx="118" cy="240" rx="28" ry="20" fill="url(#dino-body)"/>
+<ellipse cx="112" cy="246" rx="18" ry="12" fill="url(#dino-belly)" opacity="0.95"/>
+<ellipse cx="108" cy="254" rx="7" ry="11" fill="#22c55e"/>
+<ellipse cx="124" cy="255" rx="7" ry="11" fill="#16a34a"/>
+<path d="M134 234 Q140 206 130 188 Q124 178 134 172" fill="none" stroke="#86efac" stroke-width="14" stroke-linecap="round"/>
+<ellipse cx="134" cy="170" rx="16" ry="13" fill="url(#dino-body)"/>
+<path d="M124 160 Q120 153 125 150 Q129 154 129 160 Z" fill="#4ade80"/>
+<ellipse cx="142" cy="178" rx="8" ry="5" fill="#bbf7d0"/>
+<circle cx="140" cy="166" r="4.2" fill="#ffffff"/>
+<circle cx="141" cy="167" r="2.4" fill="#1e3a1e"/>
+<circle cx="142" cy="165.5" r="0.9" fill="#ffffff"/>
+<path d="M137 174 Q142 178 147 174" fill="none" stroke="#15803d" stroke-width="1.6" stroke-linecap="round"/>
+<ellipse cx="131" cy="173" rx="3.5" ry="2.4" fill="#f9a8d4" opacity="0.7"/>
+</g>
+
+<g>
+<g transform="translate(300 150)">
+<ellipse cx="0" cy="0" rx="6" ry="4" fill="#fb923c" transform="rotate(-25)"/>
+<ellipse cx="-6" cy="2" rx="5" ry="3.5" fill="#f97316" transform="rotate(25)"/>
+<ellipse cx="0" cy="6" rx="4" ry="2.6" fill="#fed7aa" transform="rotate(-20)"/>
+<ellipse cx="-5" cy="7" rx="3.4" ry="2.2" fill="#fb923c" transform="rotate(20)"/>
+<line x1="-3" y1="3" x2="-3" y2="9" stroke="#7c2d12" stroke-width="1"/>
+</g>
+<g transform="translate(76 168)">
+<ellipse cx="0" cy="0" rx="5" ry="3.4" fill="#f9a8d4" transform="rotate(-25)"/>
+<ellipse cx="-5" cy="2" rx="4.4" ry="3" fill="#fbcfe8" transform="rotate(25)"/>
+<ellipse cx="0" cy="5" rx="3.4" ry="2.2" fill="#f9a8d4" transform="rotate(-20)"/>
+<ellipse cx="-4" cy="6" rx="3" ry="1.9" fill="#fbcfe8" transform="rotate(20)"/>
+<line x1="-2.6" y1="2.5" x2="-2.6" y2="8" stroke="#9d174d" stroke-width="0.9"/>
+</g>
+<g transform="translate(258 188)">
+<ellipse cx="0" cy="0" rx="4" ry="2.8" fill="#fde68a" transform="rotate(-22)"/>
+<ellipse cx="-4" cy="1.6" rx="3.6" ry="2.4" fill="#fef9c3" transform="rotate(22)"/>
+</g>
+</g>
+
+<g fill="url(#dino-particle)">
+<circle cx="60" cy="90" r="9"/>
+<circle cx="150" cy="70" r="6"/>
+<circle cx="290" cy="118" r="11"/>
+<circle cx="345" cy="100" r="7"/>
+<circle cx="100" cy="140" r="8"/>
+<circle cx="220" cy="98" r="5"/>
+<circle cx="40" cy="170" r="7"/>
+<circle cx="320" cy="160" r="9"/>
+<circle cx="180" cy="130" r="5"/>
+<circle cx="270" cy="60" r="6"/>
+<circle cx="124" cy="108" r="4"/>
+<circle cx="360" cy="140" r="6"/>
+</g>
+<g fill="#fffbe0">
+<circle cx="62" cy="88" r="2.4" opacity="0.95"/>
+<circle cx="152" cy="69" r="1.8" opacity="0.9"/>
+<circle cx="291" cy="116" r="2.8" opacity="0.95"/>
+<circle cx="345" cy="99" r="2" opacity="0.9"/>
+<circle cx="101" cy="139" r="2.2" opacity="0.9"/>
+<circle cx="221" cy="97" r="1.6" opacity="0.85"/>
+<circle cx="41" cy="169" r="2" opacity="0.85"/>
+<circle cx="320" cy="159" r="2.4" opacity="0.9"/>
+<circle cx="181" cy="129" r="1.6" opacity="0.85"/>
+<circle cx="271" cy="59" r="1.8" opacity="0.85"/>
+<circle cx="200" cy="50" r="1.5" opacity="0.8"/>
+<circle cx="86" cy="120" r="1.4" opacity="0.8"/>
+<circle cx="330" cy="120" r="1.6" opacity="0.8"/>
+<circle cx="240" cy="140" r="1.4" opacity="0.75"/>
+<circle cx="140" cy="160" r="1.5" opacity="0.8"/>
+</g>
+
+<g fill="#ffffff" opacity="0.95">
+<path d="M250 44 l1.4 4 4 1.4 -4 1.4 -1.4 4 -1.4 -4 -4 -1.4 4 -1.4 z"/>
+<path d="M312 100 l1 3 3 1 -3 1 -1 3 -1 -3 -3 -1 3 -1 z" opacity="0.9"/>
+<path d="M70 60 l1 3 3 1 -3 1 -1 3 -1 -3 -3 -1 3 -1 z" opacity="0.85"/>
+</g>
+
+<rect x="2" y="2" width="396" height="256" rx="15" fill="none" stroke="#ffffff" stroke-width="2" opacity="0.5"/>
+</g>
+</svg>

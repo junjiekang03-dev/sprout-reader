@@ -28,20 +28,23 @@ export default async function HomePage() {
   ]);
   const level = getLevel(child.levelId);
   const todayDone = calendar.find((c) => c.dateKey === dateKeyOf(new Date()))?.count ?? 0;
+  const activeDays = calendar.filter((c) => c.count > 0).length;
+  const interest = INTERESTS.find((i) => i.key === story?.interest);
 
   return (
-    <main className="mx-auto max-w-md px-6 py-8">
-      <header className="flex items-center justify-between">
-        <div>
-          <h1 className="text-2xl font-bold">Hi, {child.nickname}! 👋</h1>
-          <p className="mt-1 text-sm text-stone-500">
-            {level.name} · {level.cefr} · 约{level.oxford} · {level.gradeLabel}
-          </p>
-        </div>
-        <div className="text-center">
-          <div className="text-3xl">🔥</div>
-          <div className="text-sm font-bold text-amber-600">{streak} 天</div>
-        </div>
+    <main className="mx-auto max-w-md px-5 pb-12 pt-6">
+      {/* 品牌条 */}
+      <div className="flex items-center gap-2">
+        <span className="text-xl">🌱</span>
+        <span className="text-lg font-bold tracking-tight text-primary-ink">SproutReader</span>
+      </div>
+
+      {/* 问候 */}
+      <header className="mt-5">
+        <h1 className="text-2xl font-bold tracking-tight text-ink">Hi, {child.nickname}! 👋</h1>
+        <p className="mt-1 text-sm text-muted">
+          {level.name} · {level.cefr} · 约{level.oxford} · {level.gradeLabel}
+        </p>
       </header>
 
       <ChildSwitcher
@@ -67,59 +70,66 @@ export default async function HomePage() {
             />
           )}
 
-      {/* 今日故事 */}
-      <section className="mt-8">
+      {/* 今日故事(Daily English Adventure) */}
+      <section className="mt-7">
         {story ? (
           <Link
             href={`/read/${story.id}`}
-            className="block rounded-3xl bg-gradient-to-br from-amber-400 to-orange-400 p-6 text-white shadow-lg active:scale-95"
+            className="block rounded-card bg-secondary-soft p-5 shadow-card transition active:scale-[0.98]"
           >
-            <p className="text-sm opacity-90">
-              {todayDone > 0 ? "再读一篇 · " : "今日故事 · "}
-              {INTERESTS.find((i) => i.key === story.interest)?.emoji}{" "}
-              {INTERESTS.find((i) => i.key === story.interest)?.label}
+            <p className="text-xs font-semibold uppercase tracking-wide text-secondary-ink">
+              {todayDone > 0 ? "再读一篇" : "今日故事"} · {interest?.emoji} {interest?.label}
             </p>
-            <h2 className="mt-2 text-2xl font-bold">
+            <h2 className="mt-2 text-xl font-bold leading-snug text-ink">
               {renderWithName(story.title, child.nickname)}
             </h2>
-            <p className="mt-1 text-sm opacity-90">
+            <p className="mt-1 text-sm text-muted">
               {story.wordCount} 词 · 主角是 {child.nickname} 自己!
             </p>
-            <p className="mt-4 inline-block rounded-full bg-white/25 px-4 py-2 font-bold">
-              {todayDone > 0 ? "继续阅读 →" : "开始阅读 →"}
-            </p>
+            <span className="mt-4 inline-flex items-center gap-1.5 rounded-lg bg-primary px-5 py-2.5 text-sm font-bold text-white shadow-sm">
+              {todayDone > 0 ? "继续阅读" : "开始阅读"} →
+            </span>
           </Link>
         ) : (
-          <div className="rounded-3xl bg-white p-6 text-center text-stone-500 shadow-sm">
+          <div className="rounded-card bg-card p-6 text-center text-sm text-muted shadow-card">
             🎉 这个级别的故事都读完啦!新故事每周上新,明天再来看看吧。
           </div>
         )}
+      </section>
+
+      {/* 成长数据卡(真实指标) */}
+      <section className="mt-4 grid grid-cols-3 gap-3">
+        <StatCard icon="🔥" value={`${streak}`} label="连读天数" tint="accent" />
+        <StatCard icon="🌱" value={`${activeDays}`} label="四周打卡" tint="primary" />
+        <StatCard icon="✅" value={`${todayDone}`} label="今日已读" tint="secondary" />
       </section>
 
       {/* 复习生词(独立入口,不打断每日阅读主线;有到期词才显示) */}
       {dueCount > 0 && (
         <Link
           href="/review"
-          className="mt-4 flex items-center justify-between rounded-3xl bg-white p-5 shadow-sm active:scale-95"
+          className="mt-4 flex items-center justify-between rounded-card bg-card p-4 shadow-card transition active:scale-[0.98]"
         >
           <div className="flex items-center gap-3">
-            <span className="text-2xl">📖</span>
+            <span className="flex h-10 w-10 items-center justify-center rounded-full bg-accent-soft text-lg">
+              📖
+            </span>
             <div>
-              <p className="font-bold">复习生词</p>
-              <p className="text-xs text-stone-400">读过、查过的词,趁热复习更记得牢</p>
+              <p className="font-semibold text-ink">复习生词</p>
+              <p className="text-xs text-faint">读过、查过的词,趁热复习更记得牢</p>
             </div>
           </div>
-          <span className="rounded-full bg-amber-500 px-3 py-1 text-sm font-bold text-white">
-            {dueCount} 个待复习
+          <span className="rounded-full bg-accent px-3 py-1 text-sm font-bold text-white">
+            {dueCount} 待复习
           </span>
         </Link>
       )}
 
       {/* 打卡日历 */}
-      <section className="mt-6 rounded-3xl bg-white p-5 shadow-sm">
+      <section className="mt-4 rounded-card bg-card p-5 shadow-card">
         <div className="flex items-baseline justify-between">
-          <h3 className="font-bold">最近四周</h3>
-          <span className="text-xs text-stone-400">读 1 篇就算打卡 ✓</span>
+          <h3 className="font-semibold text-ink">最近四周</h3>
+          <span className="text-xs text-faint">读 1 篇就算打卡 ✓</span>
         </div>
         <div className="mt-3 grid grid-cols-7 gap-1.5">
           {calendar.map((c) => (
@@ -127,7 +137,7 @@ export default async function HomePage() {
               key={c.dateKey}
               title={c.dateKey}
               className={`aspect-square rounded-md ${
-                c.count >= 2 ? "bg-amber-500" : c.count === 1 ? "bg-amber-300" : "bg-stone-100"
+                c.count >= 2 ? "bg-primary" : c.count === 1 ? "bg-primary/40" : "bg-line"
               }`}
             />
           ))}
@@ -135,28 +145,56 @@ export default async function HomePage() {
       </section>
 
       {/* 自动跟随难度开关 */}
-      <section className="mt-6">
+      <section className="mt-4">
         <AutoFollowToggle enabled={child.autoFollowLevel} />
       </section>
 
       {/* 家长入口 */}
-      <section className="mt-6 flex gap-3">
+      <section className="mt-4 flex gap-3">
         <Link
           href={`/report/${child.id}`}
-          className="flex-1 rounded-2xl border border-stone-200 bg-white py-3 text-center text-sm text-stone-600 active:scale-95"
+          className="flex-1 rounded-lg border-2 border-secondary/30 bg-card py-3 text-center text-sm font-semibold text-secondary-ink transition active:scale-[0.98]"
         >
           📈 家长周报
         </Link>
         <form action={logout} className="flex-1">
-          <button className="w-full rounded-2xl border border-stone-200 bg-white py-3 text-center text-sm text-stone-400 active:scale-95">
+          <button className="w-full rounded-lg border border-line bg-card py-3 text-center text-sm text-faint transition active:scale-[0.98]">
             退出登录
           </button>
         </form>
       </section>
 
-      <p className="mt-8 text-center text-xs text-stone-300">
+      <p className="mt-8 text-center text-xs text-faint">
         芽芽阅读会在连续使用 20 分钟时提醒孩子休息眼睛
       </p>
     </main>
+  );
+}
+
+/** 成长数据小卡(图标 + 数值 + 标签),tint 决定图标底色 */
+function StatCard({
+  icon,
+  value,
+  label,
+  tint,
+}: {
+  icon: string;
+  value: string;
+  label: string;
+  tint: "primary" | "secondary" | "accent";
+}) {
+  const tintBg = {
+    primary: "bg-primary-soft",
+    secondary: "bg-secondary-soft",
+    accent: "bg-accent-soft",
+  }[tint];
+  return (
+    <div className="rounded-card bg-card p-3 text-center shadow-card">
+      <span className={`mx-auto flex h-9 w-9 items-center justify-center rounded-full ${tintBg}`}>
+        {icon}
+      </span>
+      <p className="mt-1.5 text-xl font-bold text-ink">{value}</p>
+      <p className="text-[11px] text-muted">{label}</p>
+    </div>
   );
 }
