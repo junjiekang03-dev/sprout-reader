@@ -349,6 +349,12 @@ const BAND2_COMMON: string[] = [
   "fresh",
   "loud",
   "weak",
+  "own",
+  "hit",
+  "cover",
+  "grab",
+  "roll",
+  "gold",
 ];
 
 const BAND2: string[] = [
@@ -497,6 +503,7 @@ const BAND2: string[] = [
   "why",
   "out",
   "into",
+  "onto",
   "behind",
   "under",
   "near",

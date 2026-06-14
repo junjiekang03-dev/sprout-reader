@@ -66,6 +66,7 @@ const IRREGULAR: Record<string, string> = {
   fell: "fall",
   fallen: "fall",
   felt: "feel",
+  fed: "feed",
   fought: "fight",
   forgot: "forget",
   forgotten: "forget",
@@ -186,6 +187,7 @@ function lemmaCandidates(raw: string): string[] {
     }
   }
   // 副词/比较级/名词派生
+  if (base.endsWith("ily")) tryAdd(base.slice(0, -3) + "y"); // happily → happy, easily → easy
   if (base.endsWith("ly")) tryAdd(base.slice(0, -2));
   if (base.endsWith("ness")) tryAdd(base.slice(0, -4)); // kindness → kind
   if (base.endsWith("ier")) tryAdd(base.slice(0, -3) + "y");

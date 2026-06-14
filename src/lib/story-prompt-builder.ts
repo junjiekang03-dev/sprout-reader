@@ -72,7 +72,7 @@ export function buildStoryPrompt({
 创作 ${count} 篇主题为「${it.label} (${it.key})」的英文短故事,难度为本平台 Level ${level.id}(${level.cefr},约等于牛津树 ${level.oxford})。
 
 # 硬性约束(程序会逐条校验,违反即退回)
-1. 词数:每篇 ${level.storyWordCount[0]}-${level.storyWordCount[1]} 词
+1. 词数:每篇 ${level.storyWordCount[0]}-${level.storyWordCount[1]} 词;请写到 ${level.storyWordCount[0] + 25}-${level.storyWordCount[1]} 这个偏上区间(${level.storyWordCount[0]} 是硬性下限,低于即作废,务必留足余量)
 2. 句长:任何一句不超过 ${level.maxSentenceWords} 个单词
 3. 词汇:只能使用下方词表中的词(含其常规屈折变化:复数/过去式/进行时/比较级)
 4. 例外:最多 ${newWordBudget} 个词表外的主题生词(如恐龙名),每个必须收录进 glossary 并给出中文释义;生词总出现次数 ≤ 全文词数的 ${(level.maxNewWordRatio * 100).toFixed(0)}%
@@ -95,6 +95,13 @@ ${avoidSection || "(本轨道暂无已有故事——情节自由发挥,但仍�
 - 题干和选项用词不超出该级别词表
 
 ${outputSection}
+
+# 交稿前自检(逐条核对,任何一条不满足就改了再交;可以先想清楚再落笔)
+- 词数:目标写到 ${level.storyWordCount[0] + 25} 词以上(范围 ${level.storyWordCount[0]}-${level.storyWordCount[1]});偏短就多加 1-2 个情节细节或对话扩写,绝不能低于 ${level.storyWordCount[0]}。短篇分级读物也要把情节铺到位。
+- 句长:逐句确认没有任何一句超过 ${level.maxSentenceWords} 个单词。
+- 词汇:正文与题目里每个实义词,必须在「下方词表 + 本主题词」之内,或已写进 glossary;任何拿不准是否超纲的词(如 grab / reach / pull / among / suddenly 等),都换成词表里的近义词,别留在正文里。
+- 主角:全文不用 he / she / him / her / his 指代 {{name}}。
+- 若一次多篇:每篇情节与上面「已有情节」以及彼此都明显不同。
 
 # Level ${level.id} 可用词表(band 1-${level.band} 累积)
 ${wordList}`;

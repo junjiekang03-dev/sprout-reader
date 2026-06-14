@@ -17,7 +17,8 @@
 import { readdirSync, writeFileSync } from "fs";
 import { join } from "path";
 import Anthropic from "@anthropic-ai/sdk";
-import { INTERESTS } from "../src/lib/levels";
+import { INTERESTS, getLevel } from "../src/lib/levels";
+import { cumulativeWordSet, THEME_WORDS } from "../src/lib/wordlists";
 import { buildStoryPrompt } from "../src/lib/story-prompt-builder";
 import { validateStory, type StoryInput } from "../src/lib/vocab-check";
 
@@ -168,10 +169,65 @@ function uniqueSlug(interest: string, levelId: number, title: string): string {
 const stats = {
   requested: targets.reduce((s, t) => s + t.count, 0),
   written: 0,
+  repaired: 0,
   gradingRejected: 0,
   apiFailed: 0,
   reasons: {} as Record<string, number>,
 };
+
+/** 自动修补一次:把校验报错连同正文发回模型,要求保持情节修正所有问题;返回候选(不保证已通过) */
+async function tryRepair(story: StoryInput, errors: string[]): Promise<StoryInput | null> {
+  const level = getLevel(story.levelId);
+  const wordList = [...cumulativeWordSet(level.band)].sort().join(", ");
+  const themeWords = (THEME_WORDS[story.interest] ?? []).join(", ");
+  const prompt = `下面这篇 Level ${level.id} 英文分级故事没通过程序校验。请在【保持情节、级别、主角名 {{name}} 槽位不变】的前提下,修正下面所有报错,返回修正后的同一篇故事(schema 同前:stories 数组含 1 篇)。
+
+# 校验报错(逐条修正)
+${errors.join("\n")}
+
+# 修正要点
+- 只改报错涉及的地方,别引入任何新的超纲词;改完把正文每个实义词再对照下方词表逐一核对。
+- 词表外的词:换成「下方词表 + 本主题词」里的近义词;实在要保留的主题生词才收进 glossary 并给中文释义。
+- 词数不足/超范围:增删情节细节调到 ${level.storyWordCount[0]}-${level.storyWordCount[1]}(偏上)。
+- 句子超长:拆成两句,任何一句不超过 ${level.maxSentenceWords} 词。
+- 不用 he/she/him/her/his 指代 {{name}}。
+
+# 原故事(JSON)
+${JSON.stringify({ title: story.title, text: story.text, glossary: story.glossary, summary: story.summary, questions: story.questions })}
+
+# 本主题词(免进 glossary、不算生词)
+${themeWords}
+# Level ${level.id} 可用词表(band 1-${level.band} 累积)
+${wordList}`;
+  try {
+    const res = await client.messages.create({
+      model: MODEL,
+      max_tokens: 16000,
+      thinking: { type: "adaptive" },
+      messages: [{ role: "user", content: prompt }],
+      output_config: { format: { type: "json_schema", schema: OUTPUT_JSON_SCHEMA } },
+    });
+    const tb = res.content.find((b): b is Anthropic.TextBlock => b.type === "text");
+    if (!tb) return null;
+    const data = JSON.parse(tb.text) as { stories: StoryOut[] };
+    const fixed = data.stories?.[0];
+    if (!fixed) return null;
+    return {
+      slug: story.slug,
+      title: fixed.title,
+      levelId: story.levelId,
+      interest: story.interest,
+      text: fixed.text,
+      glossary: fixed.glossary ?? [],
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      questions: fixed.questions as any,
+      summary: fixed.summary,
+      status: "draft",
+    };
+  } catch {
+    return null;
+  }
+}
 
 async function run() {
   console.log(`模型 ${MODEL} | 目标 ${targets.length} 组 / 共 ${stats.requested} 篇\n`);
@@ -213,7 +269,7 @@ async function run() {
     }
 
     for (const s of parsed.stories) {
-      const story: StoryInput = {
+      let story: StoryInput = {
         slug: uniqueSlug(t.interest, t.levelId, s.title),
         title: s.title,
         levelId: t.levelId,
@@ -225,14 +281,24 @@ async function run() {
         summary: s.summary,
         status: "draft",
       };
-      const result = validateStory(story);
+      let result = validateStory(story);
+      const needsRepair = !result.ok;
+      // 自动修补:最多 2 次迭代,每次把最新版本连同其报错发回模型修
+      for (let attempt = 0; attempt < 2 && !result.ok; attempt++) {
+        const fixed = await tryRepair(story, result.errors);
+        if (!fixed) break;
+        story = fixed;
+        result = validateStory(fixed);
+      }
+      const repaired = needsRepair && result.ok;
+      if (repaired) stats.repaired++;
       if (!result.ok) {
         stats.gradingRejected++;
         for (const e of result.errors) {
           const cat = rejectCategory(e);
           stats.reasons[cat] = (stats.reasons[cat] ?? 0) + 1;
         }
-        console.log(`  ⚠️ 退回 ${story.slug}:${result.errors[0]}`);
+        console.log(`  ⚠️ 退回 ${story.slug}(修补后仍未过):${result.errors[0]}`);
         usedSlugs.delete(story.slug); // 没落盘,释放 slug
         continue;
       }
@@ -243,7 +309,7 @@ async function run() {
       );
       stats.written++;
       console.log(
-        `  ✅ ${story.slug} — ${result.stats.wordCount} 词 | 最长句 ${result.stats.maxSentenceLen} | 生词密度 ${(result.stats.newWordRatio * 100).toFixed(1)}%`
+        `  ✅ ${story.slug}${repaired ? "(修补后)" : ""} — ${result.stats.wordCount} 词 | 最长句 ${result.stats.maxSentenceLen} | 生词密度 ${(result.stats.newWordRatio * 100).toFixed(1)}%`
       );
     }
   }
@@ -251,7 +317,7 @@ async function run() {
   const rate = stats.requested === 0 ? 0 : (stats.written / stats.requested) * 100;
   console.log(`\n=== 产出率统计 ===`);
   console.log(
-    `请求 ${stats.requested} 篇 → 落 draft ${stats.written} 篇(产出率 ${rate.toFixed(0)}%)`
+    `请求 ${stats.requested} 篇 → 落 draft ${stats.written} 篇(产出率 ${rate.toFixed(0)}%,其中自动修补救回 ${stats.repaired} 篇)`
   );
   console.log(`分级校验退回 ${stats.gradingRejected} 篇;API 失败/未产出 ${stats.apiFailed} 篇`);
   if (Object.keys(stats.reasons).length > 0) {
