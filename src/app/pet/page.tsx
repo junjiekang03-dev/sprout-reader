@@ -56,7 +56,7 @@ export default async function PetPage() {
           <li>📖 读完一篇故事 · +10 成长值</li>
           <li>⭐ 读后答题全对 · +8 成长值</li>
           <li>🎯 牢记一个生词(复习出师)· +6 成长值</li>
-          <li>🔥 每天坚持连读 · +3 成长值</li>
+          <li>🔥 每天坚持阅读 · +3 成长值</li>
         </ul>
         <p className="mt-3 text-xs text-faint">
           成长值由真实学习积累,萌宠只会长大、不会饿、不会走 💚

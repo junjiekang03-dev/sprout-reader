@@ -33,14 +33,19 @@ describe("成长值 petScore(派生自真实信号,偏向真学了)", () => {
   it("零信号成长值为 0", () => {
     expect(petScore(stats())).toBe(0);
   });
-  it("按权重累加:读完×10 + 全对×8 + 牢记词×6 + 连读×3(封顶30)", () => {
+  it("按权重累加:读完×10 + 全对×8 + 牢记词×6 + 打卡天数×3(封顶30)", () => {
     expect(
-      petScore(stats({ storiesRead: 3, perfectQuizzes: 4, wordsMastered: 0, streak: 7 }))
+      petScore(stats({ storiesRead: 3, perfectQuizzes: 4, wordsMastered: 0, daysActive: 7 }))
     ).toBe(3 * 10 + 4 * 8 + 0 + 7 * 3);
   });
-  it("连读天数对成长值的贡献封顶 30 天", () => {
-    const a = petScore(stats({ streak: 30 }));
-    const b = petScore(stats({ streak: 100 }));
+  it("打卡天数用 daysActive(单调累积)而非会断的连读 streak —— 断签不掉成长值", () => {
+    // streak 归零不影响成长值(只看累计打卡天数 daysActive),保证只升不降
+    expect(petScore(stats({ daysActive: 10, streak: 0 }))).toBe(10 * 3);
+    expect(petScore(stats({ daysActive: 10, streak: 5 }))).toBe(10 * 3);
+  });
+  it("打卡天数对成长值的贡献封顶 30 天", () => {
+    const a = petScore(stats({ daysActive: 30 }));
+    const b = petScore(stats({ daysActive: 100 }));
     expect(a).toBe(b);
   });
 });

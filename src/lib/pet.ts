@@ -59,11 +59,14 @@ export const MAX_STAGE = THRESHOLDS.length - 1; // 2
 
 /**
  * 成长值 = 真实学习信号的加权和(偏向"真学了"):
- *  读完一篇 +10、读后全对 +8、牢记一个词 +6、连读每天 +3(封顶 30 天)。
+ *  读完一篇 +10、读后全对 +8、牢记一个词 +6、坚持打卡每天 +3(封顶 30 天)。
+ *
+ * 四项全部用【单调累积】信号——打卡用 daysActive(累计阅读天数,只增)而非会断的连读 streak,
+ * 这样成长值/阶段/进度条只升不降,萌宠不会因为断签而"退化"(兑现"只会长大、不会饿、不会走")。
  */
 export function petScore(s: BadgeStats): number {
   return (
-    s.storiesRead * 10 + s.perfectQuizzes * 8 + s.wordsMastered * 6 + Math.min(s.streak, 30) * 3
+    s.storiesRead * 10 + s.perfectQuizzes * 8 + s.wordsMastered * 6 + Math.min(s.daysActive, 30) * 3
   );
 }
 
