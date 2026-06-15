@@ -3,8 +3,6 @@ import { prisma } from "./db";
 import { getStreak } from "./stats";
 import { evaluateBadges, getBadge, type BadgeStats } from "./badges";
 
-const LEITNER_MAX_BOX = 5; // 见 srs.ts MAX_BOX:升到最高盒即视为"出师/牢记"
-
 /** 从已有数据汇总徽章统计(全部真实信号,不引入可刷量的指标) */
 export async function getBadgeStats(childId: string): Promise<BadgeStats> {
   const [child, readings, wordbookSize, wordsMastered, streak] = await Promise.all([
@@ -21,7 +19,8 @@ export async function getBadgeStats(childId: string): Promise<BadgeStats> {
       },
     }),
     prisma.wordbookEntry.count({ where: { childId } }),
-    prisma.wordbookEntry.count({ where: { childId, box: LEITNER_MAX_BOX } }),
+    // 牢记 = SM-2 成熟卡(masteredAt 已设);该标记只升不降,故 wordsMastered 单调
+    prisma.wordbookEntry.count({ where: { childId, masteredAt: { not: null } } }),
     getStreak(childId),
   ]);
 

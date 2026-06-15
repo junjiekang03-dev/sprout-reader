@@ -82,14 +82,18 @@ model Reading {
   @@index([childId, dateKey])
 }
 
-// 生词本:孩子阅读中查过的词,进入 Leitner 间隔重复(见 src/lib/srs.ts)
+// 生词本:孩子阅读中查过的词,进入 Anki 式 SM-2 间隔重复(见 src/lib/srs.ts)
 model WordbookEntry {
   id           String   @id @default(cuid())
   childId      String
   child        Child    @relation(fields: [childId], references: [id], onDelete: Cascade)
   word         String // 归一化小写
   zh           String // 中文释义(查词时拿到的;无释义则空串)
-  box          Int      @default(1) // Leitner 盒子 1-5
+  ease         Float    @default(2.5) // SM-2 难度系数 EF(≥1.3,越小越难、间隔涨得越慢)
+  intervalDays Int      @default(0) // 当前复习间隔(天);0=新词尚未复习
+  reps         Int      @default(0) // 连续答对次数 n(答错归零)
+  lapses       Int      @default(0) // 累计遗忘次数(统计用)
+  masteredAt   DateTime? // 首次达到「成熟卡」(间隔≥21天)的时间;只设一次、永不清除(保证 wordsMastered 单调)
   dueDateKey   String // 下次复习日期 "2026-06-13"
   timesCorrect Int      @default(0)
   timesWrong   Int      @default(0)

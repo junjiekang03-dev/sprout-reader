@@ -74,5 +74,5 @@ Child 在阅读中查过的词的个人集合,进入间隔重复。与 Glossary 
 _Avoid_: vocabulary list, dictionary, 单词表
 
 **Review(复习)**:
-基于 Leitner 间隔重复对 Wordbook 里到期词的小测;独立入口,不打断每日阅读主线。
+基于 Anki 式 SM-2 间隔重复对 Wordbook 里到期词的小测;独立入口,不打断每日阅读主线。
 _Avoid_: quiz, test, drill, 测验

@@ -22,7 +22,7 @@ export interface BadgeStats {
   perfectQuizzes: number;
   /** 生词本收集的词数 */
   wordbookSize: number;
-  /** 牢记/出师的词数(Leitner 升到最高盒子 box 5) */
+  /** 牢记/出师的词数(SM-2 成熟卡:间隔≥21天;只升不降) */
   wordsMastered: number;
   /** 累计英文阅读量(词) */
   wordsRead: number;

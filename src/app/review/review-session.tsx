@@ -76,7 +76,7 @@ export function ReviewSession({ words }: { words: Word[] }) {
         <p className="mt-2 text-muted">
           复习了 {total} 个词,答对 {correctCount} 个
         </p>
-        <p className="mt-3 text-sm text-faint">答对的词,下次复习会隔得更久;答错的,过两天再练。</p>
+        <p className="mt-3 text-sm text-faint">答对的词,下次复习会隔得更久;答错的,明天再练。</p>
         <Link
           href="/home"
           className="mt-8 rounded-xl bg-primary px-8 py-3 font-bold text-white active:scale-[0.98]"
@@ -130,7 +130,7 @@ export function ReviewSession({ words }: { words: Word[] }) {
         </div>
       </div>
 
-      <p className="text-center text-xs text-faint">答错也没关系,过两天再见到它就记住了</p>
+      <p className="text-center text-xs text-faint">答错也没关系,明天再见到它就记住了</p>
     </main>
   );
 }

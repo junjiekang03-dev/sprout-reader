@@ -149,14 +149,16 @@
 
 ---
 
-## 10. 生词本 + 间隔复习 · AFK
+## 10. 生词本 + 间隔复习 · AFK ✅ 已完成
 
 **What**:孩子查过的词进生词本,按间隔重复算法安排复习(选词卡/小测)。
 
 **Acceptance**
 
-- [ ] 查词自动进生词本
-- [ ] 间隔复习排程
-- [ ] 复习不打断每日阅读主线
+- [x] 查词自动进生词本(阅读器点 glossary 词 → `POST /api/wordbook` → `recordLookup`)
+- [x] 间隔复习排程(初版 Leitner @ `400a09b`;2026-06-15 升级为 **Anki 式 SM-2**,见 [ADR-0008](adr/0008-srs-sm2-not-leitner.md))
+- [x] 复习不打断每日阅读主线(独立 `/review`,主页仅在有到期词时显示入口)
+
+**实现要点**:纯调度逻辑 `src/lib/srs.ts`(SM-2:每词 ease + 动态间隔 + 4 档质量分;`pickSession` 保新词不被生疏词饿死;有单测),DB 胶水 `src/lib/wordbook.ts`(查询走 `@@index([childId, dueDateKey])`)。复习界面保留选择题(低龄自评不可靠)。「牢记词」= SM-2 成熟卡(间隔 ≥ 21 天,`masteredAt` 单调标记),喂徽章/萌宠成长值且只升不降。
 
 **Blocked by**:None
