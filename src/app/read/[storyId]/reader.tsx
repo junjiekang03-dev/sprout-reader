@@ -24,9 +24,12 @@ export function Reader(props: Props) {
   const [playing, setPlaying] = useState(false);
   const [qIndex, setQIndex] = useState(0);
   const [answers, setAnswers] = useState<number[]>([]);
-  const [result, setResult] = useState<{ correct: number; total: number; streak: number } | null>(
-    null
-  );
+  const [result, setResult] = useState<{
+    correct: number;
+    total: number;
+    streak: number;
+    newBadges?: { key: string; name: string; icon: string }[];
+  } | null>(null);
   const [showRest, setShowRest] = useState(false);
   const startedAt = useRef(Date.now());
   const audioRef = useRef<HTMLAudioElement | null>(null);
@@ -139,6 +142,29 @@ export function Reader(props: Props) {
           <p className="mt-1 text-4xl font-bold text-accent">🔥 {result.streak} 天</p>
           <p className="mt-3 text-xs text-faint">{props.childName} 又离「用英语想事情」近了一步</p>
         </div>
+
+        {result.newBadges && result.newBadges.length > 0 && (
+          <div className="mt-4 w-full rounded-card bg-accent-soft p-5 shadow-card">
+            <p className="text-sm font-bold text-accent-ink">🎉 解锁了新徽章!</p>
+            <div className="mt-3 flex flex-wrap justify-center gap-4">
+              {result.newBadges.map((b) => (
+                <div key={b.key} className="flex flex-col items-center">
+                  <span className="flex h-12 w-12 items-center justify-center rounded-full bg-card text-2xl shadow-card">
+                    {b.icon}
+                  </span>
+                  <span className="mt-1 text-xs font-semibold text-accent-ink">{b.name}</span>
+                </div>
+              ))}
+            </div>
+            <Link
+              href="/badges"
+              className="mt-3 block text-center text-xs font-semibold text-accent-ink underline active:scale-[0.98]"
+            >
+              在徽章墙查看全部 →
+            </Link>
+          </div>
+        )}
+
         <div className="mt-8 flex w-full gap-3">
           <Link
             href="/home"

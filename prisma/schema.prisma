@@ -46,6 +46,7 @@ model Child {
   readings      Reading[]
   wordbook      WordbookEntry[]
   levelChanges  LevelChange[]
+  badges        ChildBadge[]
 }
 
 model Story {
@@ -111,4 +112,17 @@ model LevelChange {
   createdAt DateTime @default(now())
 
   @@index([childId, createdAt])
+}
+
+// 徽章(游戏化·成就感):一旦解锁即持久化,永不撤销(positive-only)。
+// badgeKey 对应 src/lib/badges.ts 的徽章目录;按 (childId, badgeKey) 唯一,避免重复发放。
+model ChildBadge {
+  id       String   @id @default(cuid())
+  childId  String
+  child    Child    @relation(fields: [childId], references: [id], onDelete: Cascade)
+  badgeKey String
+  earnedAt DateTime @default(now())
+
+  @@unique([childId, badgeKey])
+  @@index([childId])
 }

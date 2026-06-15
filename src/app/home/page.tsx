@@ -4,6 +4,8 @@ import { getSessionParent, getActiveChild } from "@/lib/session";
 import { recommendStory } from "@/lib/recommend";
 import { getStreak, getCalendar, getLevelSuggestion, getLatestAutoLevelChange } from "@/lib/stats";
 import { getDueCount } from "@/lib/wordbook";
+import { getEarnedBadges } from "@/lib/badges-store";
+import { BADGE_TOTAL } from "@/lib/badges";
 import { getLevel, INTERESTS } from "@/lib/levels";
 import { dateKeyOf, renderWithName } from "@/lib/story-types";
 import { logout } from "@/app/actions/auth";
@@ -18,14 +20,17 @@ export default async function HomePage() {
   if (!child) redirect("/onboarding");
   if (!child.placementDone) redirect("/placement");
 
-  const [story, streak, calendar, suggestion, dueCount, latestChange] = await Promise.all([
-    recommendStory(child.id),
-    getStreak(child.id),
-    getCalendar(child.id, 28),
-    getLevelSuggestion(child.id, child.levelId),
-    getDueCount(child.id),
-    getLatestAutoLevelChange(child.id),
-  ]);
+  const [story, streak, calendar, suggestion, dueCount, latestChange, earnedBadges] =
+    await Promise.all([
+      recommendStory(child.id),
+      getStreak(child.id),
+      getCalendar(child.id, 28),
+      getLevelSuggestion(child.id, child.levelId),
+      getDueCount(child.id),
+      getLatestAutoLevelChange(child.id),
+      getEarnedBadges(child.id),
+    ]);
+  const earnedCount = earnedBadges.size;
   const level = getLevel(child.levelId);
   const todayDone = calendar.find((c) => c.dateKey === dateKeyOf(new Date()))?.count ?? 0;
   const activeDays = calendar.filter((c) => c.count > 0).length;
@@ -148,6 +153,25 @@ export default async function HomePage() {
       <section className="mt-4">
         <AutoFollowToggle enabled={child.autoFollowLevel} />
       </section>
+
+      {/* 徽章墙入口 */}
+      <Link
+        href="/badges"
+        className="mt-4 flex items-center justify-between rounded-card bg-card p-4 shadow-card transition active:scale-[0.98]"
+      >
+        <div className="flex items-center gap-3">
+          <span className="flex h-10 w-10 items-center justify-center rounded-full bg-primary-soft text-lg">
+            🏅
+          </span>
+          <div>
+            <p className="font-semibold text-ink">徽章墙</p>
+            <p className="text-xs text-faint">读得越多,点亮越多</p>
+          </div>
+        </div>
+        <span className="rounded-full bg-primary-soft px-3 py-1 text-sm font-bold text-primary-ink">
+          {earnedCount}/{BADGE_TOTAL}
+        </span>
+      </Link>
 
       {/* 家长入口 */}
       <section className="mt-4 flex gap-3">
