@@ -156,6 +156,25 @@ export default async function HomePage() {
         </Link>
       )}
 
+      {/* 成长地图(进度视图:走了多远 / 前面有什么) */}
+      <Link
+        href="/map"
+        className="mt-4 flex items-center justify-between rounded-card bg-card p-4 shadow-card transition active:scale-[0.98]"
+      >
+        <div className="flex items-center gap-3">
+          <span className="flex h-10 w-10 items-center justify-center rounded-full bg-secondary-soft text-lg">
+            🗺️
+          </span>
+          <div>
+            <p className="font-semibold text-ink">成长地图</p>
+            <p className="text-xs text-faint">看看走了多远、前面有什么</p>
+          </div>
+        </div>
+        <span className="rounded-full bg-secondary-soft px-3 py-1 text-sm font-bold text-secondary-ink">
+          第 {child.levelId} 关
+        </span>
+      </Link>
+
       {/* 复习生词(独立入口,不打断每日阅读主线;有到期词才显示) */}
       {dueCount > 0 && (
         <Link
