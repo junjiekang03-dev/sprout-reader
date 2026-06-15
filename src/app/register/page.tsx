@@ -19,14 +19,14 @@ export default function RegisterPage() {
           type="tel"
           inputMode="numeric"
           placeholder="家长手机号"
-          className="w-full rounded-xl border border-line bg-card px-5 py-4 text-lg focus:border-secondary"
+          className="w-full rounded-xl border border-line bg-card px-5 py-4 text-lg outline-secondary"
           required
         />
         <input
           name="password"
           type="password"
           placeholder="设置密码(至少 8 位)"
-          className="w-full rounded-xl border border-line bg-card px-5 py-4 text-lg focus:border-secondary"
+          className="w-full rounded-xl border border-line bg-card px-5 py-4 text-lg outline-secondary"
           required
         />
         {state?.error && <p className="text-sm text-red-500">{state.error}</p>}

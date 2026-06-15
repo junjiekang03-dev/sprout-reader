@@ -21,7 +21,7 @@ export default function OnboardingPage() {
         <input
           name="nickname"
           placeholder="孩子的英文名,如 Leo / Mia"
-          className="w-full rounded-xl border border-line bg-card px-5 py-4 text-lg focus:border-secondary"
+          className="w-full rounded-xl border border-line bg-card px-5 py-4 text-lg outline-secondary"
           required
         />
 
