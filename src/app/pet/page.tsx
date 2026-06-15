@@ -25,11 +25,10 @@ export default async function PetPage() {
         <span className="text-sm font-semibold text-primary-ink">🌱 SproutReader</span>
       </header>
 
-      {/* 萌宠展示(会动、能摸) */}
-      <section className="mt-6 rounded-card bg-secondary-soft p-6 text-center shadow-card">
-        <PetCompanion image={image} name={stageName} element={species.element} />
-        <p className="mt-2 text-xl font-bold text-ink">{stageName}</p>
-        <p className="-mt-1 mb-1 text-[11px] text-faint">点一点,摸摸它 👆</p>
+      {/* 萌宠展示(真 3D:可拖转 / 点击互动) */}
+      <section className="mt-6 rounded-card bg-secondary-soft p-4 text-center shadow-card">
+        <PetCompanion image={image} name={stageName} species={species.key} />
+        <p className="mt-1 text-xl font-bold text-ink">{stageName}</p>
         <p className="mt-0.5 text-xs text-muted">
           {species.element} · 成长阶段 {stage + 1}/{MAX_STAGE + 1}
         </p>

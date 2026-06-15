@@ -1,170 +1,51 @@
 "use client";
 
-import { useCallback, useEffect, useRef, useState } from "react";
+import dynamic from "next/dynamic";
+import { Component, type ReactNode } from "react";
 
-/** 点击萌宠时轮流冒出的鼓励语(只鼓励、不卖惨;轻轻指向真实的「读」) */
-const CHEERS = [
-  "再读一篇,我会更有精神!",
-  "今天的你超棒 🌟",
-  "我们一起加油!",
-  "下一个故事在等我们啦~",
-  "谢谢你陪我长大 🌱",
-  "你越读,我越神气!",
-];
+type SpeciesKey = "dragon" | "owl" | "fox";
 
-const PARTICLES = ["💚", "✨", "⭐", "🌟", "💫"];
+// 3D 萌宠按需加载:three.js/R3F 只在 /pet 页拉取,不拖累全站首屏体积
+const PetCreature3D = dynamic(() => import("./pet-creature-3d"), {
+  ssr: false,
+  loading: () => (
+    <div className="mx-auto flex h-60 w-full max-w-[20rem] items-center justify-center text-sm text-faint">
+      萌宠来啦…
+    </div>
+  ),
+});
 
-interface Burst {
-  id: number;
-  emoji: string;
-  left: number; // 0-100 (%)
-  delay: number; // ms
+/** WebGL 不可用 / 3D 出错时,优雅降级回静态插画 */
+class WebGLBoundary extends Component<
+  { fallback: ReactNode; children: ReactNode },
+  { failed: boolean }
+> {
+  state = { failed: false };
+  static getDerivedStateFromError() {
+    return { failed: true };
+  }
+  render() {
+    return this.state.failed ? this.props.fallback : this.props.children;
+  }
 }
 
-/**
- * 2.5D「活灵活现」萌宠:平面插画 + CSS 3D 透视。
- * - 静止:缓慢张望(转头) + 浮动呼吸 + 地面投影。
- * - 跟随:手指/光标在它身上移动时,它绕 X/Y 轴「转头看你」(JS 设 transform)。
- * - 点击:立体弹跳 + 冒爱心/星星 + 鼓励气泡(还会播报给读屏)。
- * 纯展示交互,不发放任何成长值(成长只挂真实学习)。
- */
 export function PetCompanion({
   image,
   name,
-  element,
+  species,
 }: {
   image: string;
   name: string;
-  element?: string;
+  species: SpeciesKey;
 }) {
-  const [popping, setPopping] = useState(false);
-  const [bubble, setBubble] = useState<string | null>(null);
-  const [bursts, setBursts] = useState<Burst[]>([]);
-  const timers = useRef<ReturnType<typeof setTimeout>[]>([]);
-  const seq = useRef(0);
-  const cheerIdx = useRef(0);
-  const tiltRef = useRef<HTMLSpanElement>(null);
-  const reduceMotion = useRef(false);
-
-  // 卸载时清掉所有计时器,避免 setState-after-unmount / 内存泄漏
-  useEffect(() => {
-    reduceMotion.current =
-      typeof window !== "undefined" &&
-      window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-    const list = timers.current;
-    return () => list.forEach(clearTimeout);
-  }, []);
-
-  const later = useCallback((ms: number, fn: () => void) => {
-    const t = setTimeout(fn, ms);
-    timers.current.push(t);
-  }, []);
-
-  // 兴趣元素 emoji(如 "🌱 大地" → "🌱")也加入粒子池
-  const elementEmoji = element?.match(/\p{Emoji}/u)?.[0];
-  const pool = elementEmoji ? [elementEmoji, ...PARTICLES] : PARTICLES;
-
-  // 「转头看你」:手指/光标位置 → 绕 Y(左右)/X(上下,反向)旋转
-  const track = useCallback((e: React.PointerEvent) => {
-    const el = tiltRef.current;
-    if (!el || reduceMotion.current) return;
-    const r = el.getBoundingClientRect();
-    const ry = ((e.clientX - r.left) / r.width - 0.5) * 30; // -15°..15°
-    const rx = -((e.clientY - r.top) / r.height - 0.5) * 22; // 反向,-11°..11°
-    el.classList.add("tracking");
-    el.style.transform = `perspective(620px) rotateY(${ry.toFixed(1)}deg) rotateX(${rx.toFixed(1)}deg)`;
-  }, []);
-
-  // 松手/移开:清掉手控 transform,恢复自动张望动画
-  const release = useCallback(() => {
-    const el = tiltRef.current;
-    if (!el) return;
-    el.style.transform = "";
-    el.classList.remove("tracking");
-  }, []);
-
-  const pat = useCallback(() => {
-    // 立体弹跳(重复点会续上)
-    setPopping(true);
-    later(640, () => setPopping(false));
-
-    // 鼓励气泡(轮换)
-    setBubble(CHEERS[cheerIdx.current % CHEERS.length]);
-    cheerIdx.current += 1;
-    later(1800, () => setBubble(null));
-
-    // 冒一簇粒子
-    const burst: Burst[] = Array.from({ length: 5 }, () => ({
-      id: seq.current++,
-      emoji: pool[Math.floor(Math.random() * pool.length)],
-      left: 18 + Math.random() * 64,
-      delay: Math.round(Math.random() * 160),
-    }));
-    setBursts((b) => [...b, ...burst]);
-    const ids = new Set(burst.map((x) => x.id));
-    later(1300, () => setBursts((b) => b.filter((x) => !ids.has(x.id))));
-  }, [later, pool]);
-
   return (
-    <div className="relative mx-auto h-44 w-44">
-      {/* 鼓励气泡(视觉装饰,aria-hidden;读屏由下方常驻 live region 播报) */}
-      {bubble && (
-        <div
-          aria-hidden
-          className="pet-bubble pointer-events-none absolute -top-3 left-1/2 z-20 -translate-x-1/2 whitespace-nowrap rounded-full bg-card px-3 py-1.5 text-xs font-semibold text-ink shadow-card"
-        >
-          {bubble}
-        </div>
-      )}
-      {/* 常驻无障碍 live region:点萌宠时把鼓励语播报给读屏用户 */}
-      <p role="status" aria-live="polite" className="sr-only">
-        {bubble}
-      </p>
-
-      {/* 上升粒子 */}
-      {bursts.map((p) => (
-        <span
-          key={p.id}
-          className="pet-particle pointer-events-none absolute bottom-10 z-10 text-xl"
-          style={{ left: `${p.left}%`, animationDelay: `${p.delay}ms` }}
-          aria-hidden
-        >
-          {p.emoji}
-        </span>
-      ))}
-
-      {/* 地面投影:给"离地/落地"的纵深感 */}
-      <span
-        aria-hidden
-        className="pet-shadow absolute bottom-1 left-1/2 h-3 w-24 rounded-[50%] bg-ink/30 blur-md"
-      />
-
-      {/* 萌宠本体(可点、会转头看你) */}
-      <button
-        type="button"
-        onClick={pat}
-        onPointerMove={track}
-        onPointerLeave={release}
-        onPointerUp={release}
-        onPointerCancel={release}
-        aria-label={`摸摸${name}`}
-        className="block h-full w-full cursor-pointer rounded-2xl focus:outline-none focus-visible:ring-2 focus-visible:ring-secondary focus-visible:ring-offset-2"
-      >
-        {/* 转头层:静止自动张望,被手指接管时跟手 */}
-        <span ref={tiltRef} className="pet-look block h-full w-full">
-          {/* 浮动呼吸层 */}
-          <span className="pet-idle block h-full w-full">
-            {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img
-              src={image}
-              alt=""
-              aria-hidden
-              draggable={false}
-              className={`h-full w-full select-none object-contain ${popping ? "pet-pop" : ""}`}
-            />
-          </span>
-        </span>
-      </button>
-    </div>
+    <WebGLBoundary
+      fallback={
+        // eslint-disable-next-line @next/next/no-img-element
+        <img src={image} alt="" aria-hidden className="pet-idle mx-auto h-44 w-44 object-contain" />
+      }
+    >
+      <PetCreature3D species={species} name={name} />
+    </WebGLBoundary>
   );
 }
