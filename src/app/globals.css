@@ -51,33 +51,60 @@ body {
 }
 
 /* ──────────────────────────────────────────────────────────────
-   萌宠动效:静止时轻轻漂浮呼吸,点击时蹦一下 + 冒爱心/星星 + 鼓励气泡。
-   纯 CSS transform(便宜、不掉帧);尊重 prefers-reduced-motion。
+   萌宠 2.5D 动效:在平面插画上用 CSS 3D 透视做出"活物"感——
+   会随手指/光标转头看你、呼吸起伏、有地面投影、点击 3D 弹跳。
+   纯 transform(走合成器、不掉帧);全程尊重 prefers-reduced-motion。
+   层次:tilt(转头,pet-look / JS 跟随)> idle(浮动呼吸,pet-float)> img(点击 pet-pop)。
    ────────────────────────────────────────────────────────────── */
+
+/* 转头:静止时缓慢左右张望(带透视=立体);被手指/光标接管时切到 .tracking */
+@keyframes pet-look {
+  0%,
+  100% {
+    transform: perspective(620px) rotateY(-8deg) rotateX(3deg);
+  }
+  50% {
+    transform: perspective(620px) rotateY(8deg) rotateX(-2deg);
+  }
+}
+/* 浮动 + 呼吸 */
 @keyframes pet-float {
   0%,
   100% {
-    transform: translateY(0) rotate(0deg);
+    transform: translateY(0) scale(1);
   }
   50% {
-    transform: translateY(-6px) rotate(-1deg);
+    transform: translateY(-7px) scale(1.015);
   }
 }
+/* 点击:立体弹跳——上跳 + 缩放 + 绕 Y 轴甩头 */
 @keyframes pet-pop {
   0% {
-    transform: scale(1) rotate(0deg);
+    transform: perspective(520px) translateY(0) scale(1) rotateY(0deg);
   }
-  30% {
-    transform: scale(1.12) rotate(-6deg);
+  25% {
+    transform: perspective(520px) translateY(-11px) scale(1.13) rotateY(-13deg);
   }
-  55% {
-    transform: scale(0.95) rotate(5deg);
+  52% {
+    transform: perspective(520px) translateY(0) scale(0.95) rotateY(11deg);
   }
-  78% {
-    transform: scale(1.04) rotate(-2deg);
+  74% {
+    transform: perspective(520px) translateY(-3px) scale(1.05) rotateY(-5deg);
   }
   100% {
-    transform: scale(1) rotate(0deg);
+    transform: perspective(520px) translateY(0) scale(1) rotateY(0deg);
+  }
+}
+/* 地面投影:随呼吸缩放浓淡,给"离地/落地"的纵深 */
+@keyframes pet-shadow {
+  0%,
+  100% {
+    transform: translateX(-50%) scale(1);
+    opacity: 0.26;
+  }
+  50% {
+    transform: translateX(-50%) scale(0.84);
+    opacity: 0.18;
   }
 }
 @keyframes pet-particle {
@@ -112,11 +139,24 @@ body {
   }
 }
 
+.pet-look {
+  animation: pet-look 6s ease-in-out infinite;
+  will-change: transform;
+}
+.pet-look.tracking {
+  /* 手指/光标接管时停掉自动张望,改由 JS 设 transform,加过渡让转头跟手更顺滑 */
+  animation: none;
+  transition: transform 0.16s ease-out;
+}
 .pet-idle {
-  animation: pet-float 3.5s ease-in-out infinite;
+  animation: pet-float 3.6s ease-in-out infinite;
+  will-change: transform;
 }
 .pet-pop {
-  animation: pet-pop 0.6s ease-in-out;
+  animation: pet-pop 0.62s ease-in-out;
+}
+.pet-shadow {
+  animation: pet-shadow 3.6s ease-in-out infinite;
 }
 .pet-particle {
   opacity: 0; /* 默认隐形:reduced-motion 下不冒粒子 */
@@ -128,10 +168,14 @@ body {
 }
 
 @media (prefers-reduced-motion: reduce) {
+  .pet-look,
+  .pet-look.tracking,
   .pet-idle,
   .pet-pop,
+  .pet-shadow,
   .pet-particle,
   .pet-bubble {
     animation: none;
+    transition: none;
   }
 }

@@ -22,7 +22,10 @@ interface Burst {
 }
 
 /**
- * 会动、能摸的萌宠:静止时轻轻漂浮,点一下蹦一下 + 冒爱心/星星 + 鼓励气泡。
+ * 2.5D「活灵活现」萌宠:平面插画 + CSS 3D 透视。
+ * - 静止:缓慢张望(转头) + 浮动呼吸 + 地面投影。
+ * - 跟随:手指/光标在它身上移动时,它绕 X/Y 轴「转头看你」(JS 设 transform)。
+ * - 点击:立体弹跳 + 冒爱心/星星 + 鼓励气泡(还会播报给读屏)。
  * 纯展示交互,不发放任何成长值(成长只挂真实学习)。
  */
 export function PetCompanion({
@@ -40,9 +43,14 @@ export function PetCompanion({
   const timers = useRef<ReturnType<typeof setTimeout>[]>([]);
   const seq = useRef(0);
   const cheerIdx = useRef(0);
+  const tiltRef = useRef<HTMLSpanElement>(null);
+  const reduceMotion = useRef(false);
 
   // 卸载时清掉所有计时器,避免 setState-after-unmount / 内存泄漏
   useEffect(() => {
+    reduceMotion.current =
+      typeof window !== "undefined" &&
+      window.matchMedia("(prefers-reduced-motion: reduce)").matches;
     const list = timers.current;
     return () => list.forEach(clearTimeout);
   }, []);
@@ -56,10 +64,29 @@ export function PetCompanion({
   const elementEmoji = element?.match(/\p{Emoji}/u)?.[0];
   const pool = elementEmoji ? [elementEmoji, ...PARTICLES] : PARTICLES;
 
+  // 「转头看你」:手指/光标位置 → 绕 Y(左右)/X(上下,反向)旋转
+  const track = useCallback((e: React.PointerEvent) => {
+    const el = tiltRef.current;
+    if (!el || reduceMotion.current) return;
+    const r = el.getBoundingClientRect();
+    const ry = ((e.clientX - r.left) / r.width - 0.5) * 30; // -15°..15°
+    const rx = -((e.clientY - r.top) / r.height - 0.5) * 22; // 反向,-11°..11°
+    el.classList.add("tracking");
+    el.style.transform = `perspective(620px) rotateY(${ry.toFixed(1)}deg) rotateX(${rx.toFixed(1)}deg)`;
+  }, []);
+
+  // 松手/移开:清掉手控 transform,恢复自动张望动画
+  const release = useCallback(() => {
+    const el = tiltRef.current;
+    if (!el) return;
+    el.style.transform = "";
+    el.classList.remove("tracking");
+  }, []);
+
   const pat = useCallback(() => {
-    // 蹦一下(重复点会续上)
+    // 立体弹跳(重复点会续上)
     setPopping(true);
-    later(620, () => setPopping(false));
+    later(640, () => setPopping(false));
 
     // 鼓励气泡(轮换)
     setBubble(CHEERS[cheerIdx.current % CHEERS.length]);
@@ -106,22 +133,36 @@ export function PetCompanion({
         </span>
       ))}
 
-      {/* 萌宠本体(可点) */}
+      {/* 地面投影:给"离地/落地"的纵深感 */}
+      <span
+        aria-hidden
+        className="pet-shadow absolute bottom-1 left-1/2 h-3 w-24 rounded-[50%] bg-ink/30 blur-md"
+      />
+
+      {/* 萌宠本体(可点、会转头看你) */}
       <button
         type="button"
         onClick={pat}
+        onPointerMove={track}
+        onPointerLeave={release}
+        onPointerUp={release}
+        onPointerCancel={release}
         aria-label={`摸摸${name}`}
         className="block h-full w-full cursor-pointer rounded-2xl focus:outline-none focus-visible:ring-2 focus-visible:ring-secondary focus-visible:ring-offset-2"
       >
-        <span className="pet-idle block h-full w-full">
-          {/* eslint-disable-next-line @next/next/no-img-element */}
-          <img
-            src={image}
-            alt=""
-            aria-hidden
-            draggable={false}
-            className={`h-full w-full select-none object-contain ${popping ? "pet-pop" : ""}`}
-          />
+        {/* 转头层:静止自动张望,被手指接管时跟手 */}
+        <span ref={tiltRef} className="pet-look block h-full w-full">
+          {/* 浮动呼吸层 */}
+          <span className="pet-idle block h-full w-full">
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img
+              src={image}
+              alt=""
+              aria-hidden
+              draggable={false}
+              className={`h-full w-full select-none object-contain ${popping ? "pet-pop" : ""}`}
+            />
+          </span>
         </span>
       </button>
     </div>
