@@ -69,9 +69,8 @@ function Eye({
   return (
     <group ref={groupRef} position={[x, 0.33, 0.79]}>
       <mesh scale={[0.86, 1, 0.7]}>
-        <sphereGeometry args={[0.3, 32, 32]} />
+        <sphereGeometry args={[0.3, 20, 20]} />
         <Toon c="#ffffff" />
-        <Outlines thickness={0.012} color={OUTLINE} />
       </mesh>
       <mesh ref={pupilRef} position={[0, 0, 0.22]}>
         <sphereGeometry args={[0.155, 24, 24]} />
@@ -125,15 +124,18 @@ function Creature({
       g.rotation.z = Math.sin(t * 0.8) * 0.04; // 轻微重心摆动
     }
 
-    // 点击反应包络(0→1→0)
+    // 点击反应包络(0→1→0);仅推进计时,动效另算
     let env = 0;
     if (reactRef.current > 0) {
       reactRef.current = Math.max(0, reactRef.current - delta / 0.6);
       env = Math.sin((1 - reactRef.current) * Math.PI);
-      yOff += env * 0.55; // 跳
-      sy *= 1 - env * 0.16; // 落地挤压
-      if (!reduce) g.rotation.y += delta * env * 7; // 开心转一下
     }
+    // reduced-motion 下点击不做位移/挤压/甩动,只保留气泡+播报+(CSS已关的)粒子
+    const e = reduce ? 0 : env;
+    yOff += e * 0.55; // 跳
+    sy *= 1 - e * 0.16; // 落地挤压
+    g.rotation.y = e * 0.5; // 开心晃一下(用包络直接赋值,不累加→不会越转越偏)
+
     g.position.y = yOff;
     if (body.current) {
       const sxz = 1 / Math.sqrt(sy);
@@ -141,9 +143,8 @@ function Creature({
     }
 
     // 耳朵/尾巴次级摆动(idle 轻摆 + 跳跃时跟随甩动)
-    if (ears.current) ears.current.rotation.x = (reduce ? 0 : Math.sin(t * 2.3) * 0.05) - env * 0.2;
-    if (tail.current)
-      tail.current.rotation.z = (reduce ? 0 : Math.sin(t * 1.7) * 0.16) + env * 0.28;
+    if (ears.current) ears.current.rotation.x = (reduce ? 0 : Math.sin(t * 2.3) * 0.05) - e * 0.2;
+    if (tail.current) tail.current.rotation.z = (reduce ? 0 : Math.sin(t * 1.7) * 0.16) + e * 0.28;
 
     // 眨眼
     let lid = 1;
@@ -377,7 +378,14 @@ export default function PetCreature3D({ species, name }: { species: SpeciesKey; 
         <directionalLight position={[-4, 1, 2]} intensity={0.5} color="#dbeafe" />
         <directionalLight position={[0, 3, -5]} intensity={0.7} color="#fff7ed" />
         <Creature species={species} reactRef={reactRef} reduce={reduce} />
-        <ContactShadows position={[0, -1.5, 0]} opacity={0.32} scale={6} blur={3} far={3.2} />
+        <ContactShadows
+          frames={1}
+          position={[0, -1.5, 0]}
+          opacity={0.32}
+          scale={6}
+          blur={3}
+          far={3.2}
+        />
         <OrbitControls
           makeDefault
           enableZoom={false}
