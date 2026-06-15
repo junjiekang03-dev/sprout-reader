@@ -7,8 +7,8 @@ import * as THREE from "three";
 
 /**
  * 真 3D 萌宠(占位生物)——React Three Fiber / WebGL。
- * 卡通材质(toon) + 描边 + 大眼高光,做成"刻意的卡通"而非"糙realistic"。
- * 可拖着 360° 转、会呼吸/眨眼/看向你、点击会跳;按 species 配色和特征区分。
+ * 卡通分级着色(toon + gradientMap)+ 描边 + 大眼双高光,做成"刻意的卡通"而非"糙realistic"。
+ * 可拖着 360° 转、呼吸/眨眼/瞳孔看你、耳朵尾巴次级摆动、点击会跳;按 species 配色和特征区分。
  * 正式 glb 模型到位前的「程序化身体」:换模型时只替换 <Creature/>,交互/动画不动。
  */
 
@@ -21,6 +21,21 @@ const THEME: Record<SpeciesKey, { body: string; belly: string; accent: string; i
 };
 
 const OUTLINE = "#0b1c30";
+
+// 3 级卡通分色渐变(给 meshToonMaterial 做清爽的 cel-shading,而非默认柔和过渡)
+const GRAD = (() => {
+  const data = new Uint8Array([110, 110, 110, 255, 180, 180, 180, 255, 255, 255, 255, 255]);
+  const tex = new THREE.DataTexture(data, 3, 1, THREE.RGBAFormat);
+  tex.magFilter = THREE.NearestFilter;
+  tex.minFilter = THREE.NearestFilter;
+  tex.needsUpdate = true;
+  return tex;
+})();
+
+/** 统一的卡通材质(带分级渐变) */
+function Toon({ c }: { c: string }) {
+  return <meshToonMaterial color={c} gradientMap={GRAD} />;
+}
 
 const CHEERS = [
   "再读一篇,我会更有精神!",
@@ -41,7 +56,7 @@ interface Burst {
 
 const _cam = new THREE.Vector3();
 
-/** 一只眼睛:白球 + 深色瞳孔 + 高光点(瞳孔/高光跟相机转,显得在"看你") */
+/** 一只眼睛:白球 + 深色瞳孔 + 大小双高光(瞳孔跟相机转,显得在"看你") */
 function Eye({
   x,
   groupRef,
@@ -52,18 +67,23 @@ function Eye({
   pupilRef: React.RefObject<THREE.Mesh | null>;
 }) {
   return (
-    <group ref={groupRef} position={[x, 0.34, 0.78]}>
-      <mesh scale={[0.85, 1, 0.7]}>
-        <sphereGeometry args={[0.27, 28, 28]} />
-        <meshToonMaterial color="#ffffff" />
+    <group ref={groupRef} position={[x, 0.33, 0.79]}>
+      <mesh scale={[0.86, 1, 0.7]}>
+        <sphereGeometry args={[0.3, 32, 32]} />
+        <Toon c="#ffffff" />
         <Outlines thickness={0.012} color={OUTLINE} />
       </mesh>
-      <mesh ref={pupilRef} position={[0, 0, 0.2]}>
-        <sphereGeometry args={[0.13, 20, 20]} />
-        <meshToonMaterial color="#16223a" />
-        {/* 高光点 */}
-        <mesh position={[0.05, 0.06, 0.09]}>
-          <sphereGeometry args={[0.045, 12, 12]} />
+      <mesh ref={pupilRef} position={[0, 0, 0.22]}>
+        <sphereGeometry args={[0.155, 24, 24]} />
+        <meshToonMaterial color="#16223a" gradientMap={GRAD} />
+        {/* 主高光 */}
+        <mesh position={[0.055, 0.07, 0.1]}>
+          <sphereGeometry args={[0.052, 14, 14]} />
+          <meshBasicMaterial color="#ffffff" />
+        </mesh>
+        {/* 次高光 */}
+        <mesh position={[-0.045, -0.05, 0.1]}>
+          <sphereGeometry args={[0.026, 12, 12]} />
           <meshBasicMaterial color="#ffffff" />
         </mesh>
       </mesh>
@@ -71,7 +91,7 @@ function Eye({
   );
 }
 
-/** 程序化生物本体:呼吸 / 眨眼 / 瞳孔看相机 / 点击跳跃 + 转身,全在 useFrame 算。 */
+/** 程序化生物本体:呼吸 / 眨眼 / 瞳孔看相机 / 耳尾次级摆动 / 点击跳跃,全在 useFrame 算。 */
 function Creature({
   species,
   reactRef,
@@ -83,6 +103,8 @@ function Creature({
 }) {
   const group = useRef<THREE.Group>(null);
   const body = useRef<THREE.Group>(null);
+  const ears = useRef<THREE.Group>(null);
+  const tail = useRef<THREE.Group>(null);
   const leftEye = useRef<THREE.Group>(null);
   const rightEye = useRef<THREE.Group>(null);
   const leftPupil = useRef<THREE.Mesh>(null);
@@ -102,9 +124,12 @@ function Creature({
       yOff = Math.sin(t * 1.6) * 0.05; // 浮动
       g.rotation.z = Math.sin(t * 0.8) * 0.04; // 轻微重心摆动
     }
+
+    // 点击反应包络(0→1→0)
+    let env = 0;
     if (reactRef.current > 0) {
       reactRef.current = Math.max(0, reactRef.current - delta / 0.6);
-      const env = Math.sin((1 - reactRef.current) * Math.PI);
+      env = Math.sin((1 - reactRef.current) * Math.PI);
       yOff += env * 0.55; // 跳
       sy *= 1 - env * 0.16; // 落地挤压
       if (!reduce) g.rotation.y += delta * env * 7; // 开心转一下
@@ -114,6 +139,11 @@ function Creature({
       const sxz = 1 / Math.sqrt(sy);
       body.current.scale.set(sxz, sy, sxz);
     }
+
+    // 耳朵/尾巴次级摆动(idle 轻摆 + 跳跃时跟随甩动)
+    if (ears.current) ears.current.rotation.x = (reduce ? 0 : Math.sin(t * 2.3) * 0.05) - env * 0.2;
+    if (tail.current)
+      tail.current.rotation.z = (reduce ? 0 : Math.sin(t * 1.7) * 0.16) + env * 0.28;
 
     // 眨眼
     let lid = 1;
@@ -142,87 +172,89 @@ function Creature({
 
   return (
     <group ref={group} position={[0, -0.1, 0]}>
-      {/* 会呼吸的身体组(脚不缩放) */}
+      {/* 会呼吸的身体组(手脚不缩放) */}
       <group ref={body}>
         {/* 身体(略蛋形) */}
         <mesh scale={[1, 1.06, 1]}>
-          <sphereGeometry args={[1, 36, 36]} />
-          <meshToonMaterial color={c.body} />
+          <sphereGeometry args={[1, 48, 48]} />
+          <Toon c={c.body} />
           <Outlines thickness={0.02} color={OUTLINE} />
         </mesh>
         {/* 肚皮 */}
         <mesh position={[0, -0.18, 0.72]} scale={[0.78, 0.92, 0.6]}>
-          <sphereGeometry args={[0.6, 28, 28]} />
-          <meshToonMaterial color={c.belly} />
+          <sphereGeometry args={[0.6, 32, 32]} />
+          <Toon c={c.belly} />
         </mesh>
         {/* 圆吻 + 鼻子 */}
         <mesh position={[0, -0.04, 0.9]} scale={[0.5, 0.36, 0.4]}>
-          <sphereGeometry args={[0.4, 24, 24]} />
-          <meshToonMaterial color={c.belly} />
+          <sphereGeometry args={[0.4, 28, 28]} />
+          <Toon c={c.belly} />
         </mesh>
         <mesh position={[0, 0.0, 1.04]}>
-          <sphereGeometry args={[0.07, 16, 16]} />
-          <meshToonMaterial color={OUTLINE} />
+          <sphereGeometry args={[0.07, 18, 18]} />
+          <Toon c={OUTLINE} />
         </mesh>
         {/* 腮红 */}
         <mesh position={[-0.5, -0.05, 0.74]} scale={[1, 0.7, 0.5]}>
-          <sphereGeometry args={[0.14, 16, 16]} />
-          <meshBasicMaterial color="#fb7185" transparent opacity={0.7} />
+          <sphereGeometry args={[0.14, 18, 18]} />
+          <meshBasicMaterial color="#fb7185" transparent opacity={0.65} />
         </mesh>
         <mesh position={[0.5, -0.05, 0.74]} scale={[1, 0.7, 0.5]}>
-          <sphereGeometry args={[0.14, 16, 16]} />
-          <meshBasicMaterial color="#fb7185" transparent opacity={0.7} />
+          <sphereGeometry args={[0.14, 18, 18]} />
+          <meshBasicMaterial color="#fb7185" transparent opacity={0.65} />
         </mesh>
 
         {/* 眼睛 */}
         <Eye x={-0.34} groupRef={leftEye} pupilRef={leftPupil} />
         <Eye x={0.34} groupRef={rightEye} pupilRef={rightPupil} />
 
-        {/* species 特征 */}
+        {/* species 头部特征(整组绕 head-top 枢轴次级摆动) */}
         {species === "fox" && (
-          <>
+          <group ref={ears} position={[0, 0.62, 0.03]}>
             {[-1, 1].map((s) => (
-              <group key={s} position={[s * 0.5, 0.85, 0.05]} rotation={[0, 0, -s * 0.25]}>
+              <group key={s} position={[s * 0.5, 0.23, 0.02]} rotation={[0, 0, -s * 0.25]}>
                 <mesh>
-                  <coneGeometry args={[0.22, 0.55, 20]} />
-                  <meshToonMaterial color={c.body} />
+                  <coneGeometry args={[0.22, 0.55, 24]} />
+                  <Toon c={c.body} />
                   <Outlines thickness={0.02} color={OUTLINE} />
                 </mesh>
                 <mesh position={[0, -0.02, 0.06]} scale={[0.6, 0.7, 0.6]}>
-                  <coneGeometry args={[0.22, 0.55, 20]} />
-                  <meshToonMaterial color={c.inner} />
+                  <coneGeometry args={[0.22, 0.55, 24]} />
+                  <Toon c={c.inner} />
                 </mesh>
               </group>
             ))}
-          </>
+          </group>
         )}
         {species === "dragon" && (
-          <>
+          <group ref={ears} position={[0, 0.7, 0.05]}>
             {[-1, 1].map((s) => (
-              <mesh key={s} position={[s * 0.28, 0.98, 0.1]} rotation={[0, 0, -s * 0.3]}>
-                <coneGeometry args={[0.11, 0.36, 16]} />
-                <meshToonMaterial color={c.accent} />
+              <mesh key={s} position={[s * 0.28, 0.28, 0.05]} rotation={[0, 0, -s * 0.3]}>
+                <coneGeometry args={[0.11, 0.36, 18]} />
+                <Toon c={c.accent} />
                 <Outlines thickness={0.02} color={OUTLINE} />
               </mesh>
             ))}
-            <mesh position={[0, 0.62, 0]} rotation={[0.2, 0, 0]} scale={[1, 0.5, 0.5]}>
+            <mesh position={[0, -0.08, -0.05]} rotation={[0.2, 0, 0]} scale={[1, 0.5, 0.5]}>
               <coneGeometry args={[0.12, 0.5, 4]} />
-              <meshToonMaterial color={c.inner} />
+              <Toon c={c.inner} />
             </mesh>
-          </>
+          </group>
         )}
         {species === "owl" && (
           <>
-            {[-1, 1].map((s) => (
-              <mesh key={s} position={[s * 0.5, 0.92, 0.1]} rotation={[0, 0, -s * 0.15]}>
-                <coneGeometry args={[0.18, 0.4, 4]} />
-                <meshToonMaterial color={c.body} />
-                <Outlines thickness={0.02} color={OUTLINE} />
-              </mesh>
-            ))}
+            <group ref={ears} position={[0, 0.7, 0.05]}>
+              {[-1, 1].map((s) => (
+                <mesh key={s} position={[s * 0.5, 0.22, 0.05]} rotation={[0, 0, -s * 0.15]}>
+                  <coneGeometry args={[0.18, 0.4, 4]} />
+                  <Toon c={c.body} />
+                  <Outlines thickness={0.02} color={OUTLINE} />
+                </mesh>
+              ))}
+            </group>
             <mesh position={[0, 0.04, 1.0]} rotation={[Math.PI, 0, 0]}>
               <coneGeometry args={[0.12, 0.26, 4]} />
-              <meshToonMaterial color={c.accent} />
+              <Toon c={c.accent} />
             </mesh>
           </>
         )}
@@ -231,26 +263,28 @@ function Creature({
       {/* 小手(身体两侧) */}
       {[-1, 1].map((s) => (
         <mesh key={s} position={[s * 0.96, -0.35, 0.35]} scale={[0.7, 1, 0.7]}>
-          <sphereGeometry args={[0.22, 18, 18]} />
-          <meshToonMaterial color={c.body} />
+          <sphereGeometry args={[0.22, 22, 22]} />
+          <Toon c={c.body} />
           <Outlines thickness={0.02} color={OUTLINE} />
         </mesh>
       ))}
       {/* 小脚 */}
       {[-1, 1].map((s) => (
         <mesh key={s} position={[s * 0.42, -1.02, 0.42]} scale={[1, 0.7, 1.2]}>
-          <sphereGeometry args={[0.27, 20, 20]} />
-          <meshToonMaterial color={c.accent} />
+          <sphereGeometry args={[0.27, 24, 24]} />
+          <Toon c={c.accent} />
           <Outlines thickness={0.02} color={OUTLINE} />
         </mesh>
       ))}
-      {/* 尾巴(狐/龙) */}
+      {/* 尾巴(狐/龙;绕基部枢轴摆动) */}
       {(species === "fox" || species === "dragon") && (
-        <mesh position={[0, -0.55, -1.0]} rotation={[0.7, 0, 0]}>
-          <coneGeometry args={[0.3, 1.0, 18]} />
-          <meshToonMaterial color={species === "fox" ? c.accent : c.body} />
-          <Outlines thickness={0.02} color={OUTLINE} />
-        </mesh>
+        <group ref={tail} position={[0, -0.3, -0.82]}>
+          <mesh position={[0, -0.25, -0.18]} rotation={[0.7, 0, 0]}>
+            <coneGeometry args={[0.3, 1.0, 22]} />
+            <Toon c={species === "fox" ? c.accent : c.body} />
+            <Outlines thickness={0.02} color={OUTLINE} />
+          </mesh>
+        </group>
       )}
     </group>
   );
@@ -338,18 +372,18 @@ export default function PetCreature3D({ species, name }: { species: SpeciesKey; 
         className="!touch-pan-y"
         style={{ width: "100%", height: "100%" }}
       >
-        <hemisphereLight args={["#ffffff", "#cdd6e8", 1.0]} />
-        <directionalLight position={[3, 5, 4]} intensity={1.3} />
-        <directionalLight position={[-4, 1, 2]} intensity={0.5} />
-        <directionalLight position={[0, 2, -5]} intensity={0.6} color="#fff7ed" />
+        <hemisphereLight args={["#ffffff", "#cdd6e8", 0.9]} />
+        <directionalLight position={[3, 5, 4]} intensity={1.25} color="#fff6ec" />
+        <directionalLight position={[-4, 1, 2]} intensity={0.5} color="#dbeafe" />
+        <directionalLight position={[0, 3, -5]} intensity={0.7} color="#fff7ed" />
         <Creature species={species} reactRef={reactRef} reduce={reduce} />
-        <ContactShadows position={[0, -1.5, 0]} opacity={0.3} scale={6} blur={2.8} far={3.2} />
+        <ContactShadows position={[0, -1.5, 0]} opacity={0.32} scale={6} blur={3} far={3.2} />
         <OrbitControls
           makeDefault
           enableZoom={false}
           enablePan={false}
           autoRotate={!reduce}
-          autoRotateSpeed={0.8}
+          autoRotateSpeed={0.7}
           minPolarAngle={Math.PI / 3.2}
           maxPolarAngle={Math.PI / 1.9}
         />
