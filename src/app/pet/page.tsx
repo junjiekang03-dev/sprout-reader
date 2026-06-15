@@ -3,6 +3,7 @@ import Link from "next/link";
 import { getSessionParent, getActiveChild } from "@/lib/session";
 import { getPetState } from "@/lib/pet-store";
 import { MAX_STAGE } from "@/lib/pet";
+import { PetCompanion } from "./pet-companion";
 
 export default async function PetPage() {
   const parent = await getSessionParent();
@@ -24,11 +25,11 @@ export default async function PetPage() {
         <span className="text-sm font-semibold text-primary-ink">🌱 SproutReader</span>
       </header>
 
-      {/* 萌宠展示 */}
+      {/* 萌宠展示(会动、能摸) */}
       <section className="mt-6 rounded-card bg-secondary-soft p-6 text-center shadow-card">
-        {/* eslint-disable-next-line @next/next/no-img-element */}
-        <img src={image} alt={stageName} className="mx-auto h-44 w-44 object-contain" />
+        <PetCompanion image={image} name={stageName} element={species.element} />
         <p className="mt-2 text-xl font-bold text-ink">{stageName}</p>
+        <p className="-mt-1 mb-1 text-[11px] text-faint">点一点,摸摸它 👆</p>
         <p className="mt-0.5 text-xs text-muted">
           {species.element} · 成长阶段 {stage + 1}/{MAX_STAGE + 1}
         </p>

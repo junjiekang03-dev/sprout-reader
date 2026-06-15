@@ -49,3 +49,89 @@ body {
   font-family: var(--font-sans);
   -webkit-tap-highlight-color: transparent;
 }
+
+/* ──────────────────────────────────────────────────────────────
+   萌宠动效:静止时轻轻漂浮呼吸,点击时蹦一下 + 冒爱心/星星 + 鼓励气泡。
+   纯 CSS transform(便宜、不掉帧);尊重 prefers-reduced-motion。
+   ────────────────────────────────────────────────────────────── */
+@keyframes pet-float {
+  0%,
+  100% {
+    transform: translateY(0) rotate(0deg);
+  }
+  50% {
+    transform: translateY(-6px) rotate(-1deg);
+  }
+}
+@keyframes pet-pop {
+  0% {
+    transform: scale(1) rotate(0deg);
+  }
+  30% {
+    transform: scale(1.12) rotate(-6deg);
+  }
+  55% {
+    transform: scale(0.95) rotate(5deg);
+  }
+  78% {
+    transform: scale(1.04) rotate(-2deg);
+  }
+  100% {
+    transform: scale(1) rotate(0deg);
+  }
+}
+@keyframes pet-particle {
+  0% {
+    transform: translateY(0) scale(0.5);
+    opacity: 0;
+  }
+  20% {
+    opacity: 1;
+  }
+  100% {
+    transform: translateY(-72px) scale(1.1);
+    opacity: 0;
+  }
+}
+@keyframes pet-bubble {
+  0% {
+    transform: translateY(8px) scale(0.9);
+    opacity: 0;
+  }
+  14% {
+    transform: translateY(0) scale(1);
+    opacity: 1;
+  }
+  86% {
+    transform: translateY(0) scale(1);
+    opacity: 1;
+  }
+  100% {
+    transform: translateY(-4px) scale(0.98);
+    opacity: 0;
+  }
+}
+
+.pet-idle {
+  animation: pet-float 3.5s ease-in-out infinite;
+}
+.pet-pop {
+  animation: pet-pop 0.6s ease-in-out;
+}
+.pet-particle {
+  opacity: 0; /* 默认隐形:reduced-motion 下不冒粒子 */
+  animation: pet-particle 1.1s ease-out forwards;
+}
+.pet-bubble {
+  opacity: 1; /* 默认可见:reduced-motion 下静态显示再由 JS 收起 */
+  animation: pet-bubble 1.8s ease-out forwards;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .pet-idle,
+  .pet-pop,
+  .pet-particle,
+  .pet-bubble {
+    animation: none;
+  }
+}

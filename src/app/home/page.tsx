@@ -121,7 +121,7 @@ export default async function HomePage() {
           <img
             src={petState.image}
             alt={petState.stageName}
-            className="h-16 w-16 shrink-0 object-contain"
+            className="pet-idle h-16 w-16 shrink-0 object-contain"
           />
           <div className="min-w-0 flex-1">
             <p className="font-bold text-ink">{petState.stageName}</p>
