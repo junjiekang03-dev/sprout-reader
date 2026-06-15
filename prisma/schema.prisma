@@ -47,6 +47,7 @@ model Child {
   wordbook      WordbookEntry[]
   levelChanges  LevelChange[]
   badges        ChildBadge[]
+  pet           Pet?
 }
 
 model Story {
@@ -125,4 +126,15 @@ model ChildBadge {
 
   @@unique([childId, badgeKey])
   @@index([childId])
+}
+
+// 萌宠养成(游戏化):一个孩子一只宠物。成长值由真实学习信号派生(见 src/lib/pet.ts),
+// 不存在 DB;stageSeen 记录已向孩子展示过的最高成长阶段,用于"进化"庆祝检测(只升不降)。
+model Pet {
+  id        String   @id @default(cuid())
+  childId   String   @unique
+  child     Child    @relation(fields: [childId], references: [id], onDelete: Cascade)
+  species   String // dragon | owl | fox
+  stageSeen Int      @default(0)
+  createdAt DateTime @default(now())
 }

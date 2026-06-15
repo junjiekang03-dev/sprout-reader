@@ -6,6 +6,7 @@ import { getStreak, getCalendar, getLevelSuggestion, getLatestAutoLevelChange } 
 import { getDueCount } from "@/lib/wordbook";
 import { getEarnedBadges } from "@/lib/badges-store";
 import { BADGE_TOTAL } from "@/lib/badges";
+import { getPetState } from "@/lib/pet-store";
 import { getLevel, INTERESTS } from "@/lib/levels";
 import { dateKeyOf, renderWithName } from "@/lib/story-types";
 import { logout } from "@/app/actions/auth";
@@ -20,7 +21,7 @@ export default async function HomePage() {
   if (!child) redirect("/onboarding");
   if (!child.placementDone) redirect("/placement");
 
-  const [story, streak, calendar, suggestion, dueCount, latestChange, earnedBadges] =
+  const [story, streak, calendar, suggestion, dueCount, latestChange, earnedBadges, petState] =
     await Promise.all([
       recommendStory(child.id),
       getStreak(child.id),
@@ -29,6 +30,7 @@ export default async function HomePage() {
       getDueCount(child.id),
       getLatestAutoLevelChange(child.id),
       getEarnedBadges(child.id),
+      getPetState(child.id),
     ]);
   const earnedCount = earnedBadges.size;
   const level = getLevel(child.levelId);
@@ -108,6 +110,51 @@ export default async function HomePage() {
         <StatCard icon="🌱" value={`${activeDays}`} label="四周打卡" tint="primary" />
         <StatCard icon="✅" value={`${todayDone}`} label="今日已读" tint="secondary" />
       </section>
+
+      {/* 萌宠养成 */}
+      {petState ? (
+        <Link
+          href="/pet"
+          className="mt-4 flex items-center gap-4 rounded-card bg-secondary-soft p-4 shadow-card transition active:scale-[0.98]"
+        >
+          {/* eslint-disable-next-line @next/next/no-img-element */}
+          <img
+            src={petState.image}
+            alt={petState.stageName}
+            className="h-16 w-16 shrink-0 object-contain"
+          />
+          <div className="min-w-0 flex-1">
+            <p className="font-bold text-ink">{petState.stageName}</p>
+            <p className="text-xs text-muted">
+              {petState.progress.atMax
+                ? "已长成成年形态 ✨"
+                : `还差 ${petState.progress.toNext} 成长值进化`}
+            </p>
+            <div className="mt-1.5 h-2 overflow-hidden rounded-full bg-card">
+              <div
+                className="h-full rounded-full bg-primary transition-all"
+                style={{ width: `${petState.progress.pct}%` }}
+              />
+            </div>
+          </div>
+        </Link>
+      ) : (
+        <Link
+          href="/pet/choose"
+          className="mt-4 flex items-center justify-between rounded-card bg-secondary-soft p-4 shadow-card transition active:scale-[0.98]"
+        >
+          <div className="flex items-center gap-3">
+            <span className="flex h-12 w-12 items-center justify-center rounded-full bg-card text-2xl">
+              🥚
+            </span>
+            <div>
+              <p className="font-bold text-ink">领养你的神奇萌宠</p>
+              <p className="text-xs text-muted">读书喂养,陪你一起长大</p>
+            </div>
+          </div>
+          <span className="text-secondary-ink">→</span>
+        </Link>
+      )}
 
       {/* 复习生词(独立入口,不打断每日阅读主线;有到期词才显示) */}
       {dueCount > 0 && (

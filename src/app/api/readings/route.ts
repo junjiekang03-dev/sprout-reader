@@ -3,6 +3,7 @@ import { prisma } from "@/lib/db";
 import { getSessionParent, getActiveChild } from "@/lib/session";
 import { getStreak, getLevelSuggestion } from "@/lib/stats";
 import { awardBadges } from "@/lib/badges-store";
+import { checkPetEvolution } from "@/lib/pet-store";
 import { decideAutoLevelChange } from "@/lib/progression";
 import { parseQuestions, dateKeyOf } from "@/lib/story-types";
 
@@ -68,9 +69,10 @@ export async function POST(req: Request) {
     }
   }
 
-  // 游戏化:读完后评估并发放新解锁的徽章(在记录阅读 + 可能的调级之后,挂在真实信号上)
+  // 游戏化:读完后评估发放新徽章 + 检查萌宠进化(都挂在真实信号上,在记录阅读+调级之后)
   const newBadges = await awardBadges(child.id);
+  const petEvolved = await checkPetEvolution(child.id);
 
   const streak = await getStreak(child.id);
-  return NextResponse.json({ correct, total, streak, levelChange, newBadges });
+  return NextResponse.json({ correct, total, streak, levelChange, newBadges, petEvolved });
 }

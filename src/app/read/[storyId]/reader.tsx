@@ -29,6 +29,7 @@ export function Reader(props: Props) {
     total: number;
     streak: number;
     newBadges?: { key: string; name: string; icon: string }[];
+    petEvolved?: { species: string; stage: number; name: string; image: string } | null;
   } | null>(null);
   const [showRest, setShowRest] = useState(false);
   const startedAt = useRef(Date.now());
@@ -142,6 +143,25 @@ export function Reader(props: Props) {
           <p className="mt-1 text-4xl font-bold text-accent">🔥 {result.streak} 天</p>
           <p className="mt-3 text-xs text-faint">{props.childName} 又离「用英语想事情」近了一步</p>
         </div>
+
+        {result.petEvolved && (
+          <div className="mt-4 w-full rounded-card bg-primary-soft p-5 text-center shadow-card">
+            <p className="text-sm font-bold text-primary-ink">🎉 你的萌宠进化了!</p>
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img
+              src={result.petEvolved.image}
+              alt={result.petEvolved.name}
+              className="mx-auto mt-2 h-28 w-28 object-contain"
+            />
+            <p className="mt-1 text-base font-bold text-ink">进化成「{result.petEvolved.name}」</p>
+            <Link
+              href="/pet"
+              className="mt-2 inline-block text-xs font-semibold text-primary-ink underline active:scale-[0.98]"
+            >
+              去萌宠页看看 →
+            </Link>
+          </div>
+        )}
 
         {result.newBadges && result.newBadges.length > 0 && (
           <div className="mt-4 w-full rounded-card bg-accent-soft p-5 shadow-card">
